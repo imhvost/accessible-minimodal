@@ -1,0 +1,29 @@
+{
+  "presets": [
+      ["env", {
+        "targets": {
+          "chrome": "58",
+          "ie": "10",
+          "ios": "7",
+          "android": "4.4",
+          "safari": "6.1",
+          "firefox": "50"
+        },
+        "useBuiltIns": true,
+        "loose": true,
+        "spec": false,
+        "uglify": false,
+        "debug": false,
+        "modules": false,
+        "include": [],
+        "exclude": []
+      }]
+  ],
+  "plugins": [
+    ["transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ]
+  ]
+}

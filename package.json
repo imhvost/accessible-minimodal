@@ -1,0 +1,36 @@
+{
+  "name": "accessible-minimodal",
+  "version": "1.0.0",
+  "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "build": "rimraf dist && webpack --config webpack.config.js --mode production",
+    "dev": "webpack-dev-server --open --config webpack.config.js --mode development"
+  },
+  "author": "imhvost",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.5.3",
+    "eslint": "^7.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "html-webpack-plugin": "^4.3.0",
+    "less": "^3.11.2",
+    "less-loader": "^6.1.0",
+    "less-plugin-autoprefix": "^2.0.0",
+    "less-plugin-clean-css": "^1.5.1",
+    "rimraf": "^3.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

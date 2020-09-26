@@ -1,7 +1,7 @@
 # accessible-minimodal
 Accessible, lightweight, stylish modal library in pure JavaScript
 ## Example
-https://codepen.io/imhvost/pen/LYNazqo
+https://codepen.io/imhvost/pen/LYNazqo (with multiple option)
 ### html
 ```html
 <button id="modal-open-btn-1" data-modal-open="modal-1">Open Modal 1</button>

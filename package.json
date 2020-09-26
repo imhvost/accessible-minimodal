@@ -1,15 +1,12 @@
 {
   "name": "accessible-minimodal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
-  "main": ".eslintrc.js",
+  "main": "./dist/accessible-minimodal.min.js",
   "scripts": {
     "build": "rimraf dist && webpack --config webpack.config.js --mode production",
     "dev": "webpack-dev-server --open --config webpack.config.js --mode development"
   },
-  "files":  [
-    "dist/accessible-minimodal.min.js"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imhvost/accessible-minimodal"

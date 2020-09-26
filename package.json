@@ -1,6 +1,6 @@
 {
   "name": "accessible-minimodal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
   "main": ".eslintrc.js",
   "scripts": {

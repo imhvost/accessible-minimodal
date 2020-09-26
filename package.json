@@ -1,6 +1,6 @@
 {
   "name": "accessible-minimodal",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
   "main": "./dist/accessible-minimodal.min.js",
   "files": [
@@ -10,6 +10,13 @@
     "build": "rimraf dist && webpack --config webpack.config.js --mode production",
     "dev": "webpack-dev-server --open --config webpack.config.js --mode development"
   },
+  "keywords": [
+    "modal",
+    "dialog",
+    "accessible",
+    "pure",
+    "stylish"
+  ],
   "author": "imhvost",
   "license": "MIT",
   "devDependencies": {

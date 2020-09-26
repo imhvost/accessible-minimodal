@@ -1,5 +1,5 @@
 # accessible-minimodal
-Accessible, lightweight, stylish modal library in pure JavaScript
+Accessible, lightweight (**< 8 kB**), stylish modal library in pure JavaScript
 ## Example
 https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 ## Install

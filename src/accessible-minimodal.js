@@ -242,77 +242,78 @@ const AccessibleMinimodal = (() => {
       const margin = getMargin(this.config.style.valign)
       const transform = getTransform(this.config.style.openAnimation)
       const animationDuration = this.getAnimationDuration()
-      const style = `
-      .${modal} {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 666666;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity ${animationDuration}ms, visibility ${animationDuration}ms;
-        backdrop-filter: blur(5px);
-      }
-      .${modal}.${active} {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-      .${modal}.${active} .${body} {
-        transform: none;
-      }
-      .${wrapp} {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 40px 20px;
-        overflow-y: scroll;
-      }
-      .${body} {
-        background-color: #fff;
-        flex: none;
-        min-height: 1px;
-        border-radius: 2px;
-        width: ${this.config.style.width}px;
-        max-width: 100%;
-        margin: ${margin};
-        padding: 20px;
-        transition: ${animationDuration}ms;
-        transform: ${transform};
-        position: relative;
-      }
-      .${body} [${close}] {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        width: 16px;
-        height: 16px;
-        border: 0;
-        background: none;
-        cursor: pointer;
-      }
-      .${body} [${close}]:before,
-      .${body} [${close}]:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        margin-top: -1px;
-        background-color: currentColor;
-        height: 2px;
-      }
-      .${body} [${close}]:before {
-        transform: rotate(45deg);
-      }
-      .${body} [${close}]:after {
-        transform: rotate(-45deg);
-      }      
-      `
+      const style =
+`
+.${modal} {
+position: fixed;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: 666666;
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+transition: opacity ${animationDuration}ms, visibility ${animationDuration}ms;
+backdrop-filter: blur(5px);
+}
+.${modal}.${active} {
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
+}
+.${modal}.${active} .${body} {
+transform: none;
+}
+.${wrapp} {
+width: 100%;
+height: 100%;
+display: flex;
+background-color: rgba(0, 0, 0, 0.7);
+padding: 40px 20px;
+overflow-y: scroll;
+}
+.${body} {
+background-color: #fff;
+flex: none;
+min-height: 1px;
+border-radius: 2px;
+width: ${this.config.style.width}px;
+max-width: 100%;
+margin: ${margin};
+padding: 20px;
+transition: ${animationDuration}ms;
+transform: ${transform};
+position: relative;
+}
+.${body} [${close}] {
+position: absolute;
+right: 10px;
+top: 10px;
+width: 16px;
+height: 16px;
+border: 0;
+background: none;
+cursor: pointer;
+}
+.${body} [${close}]:before,
+.${body} [${close}]:after {
+content: '';
+position: absolute;
+top: 50%;
+left: 0;
+right: 0;
+margin-top: -1px;
+background-color: currentColor;
+height: 2px;
+}
+.${body} [${close}]:before {
+transform: rotate(45deg);
+}
+.${body} [${close}]:after {
+transform: rotate(-45deg);
+}      
+`
       document.head.insertAdjacentHTML('beforeend', `<style>${style}</style>`)
       document.querySelectorAll('.' + this.config.classes.modal).forEach(el => {
         el.style.display = 'block'

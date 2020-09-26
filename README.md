@@ -20,10 +20,10 @@ Accessible, lightweight, stylish modal library in pure JavaScript
       class="modal-body">
       <button
         type="button"
-        class="modal-close-btn close"
+        class="modal-close-btn"
         aria-label="Close Modal"
         data-modal-close></button>
-        <!-- Modal content -->
+        Modal content
     </div>
   </div>
 </div>
@@ -31,6 +31,37 @@ Accessible, lightweight, stylish modal library in pure JavaScript
 ### js
 ```js
 const modal = AccessibleMinimodal.init({
-  // options
+  classes: {
+    modal: 'modal',
+    wrapp: 'modal-wrapp',
+    body: 'modal-body',
+    active: 'active'
+  },
+  disableScroll: true,
+  focus: true,
+  hash: {
+    open: true,
+    add: true,
+    remove: true
+  },
+  multiple: false,
+  on: {
+    beforeOpen: function (instance) {},
+    afterOpen: function (instance) {},
+    beforeClose: function (instance) {},
+    afterClose: function (instance) {}
+  },
+  outsideClose: true,
+  style: {
+    use: true,
+    width: 400,
+    valign: 'center', // center, top, bottom
+    openAnimation: 'from-bottom', // from-bottom, from-top, from-left, from-right, zoom-in, zoom-out, fade
+    animationDuration: 400
+  },
+  triggers: {
+    open: 'data-modal-open',
+    close: 'data-modal-close'
+  }
 })
 ```

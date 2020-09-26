@@ -9,24 +9,27 @@ const AccessibleMinimodal = (() => {
     [contenteditable="true"]
   `
   const settings = {
-    triggers: {
-      open: 'data-modal-open',
-      close: 'data-modal-close'
-    },
-    disableScroll: true,
-    focus: true,
-    outsideClose: true,
-    hash: {
-      open: true,
-      add: true,
-      remove: true
-    },
     classes: {
       modal: 'modal',
       wrapp: 'modal-wrapp',
       body: 'modal-body',
       active: 'active'
     },
+    disableScroll: true,
+    focus: true,
+    hash: {
+      open: true,
+      add: true,
+      remove: true
+    },
+    multiple: false,
+    on: {
+      beforeOpen: function (instance) {},
+      afterOpen: function (instance) {},
+      beforeClose: function (instance) {},
+      afterClose: function (instance) {}
+    },
+    outsideClose: true,
     style: {
       use: true,
       width: 400,
@@ -34,11 +37,9 @@ const AccessibleMinimodal = (() => {
       openAnimation: 'from-bottom',
       animationDuration: 400
     },
-    on: {
-      beforeOpen: function (instance) {},
-      afterOpen: function (instance) {},
-      beforeClose: function (instance) {},
-      afterClose: function (instance) {}
+    triggers: {
+      open: 'data-modal-open',
+      close: 'data-modal-close'
     }
   }
   class MiniModal {
@@ -55,8 +56,10 @@ const AccessibleMinimodal = (() => {
         hash: settings.hash,
         style: settings.style,
         classes: settings.classes,
-        outsideClose: settings.outsideClose
+        outsideClose: settings.outsideClose,
+        multiple: settings.multiple
       }
+      this.modals = []
       this.onKeydown = this.onKeydown.bind(this)
       this.registerTriggers()
       this.addStyles()
@@ -98,7 +101,8 @@ const AccessibleMinimodal = (() => {
         closingNodes.forEach(el => {
           el.addEventListener('click', event => {
             event.preventDefault()
-            if (this.modal) this.closeModal()
+            const modalId = event.target.getAttribute(this.config.triggers.close)
+            if (this.modal) this.closeModal(modalId)
           })
         })
       }
@@ -113,11 +117,13 @@ const AccessibleMinimodal = (() => {
       }
     }
 
-    openModal (modalId, openingNode) {
+    openModal (modalId, openingNode, preventMultiple = false) {
       const animationDuration = this.getAnimationDuration()
       const timeout = this.modal ? animationDuration : 0
       if (this.modal) {
-        this.closeModal(this.modal.id, false)
+        const parentModalId = this.modal.id
+        this.closeModal(this.modal.id, false, true)
+        if (this.config.multiple && !preventMultiple) this.modals.push(parentModalId)
       }
       setTimeout(() => {
         this.modal = document.getElementById(modalId)
@@ -152,7 +158,7 @@ const AccessibleMinimodal = (() => {
       }, timeout)
     }
 
-    closeModal (modalId, changeBackFocus = true) {
+    closeModal (modalId, changeBackFocus = true, preventMultiple = false) {
       const modal = this.modal || document.getElementById(modalId)
       if (!modal) return
       if (this.animated) return
@@ -180,6 +186,11 @@ const AccessibleMinimodal = (() => {
           this.backFocusNode = null
         }
       }, this.getAnimationDuration())
+      if (this.config.multiple && !preventMultiple) {
+        const parentModalId = this.modals.pop()
+        console.log(parentModalId)
+        this.openModal(parentModalId, false, true)
+      }
     }
 
     getAnimationDuration () {

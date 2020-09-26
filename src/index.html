@@ -55,14 +55,36 @@
             class="modal-close-btn close"
             aria-label="Close Modal"
             data-modal-close></button>
-          <div class="modal-title">This is other modal</div>
+          <div class="modal-title">This is other modal 2</div>
           <label aria-label="Input">
             <input type="text" placeholder="Input">
           </label>
           <label aria-label="Input">
             <input type="text" placeholder="Input">
           </label>
-          <button>Button</button>
+          <button id="modal-open-btn-3" data-modal-open="modal-3">Modal 3</button>
+        </div>
+      </div>
+    </div>
+    <div
+      id="modal-3"
+      aria-hidden="true"
+      class="modal"
+      style="display:none;">
+      <div
+        tabindex="-1"
+        class="modal-wrapp">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-open-btn-3"
+          class="modal-body">
+          <button
+            type="button"
+            class="modal-close-btn close"
+            aria-label="Close Modal"
+            data-modal-close></button>
+          <div class="modal-title">This is other modal 3</div>
         </div>
       </div>
     </div>

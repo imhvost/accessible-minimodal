@@ -1,15 +1,14 @@
 {
   "name": "accessible-minimodal",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
   "main": "./dist/accessible-minimodal.min.js",
+  "files": [
+    "dist/accessible-minimodal.min.js"
+  ],
   "scripts": {
     "build": "rimraf dist && webpack --config webpack.config.js --mode production",
     "dev": "webpack-dev-server --open --config webpack.config.js --mode development"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imhvost/accessible-minimodal"
   },
   "author": "imhvost",
   "license": "MIT",

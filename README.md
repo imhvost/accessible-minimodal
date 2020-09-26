@@ -2,10 +2,22 @@
 Accessible, lightweight, stylish modal library in pure JavaScript
 ## Example
 https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
+## Install
+### npm
+```
+npm install minimodal --save
+```
+or include scripts
+```html
+<script src="accessible-minimodal.min.js"></script>
+```
 ### html
+Open button:
 ```html
 <button id="modal-open-btn-1" data-modal-open="modal-1">Open Modal 1</button>
-
+```
+Modal:
+```html
 <div 
   id="modal-1"
   aria-hidden="true"

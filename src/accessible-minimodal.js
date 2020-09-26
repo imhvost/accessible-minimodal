@@ -6,7 +6,7 @@ const AccessibleMinimodal = (() => {
     select:not([disabled]):not([aria-hidden]),
     textarea:not([disabled]):not([aria-hidden]),
     [tabindex]:not([tabindex="-1"]),
-    [contenteditable]
+    [contenteditable="true"]
   `
   const settings = {
     triggers: {
@@ -303,6 +303,9 @@ const AccessibleMinimodal = (() => {
       }      
       `
       document.head.insertAdjacentHTML('beforeend', `<style>${style}</style>`)
+      document.querySelectorAll('.' + this.config.classes.modal).forEach(el => {
+        el.style.display = 'block'
+      })
       function getTransform (openAnimation) {
         switch (openAnimation) {
           case 'from-top': return 'translateY(-20px)'
@@ -334,3 +337,4 @@ const AccessibleMinimodal = (() => {
 })()
 
 export { AccessibleMinimodal }
+window.AccessibleMinimodal = AccessibleMinimodal

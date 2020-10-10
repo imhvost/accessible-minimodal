@@ -5,7 +5,7 @@ https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 ## Install
 ### npm
 ```
-npm install minimodal --save
+npm install accessible-minimodal --save
 ```
 or include scripts
 ```html

@@ -18,9 +18,9 @@ const AccessibleMinimodal = (() => {
     disableScroll: true,
     focus: true,
     hash: {
-      open: true,
-      add: true,
-      remove: true
+      open: false,
+      add: false,
+      remove: false
     },
     multiple: false,
     on: {
@@ -47,15 +47,15 @@ const AccessibleMinimodal = (() => {
       this.modal = null
       this.backFocusNode = null
       this.openingNode = null
-      this.on = settings.on || {}
+      this.on = settings.on
       this.animated = false
       this.config = {
-        triggers: settings.triggers || {},
+        triggers: settings.triggers,
         disableScroll: settings.disableScroll,
         focus: settings.focus,
-        hash: settings.hash || {},
-        style: settings.style || {},
-        classes: settings.classes || {},
+        hash: settings.hash,
+        style: settings.style,
+        classes: settings.classes,
         outsideClose: settings.outsideClose,
         multiple: settings.multiple
       }
@@ -340,7 +340,11 @@ transform: rotate(-45deg);
   }
   const init = config => {
     const insideObjects = ['style', 'on', 'triggers', 'hash']
-    insideObjects.forEach(name => { config[name] = Object.assign({}, settings[name], config[name]) })
+    insideObjects.forEach(name => {
+      if (config && config[name]) {
+        config[name] = Object.assign({}, settings[name], config[name])
+      }
+    })
     const options = Object.assign({}, settings, config)
     const modal = new MiniModal(options)
     return modal

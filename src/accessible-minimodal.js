@@ -47,15 +47,15 @@ const AccessibleMinimodal = (() => {
       this.modal = null
       this.backFocusNode = null
       this.openingNode = null
-      this.on = settings.on
+      this.on = settings.on || {}
       this.animated = false
       this.config = {
-        triggers: settings.triggers,
+        triggers: settings.triggers || {},
         disableScroll: settings.disableScroll,
         focus: settings.focus,
-        hash: settings.hash,
-        style: settings.style,
-        classes: settings.classes,
+        hash: settings.hash || {},
+        style: settings.style || {},
+        classes: settings.classes || {},
         outsideClose: settings.outsideClose,
         multiple: settings.multiple
       }

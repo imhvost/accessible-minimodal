@@ -255,7 +255,6 @@ opacity: 0;
 visibility: hidden;
 pointer-events: none;
 transition: opacity ${animationDuration}ms, visibility ${animationDuration}ms;
-backdrop-filter: blur(5px);
 }
 .${modal}.${active} {
 opacity: 1;

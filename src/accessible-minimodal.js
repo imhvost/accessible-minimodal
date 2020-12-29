@@ -92,8 +92,8 @@ const AccessibleMinimodal = (() => {
         openingNodes.forEach(el => {
           el.addEventListener('click', event => {
             event.preventDefault()
-            const modalId = event.target.getAttribute(this.config.triggers.open)
-            this.openModal(modalId, event.target)
+            const modalId = event.currentTarget.getAttribute(this.config.triggers.open)
+            this.openModal(modalId, event.currentTarget)
           })
         })
       }
@@ -101,7 +101,7 @@ const AccessibleMinimodal = (() => {
         closingNodes.forEach(el => {
           el.addEventListener('click', event => {
             event.preventDefault()
-            const modalId = event.target.getAttribute(this.config.triggers.close)
+            const modalId = event.currentTarget.getAttribute(this.config.triggers.close)
             if (this.modal) this.closeModal(modalId)
           })
         })
@@ -110,7 +110,7 @@ const AccessibleMinimodal = (() => {
         const outsideCloseNode = document.querySelector('.' + this.config.classes.wrapp)
         if (outsideCloseNode) {
           outsideCloseNode.addEventListener('click', event => {
-            if (!event.target.classList.contains(this.config.classes.wrapp)) return
+            if (!event.currentTarget.classList.contains(this.config.classes.wrapp)) return
             if (this.modal) this.closeModal()
           })
         }
@@ -222,11 +222,11 @@ const AccessibleMinimodal = (() => {
       const firstNode = focusableNodes[0]
       const lastNode = focusableNodes[focusableNodes.length - 1]
       if (event.shiftKey) {
-        if (event.target === firstNode) {
+        if (event.currentTarget === firstNode) {
           lastNode.focus()
           event.preventDefault()
         }
-      } else if (event.target === lastNode) {
+      } else if (event.currentTarget === lastNode) {
         firstNode.focus()
         event.preventDefault()
       }

@@ -110,7 +110,7 @@ const AccessibleMinimodal = (() => {
         const outsideCloseNode = document.querySelector('.' + this.config.classes.wrapp)
         if (outsideCloseNode) {
           outsideCloseNode.addEventListener('click', event => {
-            if (!event.currentTarget.classList.contains(this.config.classes.wrapp)) return
+            if (!event.target.classList.contains(this.config.classes.wrapp)) return
             if (this.modal) this.closeModal()
           })
         }

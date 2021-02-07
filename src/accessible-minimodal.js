@@ -9,11 +9,14 @@ const AccessibleMinimodal = (() => {
     [contenteditable="true"]
   `
   const settings = {
+    animationDuration: 400,
     classes: {
       modal: 'modal',
       wrapp: 'modal-wrapp',
       body: 'modal-body',
-      active: 'active'
+      active: 'active',
+      open: 'open',
+      close: 'close'
     },
     disableScroll: true,
     focus: true,
@@ -34,8 +37,7 @@ const AccessibleMinimodal = (() => {
       use: true,
       width: 400,
       valign: 'center',
-      openAnimation: 'from-bottom',
-      animationDuration: 400
+      animation: 'from-bottom'
     },
     triggers: {
       open: 'data-modal-open',
@@ -50,6 +52,7 @@ const AccessibleMinimodal = (() => {
       this.on = settings.on
       this.animated = false
       this.config = {
+        animationDuration: settings.animationDuration,
         triggers: settings.triggers,
         disableScroll: settings.disableScroll,
         focus: settings.focus,
@@ -118,8 +121,7 @@ const AccessibleMinimodal = (() => {
     }
 
     openModal (modalId, openingNode, preventMultiple = false) {
-      const animationDuration = this.getAnimationDuration()
-      const timeout = this.modal ? animationDuration : 0
+      const timeout = this.modal ? this.config.animationDuration : 0
       if (this.modal) {
         const parentModalId = this.modal.id
         this.closeModal(this.modal.id, false, true)
@@ -132,7 +134,8 @@ const AccessibleMinimodal = (() => {
         this.animated = true
         this.openingNode = openingNode
         if (!this.backFocusNode) this.backFocusNode = openingNode
-        this.on.beforeOpen(this.getInstance())
+        this.on.beforeOpen(this)
+        this.modal.classList.add(this.config.classes.open)
         if (this.config.hash.add) {
           window.history.replaceState('', document.title, '#' + modalId)
         }
@@ -153,8 +156,9 @@ const AccessibleMinimodal = (() => {
             if (!focusableNodes) return
             focusableNodes[0].focus()
           }
-          this.on.afterOpen(this.getInstance())
-        }, animationDuration)
+          this.on.afterOpen(this)
+          this.modal.classList.remove(this.config.classes.open)
+        }, this.config.animationDuration)
       }, timeout)
     }
 
@@ -163,7 +167,8 @@ const AccessibleMinimodal = (() => {
       if (!modal) return
       if (this.animated) return
       this.animated = true
-      this.on.beforeClose(this.getInstance())
+      this.on.beforeClose(this)
+      modal.classList.add(this.config.classes.close)
       document.removeEventListener('keydown', this.onKeydown)
       modal.classList.remove(this.config.classes.active)
       modal.setAttribute('aria-hidden', true)
@@ -179,29 +184,17 @@ const AccessibleMinimodal = (() => {
           html.style.paddingRight = style.html.paddingRight
           document.body.style.overflowY = style.body.overflowY
         }
-        this.on.afterClose(this.getInstance())
+        this.on.afterClose(this)
+        modal.classList.remove(this.config.classes.close)
         this.modal = null
         if (changeBackFocus && this.backFocusNode && this.config.focus) {
           this.backFocusNode.focus()
           this.backFocusNode = null
         }
-      }, this.getAnimationDuration())
+      }, this.config.animationDuration)
       if (this.config.multiple && !preventMultiple) {
         const parentModalId = this.modals.pop()
-        console.log(parentModalId)
         this.openModal(parentModalId, false, true)
-      }
-    }
-
-    getAnimationDuration () {
-      return settings.style.use ? settings.style.animationDuration : 0
-    }
-
-    getInstance () {
-      return {
-        modal: this.modal,
-        openingNode: this.openingNode,
-        backFocusNode: this.backFocusNode
       }
     }
 
@@ -240,8 +233,8 @@ const AccessibleMinimodal = (() => {
       const active = this.config.classes.active
       const close = this.config.triggers.close
       const margin = getMargin(this.config.style.valign)
-      const transform = getTransform(this.config.style.openAnimation)
-      const animationDuration = this.getAnimationDuration()
+      const transform = getTransform(this.config.style.animation)
+      const animationDuration = this.config.animationDuration
       const style =
 `
 .${modal} {
@@ -317,8 +310,8 @@ transform: rotate(-45deg);
       document.querySelectorAll('.' + this.config.classes.modal).forEach(el => {
         el.style.display = 'block'
       })
-      function getTransform (openAnimation) {
-        switch (openAnimation) {
+      function getTransform (animation) {
+        switch (animation) {
           case 'from-top': return 'translateY(-20px)'
           case 'from-left': return 'translateX(-20px)'
           case 'from-right': return 'translateX(20px)'

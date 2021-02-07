@@ -7,7 +7,9 @@ const modal = AccessibleMinimodal.init({
     width: 400,
     openAnimation: 'from-left'
   },
-  on: {}
+  on: {
+    beforeOpen: (ins) => console.log(ins)
+  }
 })
 
 console.log(modal)

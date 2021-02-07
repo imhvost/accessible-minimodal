@@ -44,11 +44,14 @@ Modal:
 ### js
 ```js
 const modal = AccessibleMinimodal.init({
+  animationDuration: 400,
   classes: {
     modal: 'modal',
     wrapp: 'modal-wrapp',
     body: 'modal-body',
-    active: 'active'
+    active: 'active',
+    open: 'open',
+    close: 'close'
   },
   disableScroll: true,
   focus: true,
@@ -69,8 +72,7 @@ const modal = AccessibleMinimodal.init({
     use: true,
     width: 400,
     valign: 'center', // center, top, bottom
-    openAnimation: 'from-bottom', // from-bottom, from-top, from-left, from-right, zoom-in, zoom-out, fade
-    animationDuration: 400
+    animation: 'from-bottom', // from-bottom, from-top, from-left, from-right, zoom-in, zoom-out, fade
   },
   triggers: {
     open: 'data-modal-open',

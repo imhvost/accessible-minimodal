@@ -110,7 +110,7 @@ const AccessibleMinimodal = (() => {
         })
       }
       if (this.config.outsideClose) {
-        const outsideCloseNode = document.querySelector('.' + this.config.classes.wrapp)
+        const outsideCloseNode = document.querySelectorAll('.' + this.config.classes.wrapp)
         if (outsideCloseNode) {
           outsideCloseNode.forEach(el => {
             el.addEventListener('click', event => {

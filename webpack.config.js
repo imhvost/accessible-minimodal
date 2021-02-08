@@ -1,4 +1,5 @@
 const NODE_ENV = process.env.NODE_ENV
+const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LessPluginAutoPrefix = require('less-plugin-autoprefix')
@@ -7,6 +8,8 @@ const autoprefix = new LessPluginAutoPrefix({
 })
 const LessPluginCleanCSS = require('less-plugin-clean-css')
 const cleanCSSPlugin = new LessPluginCleanCSS({ advanced: true })
+const PACKAGE = require('./package.json')
+const banner = PACKAGE.name + ' v' + PACKAGE.version + '\n' + PACKAGE.repository.url.replace('git+', '') + '\n'
 
 module.exports = {
   mode: NODE_ENV === 'development' ? 'development' : 'production',
@@ -62,6 +65,7 @@ module.exports = {
       filename: 'index.html',
       template: './src/index.html',
       inject: true
-    })
+    }),
+    new webpack.BannerPlugin(banner)
   ]
 }

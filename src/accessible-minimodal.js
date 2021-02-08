@@ -217,11 +217,11 @@ const AccessibleMinimodal = (() => {
       const firstNode = focusableNodes[0]
       const lastNode = focusableNodes[focusableNodes.length - 1]
       if (event.shiftKey) {
-        if (event.currentTarget === firstNode) {
+        if (event.target === firstNode) {
           lastNode.focus()
           event.preventDefault()
         }
-      } else if (event.currentTarget === lastNode) {
+      } else if (event.target === lastNode) {
         firstNode.focus()
         event.preventDefault()
       }

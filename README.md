@@ -7,11 +7,11 @@ https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 ```
 npm install accessible-minimodal --save
 ```
-or include scripts
+###or include scripts
 ```html
 <script src="accessible-minimodal.min.js"></script>
 ```
-### html
+## html
 Open button:
 ```html
 <button id="modal-open-btn-1" data-modal-open="modal-1">Open Modal 1</button>
@@ -41,7 +41,7 @@ Modal:
   </div>
 </div>
 ```
-### js
+## js
 ```js
 const modal = AccessibleMinimodal.init({
   animationDuration: 400,
@@ -78,5 +78,31 @@ const modal = AccessibleMinimodal.init({
     open: 'data-modal-open',
     close: 'data-modal-close'
   }
+})
+```
+## methods
+### open by id
+```js
+modal.openModal('my-modal')
+```
+### close by id
+```js
+modal.closeModal('my-modal')
+```
+### close all
+```js
+modal.closeModal()
+```
+### get scrollbar width
+Example of preventing displacement of position:fixed elements when scrolling is disabled:
+```js
+const modal = AccessibleMinimodal.init({
+	on: {
+		beforeOpen: modal => {
+      const scrollbarWidth = modal.getScrollbarWidth()
+      document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`
+    },
+		afterClose: () => document.querySelector('.header').style.marginRight = 0
+	}
 })
 ```

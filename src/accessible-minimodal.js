@@ -115,7 +115,7 @@ const AccessibleMinimodal = (() => {
           outsideCloseNode.forEach(el => {
             el.addEventListener('click', event => {
               if (!event.target.classList.contains(this.config.classes.wrapp)) return
-              if (this.modal) this.closeModal()
+              if (this.modal) this.closeModal(this.modal.id)
             })
           })
         }
@@ -165,7 +165,7 @@ const AccessibleMinimodal = (() => {
     }
 
     closeModal (modalId, changeBackFocus = true, preventMultiple = false) {
-      const modal = this.modal || document.getElementById(modalId)
+      const modal = modalId ? document.getElementById(modalId) : this.modal
       if (!modal) return
       if (this.animated) return
       this.animated = true

@@ -103,6 +103,6 @@ const modal = AccessibleMinimodal.init({
       document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`
     },
     afterClose: () => document.querySelector('.header').style.marginRight = 0
-	}
+  }
 })
 ```

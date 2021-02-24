@@ -97,12 +97,12 @@ modal.closeModal()
 Example of preventing displacement of position:fixed elements when scrolling is disabled:
 ```js
 const modal = AccessibleMinimodal.init({
-	on: {
-		beforeOpen: modal => {
+  on: {
+    beforeOpen: modal => {
       const scrollbarWidth = modal.getScrollbarWidth()
       document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`
     },
-		afterClose: () => document.querySelector('.header').style.marginRight = 0
+    afterClose: () => document.querySelector('.header').style.marginRight = 0
 	}
 })
 ```

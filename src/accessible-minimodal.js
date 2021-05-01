@@ -333,7 +333,7 @@ transform: rotate(-45deg);
     }
   }
   const init = config => {
-    const insideObjects = ['style', 'on', 'triggers', 'hash']
+    const insideObjects = ['style', 'on', 'triggers', 'hash', 'classes']
     insideObjects.forEach(name => {
       if (config && config[name]) {
         config[name] = Object.assign({}, settings[name], config[name])

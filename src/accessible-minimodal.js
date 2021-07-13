@@ -201,7 +201,7 @@ const AccessibleMinimodal = (() => {
     }
 
     getScrollbarWidth () {
-      return window.innerWidth - document.documentElement.clientWidth
+      return window.screen.width - document.documentElement.clientWidth
     }
 
     onKeydown (event) {

@@ -89,37 +89,22 @@ const AccessibleMinimodal = (() => {
     }
 
     registerTriggers () {
-      const openingNodes = document.querySelectorAll(`[${this.config.triggers.open}]`)
-      const closingNodes = document.querySelectorAll(`[${this.config.triggers.close}]`)
-      if (openingNodes) {
-        openingNodes.forEach(el => {
-          el.addEventListener('click', event => {
-            event.preventDefault()
-            const modalId = event.currentTarget.getAttribute(this.config.triggers.open)
-            this.openModal(modalId, event.currentTarget)
-          })
-        })
-      }
-      if (closingNodes) {
-        closingNodes.forEach(el => {
-          el.addEventListener('click', event => {
-            event.preventDefault()
-            const modalId = event.currentTarget.getAttribute(this.config.triggers.close)
-            if (this.modal) this.closeModal(modalId)
-          })
-        })
-      }
-      if (this.config.outsideClose) {
-        const outsideCloseNode = document.querySelectorAll('.' + this.config.classes.wrapp)
-        if (outsideCloseNode) {
-          outsideCloseNode.forEach(el => {
-            el.addEventListener('click', event => {
-              if (!event.target.classList.contains(this.config.classes.wrapp)) return
-              if (this.modal) this.closeModal(this.modal.id)
-            })
-          })
+      document.addEventListener('click', event => {
+        if (event.target.getAttribute(this.config.triggers.open)) {
+          event.preventDefault()
+          const modalId = event.target.getAttribute(this.config.triggers.open)
+          this.openModal(modalId, event.target)
         }
-      }
+        if (event.target.getAttribute(this.config.triggers.close) !== null) {
+          event.preventDefault()
+          const modalId = event.target.getAttribute(this.config.triggers.close)
+          if (this.modal) this.closeModal(modalId)
+        }
+        if (this.config.outsideClose && event.target.classList.contains(this.config.classes.wrapp)) {
+          event.preventDefault()
+          if (this.modal) this.closeModal(this.modal.id)
+        }
+      }, false)
     }
 
     openModal (modalId, openingNode, preventMultiple = false) {

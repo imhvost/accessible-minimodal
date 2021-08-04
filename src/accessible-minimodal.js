@@ -90,7 +90,6 @@ const AccessibleMinimodal = (() => {
 
     registerTriggers () {
       document.addEventListener('click', event => {
-        console.log(event.currentTarget)
         if (event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)) {
           event.preventDefault()
           const modalId = event.target.getAttribute(this.config.triggers.open)

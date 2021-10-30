@@ -90,19 +90,17 @@ const AccessibleMinimodal = (() => {
 
     registerTriggers () {
       document.addEventListener('click', event => {
+        event.preventDefault()
         if (event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)) {
-          event.preventDefault()
-          const openingNode = event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)
+          const openingNode = event.target.getAttribute(this.config.triggers.open) ? event.target : event.target.closest(`[${this.config.triggers.open}]`)
           const modalId = openingNode.getAttribute(this.config.triggers.open)
           this.openModal(modalId, openingNode)
         }
         if (event.target.getAttribute(this.config.triggers.close) !== null || event.target.closest(`[${this.config.triggers.close}]`)) {
-          event.preventDefault()
           const modalId = event.target.getAttribute(this.config.triggers.close) || event.target.closest(`[${this.config.triggers.close}]`).getAttribute(this.config.triggers.close)
           if (this.modal) this.closeModal(modalId)
         }
         if (this.config.outsideClose && event.target.classList.contains(this.config.classes.wrapp)) {
-          event.preventDefault()
           if (this.modal) this.closeModal(this.modal.id)
         }
       }, false)

@@ -92,8 +92,9 @@ const AccessibleMinimodal = (() => {
       document.addEventListener('click', event => {
         if (event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)) {
           event.preventDefault()
-          const modalId = event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`).getAttribute(this.config.triggers.open)
-          this.openModal(modalId, event.target)
+          const openingNode = event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)
+          const modalId = openingNode.getAttribute(this.config.triggers.open)
+          this.openModal(modalId, openingNode)
         }
         if (event.target.getAttribute(this.config.triggers.close) !== null || event.target.closest(`[${this.config.triggers.close}]`)) {
           event.preventDefault()

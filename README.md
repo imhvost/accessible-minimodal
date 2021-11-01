@@ -18,24 +18,10 @@ Open button:
 ```
 Modal:
 ```html
-<div 
-  id="modal-1"
-  aria-hidden="true"
-  class="modal"
-  style="display:none;">
-  <div
-    tabindex="-1" 
-    class="modal-wrapp">
-    <div 
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-open-btn-1"
-      class="modal-body">
-      <button
-        type="button"
-        class="modal-close-btn"
-        aria-label="Close Modal"
-        data-modal-close></button>
+<div id="modal-1" aria-hidden="true" class="modal" style="display:none;">
+  <div tabindex="-1" class="modal-wrapp">
+    <div role="dialog" aria-modal="true" aria-labelledby="modal-open-btn-1" class="modal-body">
+      <button type="button" class="modal-close-btn" aria-label="Close Modal" data-modal-close></button>
         Modal content
     </div>
   </div>
@@ -77,24 +63,29 @@ const modal = AccessibleMinimodal.init({
   },
   triggers: {
     open: 'data-modal-open',
-    close: 'data-modal-close'
+    close: 'data-modal-close',
+    closeAll: 'data-modal-close-all'
   }
 })
 ```
 ## methods
-### open by id
+### Open by id
 ```js
 modal.openModal('my-modal')
 ```
-### close by id
+### Close by id
 ```js
 modal.closeModal('my-modal')
 ```
-### close all
+### Close current
 ```js
 modal.closeModal()
 ```
-### get scrollbar width
+### Close all
+```js
+modal.closeAllModals()
+```
+### Get scrollbar width
 Example of preventing displacement of position:fixed elements when scrolling is disabled:
 ```js
 const modal = AccessibleMinimodal.init({

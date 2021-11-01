@@ -42,7 +42,8 @@ const AccessibleMinimodal = (() => {
     },
     triggers: {
       open: 'data-modal-open',
-      close: 'data-modal-close'
+      close: 'data-modal-close',
+      closeAll: 'data-modal-close-all'
     }
   }
   class MiniModal {
@@ -92,6 +93,10 @@ const AccessibleMinimodal = (() => {
 
     registerTriggers () {
       document.addEventListener('click', event => {
+        if (event.target.getAttribute(this.config.triggers.closeAll) !== null || event.target.closest(`[${this.config.triggers.closeAll}]`)) {
+          event.preventDefault()
+          this.closeAllModals()
+        }
         if (event.target.getAttribute(this.config.triggers.open) || event.target.closest(`[${this.config.triggers.open}]`)) {
           event.preventDefault()
           const openingNode = event.target.getAttribute(this.config.triggers.open) ? event.target : event.target.closest(`[${this.config.triggers.open}]`)
@@ -129,10 +134,10 @@ const AccessibleMinimodal = (() => {
         this.modal = document.getElementById(modalId)
         if (!this.modal) return
         if (this.animated) return
+        this.on.beforeOpen(this)
         this.animated = true
         this.openingNode = openingNode
         if (!this.backFocusNode) this.backFocusNode = openingNode
-        this.on.beforeOpen(this)
         this.modal.classList.add(this.config.classes.open)
         if (this.config.hash.add) {
           window.history.replaceState('', document.title, '#' + modalId)
@@ -160,10 +165,10 @@ const AccessibleMinimodal = (() => {
       }, timeout)
     }
 
-    closeModal (modalId, changeBackFocus = true, preventMultiple = false) {
+    closeModal (modalId, changeBackFocus = true, preventMultiple = false, closeAll = false) {
       const modal = modalId ? document.getElementById(modalId) : this.modal
       if (!modal) return
-      if (this.animated) return
+      if (this.animated && !closeAll) return
       this.animated = true
       this.on.beforeClose(this)
       modal.classList.add(this.config.classes.close)
@@ -190,10 +195,22 @@ const AccessibleMinimodal = (() => {
           this.backFocusNode = null
         }
       }, this.config.animationDuration)
-      if (this.config.multiple && !preventMultiple) {
+      if (this.config.multiple && !preventMultiple && !closeAll) {
         const parentModalId = this.modals.pop()
         this.openModal(parentModalId, false, true)
       }
+    }
+
+    closeAllModals () {
+      if (this.config.multiple && !this.config.multipleClosePrev) {
+        if (this.modals) {
+          this.modals.forEach(modalId => {
+            this.closeModal(modalId, false, true, true)
+          })
+          this.modals = []
+        }
+      }
+      this.closeModal(false, false, false, true)
     }
 
     getScrollbarWidth () {

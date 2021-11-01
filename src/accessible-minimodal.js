@@ -26,6 +26,7 @@ const AccessibleMinimodal = (() => {
       remove: false
     },
     multiple: false,
+    multipleClosePrev: true,
     on: {
       beforeOpen: function (instance) {},
       afterOpen: function (instance) {},
@@ -60,7 +61,8 @@ const AccessibleMinimodal = (() => {
         style: settings.style,
         classes: settings.classes,
         outsideClose: settings.outsideClose,
-        multiple: settings.multiple
+        multiple: settings.multiple,
+        multipleClosePrev: settings.multipleClosePrev
       }
       this.modals = []
       this.onKeydown = this.onKeydown.bind(this)
@@ -109,11 +111,19 @@ const AccessibleMinimodal = (() => {
     }
 
     openModal (modalId, openingNode, preventMultiple = false) {
-      const timeout = this.modal ? this.config.animationDuration : 0
+      let timeout = this.modal ? this.config.animationDuration : 0
       if (this.modal) {
         const parentModalId = this.modal.id
-        this.closeModal(this.modal.id, false, true)
-        if (this.config.multiple && !preventMultiple) this.modals.push(parentModalId)
+        if (this.config.multiple && !preventMultiple) {
+          if (this.config.multipleClosePrev) {
+            this.closeModal(this.modal.id, false, true)
+          } else {
+            timeout = 0
+          }
+          this.modals.push(parentModalId)
+        } else {
+          this.closeModal(this.modal.id, false, true)
+        }
       }
       setTimeout(() => {
         this.modal = document.getElementById(modalId)

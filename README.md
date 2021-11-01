@@ -7,7 +7,7 @@ https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 ```
 npm install accessible-minimodal --save
 ```
-###or include scripts
+### or include scripts
 ```html
 <script src="accessible-minimodal.min.js"></script>
 ```
@@ -61,6 +61,7 @@ const modal = AccessibleMinimodal.init({
     remove: true
   },
   multiple: false,
+  multipleClosePrev: true,
   on: {
     beforeOpen: function (instance) {},
     afterOpen: function (instance) {},

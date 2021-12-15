@@ -108,7 +108,7 @@ const AccessibleMinimodal = (() => {
           const modalId = event.target.getAttribute(this.config.triggers.close) || event.target.closest(`[${this.config.triggers.close}]`).getAttribute(this.config.triggers.close)
           if (this.modal) this.closeModal(modalId)
         }
-        if (this.config.outsideClose && event.target.classList.contains(this.config.classes.wrapp)) {
+        if (this.config.outsideClose && event.target.classList.contains(this.config.classes.wrapp) && document.activeElement.classList.contains(this.config.classes.wrapp)) {
           event.preventDefault()
           if (this.modal) this.closeModal(this.modal.id)
         }

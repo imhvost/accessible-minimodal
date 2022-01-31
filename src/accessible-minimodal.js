@@ -134,10 +134,10 @@ const AccessibleMinimodal = (() => {
         this.modal = document.getElementById(modalId)
         if (!this.modal) return
         if (this.animated) return
-        this.on.beforeOpen(this)
         this.animated = true
         this.openingNode = openingNode
         if (!this.backFocusNode) this.backFocusNode = openingNode
+        this.on.beforeOpen(this)
         this.modal.classList.add(this.config.classes.open)
         if (this.config.hash.add) {
           window.history.replaceState('', document.title, '#' + modalId)

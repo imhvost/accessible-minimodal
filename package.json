@@ -1,6 +1,6 @@
 {
   "name": "accessible-minimodal",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Accessible, lightweight, stylish modal library in pure JavaScript",
   "main": "./dist/accessible-minimodal.min.js",
   "files": [

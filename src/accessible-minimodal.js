@@ -156,8 +156,9 @@ const AccessibleMinimodal = (() => {
           document.addEventListener('keydown', this.onKeydown)
           if (this.config.focus) {
             const focusableNodes = this.modal.querySelectorAll(FOCUSABLE_SELECTOR)
-            if (!focusableNodes) return
-            focusableNodes[0].focus()
+            if (focusableNodes.lenght) {
+              focusableNodes[0].focus()
+            }
           }
           this.on.afterOpen(this)
           this.modal.classList.remove(this.config.classes.open)
@@ -191,7 +192,9 @@ const AccessibleMinimodal = (() => {
         modal.classList.remove(this.config.classes.close)
         this.modal = null
         if (changeBackFocus && this.backFocusNode && this.config.focus) {
-          this.backFocusNode.focus()
+          if (this.backFocusNode) {
+            this.backFocusNode.focus()
+          }
           this.backFocusNode = null
         }
       }, this.config.animationDuration)
@@ -231,11 +234,15 @@ const AccessibleMinimodal = (() => {
       const lastNode = focusableNodes[focusableNodes.length - 1]
       if (event.shiftKey) {
         if (event.target === firstNode) {
-          lastNode.focus()
+          if (lastNode) {
+            lastNode.focus()
+          }
           event.preventDefault()
         }
       } else if (event.target === lastNode) {
-        firstNode.focus()
+        if (firstNode) {
+          firstNode.focus()
+        }
         event.preventDefault()
       }
     }

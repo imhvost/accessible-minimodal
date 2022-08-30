@@ -366,5 +366,8 @@ transform: rotate(-45deg);
   return { init }
 })()
 
-export { AccessibleMinimodal }
-window.AccessibleMinimodal = AccessibleMinimodal
+export default AccessibleMinimodal
+
+if (typeof window !== 'undefined') {
+  window.AccessibleMinimodal = AccessibleMinimodal
+}

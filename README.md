@@ -7,6 +7,10 @@ https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 ```
 npm install accessible-minimodal --save
 ```
+### import modal
+```js
+import AccessibleMinimodal from 'accessible-minimodal';
+```
 ### or include scripts
 ```html
 <script src="accessible-minimodal.min.js"></script>

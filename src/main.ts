@@ -1,4 +1,5 @@
-import { settingsDefault, AccessibleMinimodalSettings } from './settings';
+import { settingsDefault } from './settings';
+import type { AccessibleMinimodalSettings } from './settings';
 import { buildStyle } from './style';
 
 export default class AccessibleMinimodal {

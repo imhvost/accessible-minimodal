@@ -82,7 +82,7 @@ const modal = new AccessibleMinimodal({
   },
 })
 ```
-## methods
+## Methods
 ### Open by id
 ```js
 modal.openModal('my-modal')
@@ -102,13 +102,13 @@ modal.closeAllModals()
 ### Get scrollbar width
 Example of preventing displacement of position:fixed elements when scrolling is disabled:
 ```js
-const modal = AccessibleMinimodal.init({
+const modal = new AccessibleMinimodal({
   on: {
-    beforeOpen: modal => {
-      const scrollbarWidth = modal.getScrollbarWidth()
-      document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`
+    beforeOpen: instance => {
+      const scrollbarWidth = instance.getScrollbarWidth();
+      document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`;
     },
-    afterClose: () => document.querySelector('.header').style.marginRight = 0
+    afterClose: () => document.querySelector('.header').style.removeProperty('margin-right')l
   }
 })
 ```

@@ -30,20 +30,7 @@ Modal:
 ```
 ## js
 ```js
-const modal = AccessibleMinimodal.init({
-  animationDuration?: number;
-  classes?: Classes;
-  disableScroll?: boolean;
-  focus?: Focus;
-  hash?: Hash;
-  multiple?: Multiple;
-  on?: On;
-  outsideClose?: boolean;
-  style?: Style;
-  triggersAttrs?: TriggersAttrs;
-}
-
-const settingsDefault: AccessibleMinimodalSettings = {
+const modal = new AccessibleMinimodal({
   animationDuration: 400,
   classes: {
     modal: 'modal',
@@ -95,7 +82,7 @@ const settingsDefault: AccessibleMinimodalSettings = {
   },
 })
 ```
-## Methods
+## methods
 ### Open by id
 ```js
 modal.openModal('my-modal')

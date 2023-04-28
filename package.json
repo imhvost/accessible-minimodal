@@ -1,6 +1,22 @@
 {
   "name": "accessible-minimodal",
   "version": "2.0.0",
+  "description": "Accessible, lightweight, stylish modal library in JavaScript / TypeScript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imhvost/accessible-minimodal"
+  },
+  "keywords": [
+    "modal",
+    "dialog",
+    "accessible",
+    "pure",
+    "stylish",
+    "typescript modal",
+    "multiple modal"
+  ],
+  "author": "imhvost",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/accessible-minimodal.umd.cjs",
   "module": "./dist/accessible-minimodal.js",

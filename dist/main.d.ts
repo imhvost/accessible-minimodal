@@ -1,4 +1,4 @@
-import { AccessibleMinimodalSettings } from './settings';
+import type { AccessibleMinimodalSettings } from './settings';
 export default class AccessibleMinimodal {
     config: AccessibleMinimodalSettings;
     modal: HTMLElement | null;

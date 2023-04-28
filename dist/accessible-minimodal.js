@@ -1,7 +1,7 @@
 var x = Object.defineProperty;
 var B = (n, t, i) => t in n ? x(n, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : n[t] = i;
 var p = (n, t, i) => (B(n, typeof t != "symbol" ? t + "" : t, i), i);
-const S = {
+const $ = {
   animationDuration: 400,
   classes: {
     modal: "modal",
@@ -168,7 +168,7 @@ const S = {
 `.replace(/\s*([:;,{}])\s*/g, "$1");
 };
 class k {
-  constructor(t) {
+  constructor(t = $) {
     p(this, "config");
     p(this, "modal");
     p(this, "openBtn");
@@ -192,9 +192,9 @@ class k {
         };
       }
     }
-    this.config = Object.assign({}, S, t), Object.keys(t).map((i) => {
+    this.config = Object.assign({}, $, t), Object.keys(t).map((i) => {
       const e = i;
-      typeof t[e] == "object" && (this.config[e] = Object.assign({}, S[e], t[e]));
+      typeof t[e] == "object" && (this.config[e] = Object.assign({}, $[e], t[e]));
     }), this.modal = null, this.openBtn = null, this.modals = [], this.focusBtns = [], this.animated = !1, this.init(), this.addTriggers();
   }
   init() {
@@ -235,7 +235,7 @@ class k {
         u.style.overflow = "hidden", u.style.paddingInlineEnd = `${g}px`, b.style.overflow = "hidden";
       }
       (h = this.modal) == null || h.classList.add(((r = this.config.classes) == null ? void 0 : r.active) ?? ""), (m = this.modal) == null || m.setAttribute("aria-hidden", "false"), setTimeout(() => {
-        var g, u, b, f, y, $;
+        var g, u, b, f, y, S;
         if (document.addEventListener("keydown", this.onKeydown.bind(this)), (g = this.config.focus) != null && g.use && this.config.focus.selectors) {
           const w = (u = this.modal) == null ? void 0 : u.querySelectorAll(
             this.config.focus.selectors.join(", ")
@@ -247,7 +247,7 @@ class k {
             ) && w.length > 1 && (v = w[1]), v == null || v.focus();
           }
         }
-        (y = this.modal) == null || y.classList.remove(((f = this.config.classes) == null ? void 0 : f.open) ?? ""), this.animated = !1, ($ = this.config.on) != null && $.afterOpen && this.config.on.afterOpen(this);
+        (y = this.modal) == null || y.classList.remove(((f = this.config.classes) == null ? void 0 : f.open) ?? ""), this.animated = !1, (S = this.config.on) != null && S.afterOpen && this.config.on.afterOpen(this);
       }, this.config.animationDuration);
     }, e);
   }
@@ -322,5 +322,5 @@ class k {
   }
 }
 export {
-  k as test
+  k as AccessibleMinimodal
 };

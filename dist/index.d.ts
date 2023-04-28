@@ -1,1 +1,1 @@
-export { default as test } from './main';
+export { default as AccessibleMinimodal } from './main';

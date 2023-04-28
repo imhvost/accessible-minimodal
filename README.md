@@ -1,34 +1,60 @@
 # accessible-minimodal
+
 Accessible, lightweight (**< 4 kB gzip**), stylish modal library in JavaScript (TypeScript)
+
 ## Example
+
 https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
+
 ## Install
+
 ### With npm
+
 ```
 npm install accessible-minimodal --save
 ```
+
 ### Or include scripts
+
 ```html
 <script src="accessible-minimodal.min.js"></script>
 ```
+
 ---
+
 ## Your html
+
 Open button:
+
 ```html
 <button id="modal-open-btn-1" data-modal-open="modal-1">Open Modal 1</button>
 ```
+
 Modal:
+
 ```html
 <div id="modal-1" aria-hidden="true" class="modal" style="display:none;">
   <div tabindex="-1" class="modal-wrapp">
-    <div role="dialog" aria-modal="true" aria-labelledby="modal-open-btn-1" class="modal-body">
-      <button type="button" class="modal-close-btn" aria-label="Close Modal" data-modal-close></button>
-        Modal content
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-open-btn-1"
+      class="modal-body"
+    >
+      <button
+        type="button"
+        class="modal-close-btn"
+        aria-label="Close Modal"
+        data-modal-close
+      ></button>
+      Modal content
     </div>
   </div>
 </div>
 ```
+
 ## js
+
 ```js
 const modal = new AccessibleMinimodal({
   animationDuration: 400,
@@ -80,27 +106,39 @@ const modal = new AccessibleMinimodal({
     close: 'data-modal-close',
     closeAll: 'data-modal-close-all',
   },
-})
+});
 ```
+
 ## Methods
+
 ### Open by id
+
 ```js
-modal.openModal('my-modal')
+modal.openModal('my-modal');
 ```
+
 ### Close by id
+
 ```js
-modal.closeModal('my-modal')
+modal.closeModal('my-modal');
 ```
+
 ### Close current
+
 ```js
-modal.closeModal()
+modal.closeModal();
 ```
+
 ### Close all
+
 ```js
-modal.closeAllModals()
+modal.closeAllModals();
 ```
+
 ### Get scrollbar width
+
 Example of preventing displacement of position:fixed elements when scrolling is disabled:
+
 ```js
 const modal = new AccessibleMinimodal({
   on: {

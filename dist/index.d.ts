@@ -1,1 +1,2 @@
-export { default as AccessibleMinimodal } from './main';
+import AccessibleMinimodal from './main';
+export default AccessibleMinimodal;

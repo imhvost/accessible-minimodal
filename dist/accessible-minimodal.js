@@ -208,8 +208,8 @@ class k {
     document.addEventListener("click", (t) => {
       var e, s, o, a, l, c, d;
       const i = (r) => {
-        const h = t.target;
-        return h.getAttribute(r) ? h : h.closest(`[${r}]`);
+        const f = t.target;
+        return f.getAttribute(r) ? f : f.closest(`[${r}]`);
       };
       if (this.openBtn = i(((e = this.config.triggersAttrs) == null ? void 0 : e.open) ?? ""), this.openBtn && (t.preventDefault(), this.modal = document.getElementById(
         this.openBtn.getAttribute(((s = this.config.triggersAttrs) == null ? void 0 : s.open) ?? "") ?? ""
@@ -229,13 +229,13 @@ class k {
     }
     let e = 0;
     (s = this.config.multiple) != null && s.use ? (this.modals.length && document.removeEventListener("keydown", this.onKeydown), this.config.multiple.closePrevModal && this.modals.length && (this.closeModal(this.modals[this.modals.length - 1], !1), i && (e = this.config.animationDuration ?? 0))) : this.modals.length && (this.closeModal(this.modals[this.modals.length - 1]), i && (e = this.config.animationDuration ?? 0)), setTimeout(() => {
-      var o, a, l, c, d, r, h, m;
+      var o, a, l, c, d, r, f, m;
       if (this.animated = !0, (o = this.config.on) != null && o.beforeOpen && this.config.on.beforeOpen(this), (l = this.modal) == null || l.classList.add(((a = this.config.classes) == null ? void 0 : a.open) ?? ""), this.modal && this.modals.push(this.modal), (c = this.config.hash) != null && c.add && ((d = this.modal) != null && d.id) && window.history.replaceState("", location.href, "#" + this.modal.id), this.config.disableScroll) {
         const g = this.getScrollbarWidth(), u = document.querySelector("html"), b = document.querySelector("body");
         u.style.overflow = "hidden", u.style.paddingInlineEnd = `${g}px`, b.style.overflow = "hidden";
       }
-      (h = this.modal) == null || h.classList.add(((r = this.config.classes) == null ? void 0 : r.active) ?? ""), (m = this.modal) == null || m.setAttribute("aria-hidden", "false"), setTimeout(() => {
-        var g, u, b, f, y, S;
+      (f = this.modal) == null || f.classList.add(((r = this.config.classes) == null ? void 0 : r.active) ?? ""), (m = this.modal) == null || m.setAttribute("aria-hidden", "false"), setTimeout(() => {
+        var g, u, b, h, y, S;
         if (document.addEventListener("keydown", this.onKeydown.bind(this)), (g = this.config.focus) != null && g.use && this.config.focus.selectors) {
           const w = (u = this.modal) == null ? void 0 : u.querySelectorAll(
             this.config.focus.selectors.join(", ")
@@ -247,7 +247,7 @@ class k {
             ) && w.length > 1 && (v = w[1]), v == null || v.focus();
           }
         }
-        (y = this.modal) == null || y.classList.remove(((f = this.config.classes) == null ? void 0 : f.open) ?? ""), this.animated = !1, (S = this.config.on) != null && S.afterOpen && this.config.on.afterOpen(this);
+        (y = this.modal) == null || y.classList.remove(((h = this.config.classes) == null ? void 0 : h.open) ?? ""), this.animated = !1, (S = this.config.on) != null && S.afterOpen && this.config.on.afterOpen(this);
       }, this.config.animationDuration);
     }, e);
   }
@@ -261,24 +261,24 @@ class k {
       this.animated = !1;
       return;
     }
-    const o = this.modals.findIndex((h) => h.isSameNode(s));
+    const o = this.modals.findIndex((f) => f.isSameNode(s));
     i && this.modals.splice(o, 1), (a = this.config.on) != null && a.beforeClose && this.config.on.beforeClose(this), s.classList.add(((l = this.config.classes) == null ? void 0 : l.close) ?? ""), s.classList.remove(((c = this.config.classes) == null ? void 0 : c.active) ?? ""), s.setAttribute("aria-hidden", "true"), document.removeEventListener("keydown", this.onKeydown), (d = this.config.hash) != null && d.remove && window.history.replaceState(
       "",
       location.href,
       location.pathname + location.search
     ), (r = this.config.multiple) != null && r.use && i ? this.modals.length ? this.modal = this.modals[this.modals.length - 1] : this.modal = null : s != null && s.isSameNode(this.modal) && (this.modal = null), setTimeout(() => {
-      var h, m, g, u, b;
-      if (s == null || s.classList.remove(((h = this.config.classes) == null ? void 0 : h.close) ?? ""), this.config.disableScroll && !this.modals.length) {
-        const f = document.querySelector("html"), y = document.querySelector("body");
-        f.style.removeProperty("overflow"), f.style.removeProperty("paddingInlineEnd"), y.style.removeProperty("overflow");
+      var f, m, g, u, b;
+      if (s == null || s.classList.remove(((f = this.config.classes) == null ? void 0 : f.close) ?? ""), this.config.disableScroll && !this.modals.length) {
+        const h = document.querySelector("html"), y = document.querySelector("body");
+        h.style.removeProperty("overflow"), h.style.removeProperty("paddingInlineEnd"), y.style.removeProperty("overflow");
       }
       if (this.animated = !1, (m = this.config.multiple) != null && m.use && ((g = this.config.multiple) != null && g.closePrevModal) && i && !e && this.modals.length && this.openModal(this.modals.pop(), !1), (u = this.config.focus) != null && u.use && this.focusBtns.length)
         if (e) {
-          const f = this.focusBtns.find((y) => y !== null);
-          f && (f.focus(), this.focusBtns = []);
+          const h = this.focusBtns.find((y) => y !== null);
+          h && (h.focus(), this.focusBtns = []);
         } else {
-          const f = this.focusBtns[o];
-          f && (f.focus(), i && this.focusBtns.splice(o, 1));
+          const h = this.focusBtns[o];
+          h && (h.focus(), i && this.focusBtns.splice(o, 1));
         }
       (b = this.config.on) != null && b.afterClose && this.config.on.afterClose(this);
     }, this.config.animationDuration);
@@ -322,5 +322,5 @@ class k {
   }
 }
 export {
-  k as AccessibleMinimodal
+  k as default
 };

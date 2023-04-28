@@ -1,5 +1,5 @@
 import type { AccessibleMinimodalSettings } from './settings';
-export default class AccessibleMinimodal {
+declare class AccessibleMinimodal {
     config: AccessibleMinimodalSettings;
     modal: HTMLElement | null;
     openBtn: HTMLElement | null;
@@ -17,3 +17,4 @@ export default class AccessibleMinimodal {
     protected changeFocus(event: KeyboardEvent): void;
     protected addStyles(): void;
 }
+export default AccessibleMinimodal;

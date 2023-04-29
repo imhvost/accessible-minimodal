@@ -14,12 +14,6 @@ https://codepen.io/imhvost/pen/LYNazqo (with "multiple" option)
 npm install accessible-minimodal --save
 ```
 
-### Or include scripts
-
-```html
-<script src="accessible-minimodal.min.js"></script>
-```
-
 ---
 
 ## Your html
@@ -53,86 +47,116 @@ Modal:
 </div>
 ```
 
+---
+
 ## js
 
 ```js
-const modal = new AccessibleMinimodal({
-  animationDuration: 400,
-  classes: {
-    modal: 'modal',
-    wrapp: 'modal-wrapp',
-    body: 'modal-body',
-    active: 'active',
-    open: 'open',
-    close: 'close',
-  },
-  disableScroll: true,
-  focus: {
-    use: true,
-    selectors: [
-      'button:not([disabled])',
-      '[href]',
-      'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
-      'select:not([disabled]):not([aria-hidden])',
-      'textarea:not([disabled]):not([aria-hidden])',
-      '[tabindex]:not([tabindex="-1"])',
-      '[contenteditable="true"]',
-    ],
-  },
-  hash: {
-    open: false,
-    add: false,
-    remove: false,
-  },
-  multiple: {
-    use: false,
-    closePrevModal: false,
-  },
-  on: {
-    beforeOpen: () => ({}),
-    afterOpen: () => ({}),
-    beforeClose: () => ({}),
-    afterClose: () => ({}),
-  },
-  outsideClose: true,
-  style: {
-    use: false,
-    width: 400,
-    valign: 'center',
-    animation: 'from-bottom',
-  },
-  triggersAttrs: {
-    open: 'data-modal-open',
-    close: 'data-modal-close',
-    closeAll: 'data-modal-close-all',
-  },
-});
+export { AccessibleMinimodal } from 'accessible-minimodal';
+
+const Modal = new AccessibleMinimodal(/* { options } */);
 ```
+
+### Or include scripts
+
+```html
+<script src="accessible-minimodal.umd.js"></script>
+<script>
+  const Modal = new AccessibleMinimoda.AccessibleMinimodal(/* { options } */);
+</script>
+```
+
+---
+
+## Options
+
+```typescript
+{
+  animationDuration?: number; /* defult: 400 */
+  classes?: {
+    modal?: string;  /* defult: modal */
+    wrapp?: string;  /* defult: modal-wrapp */
+    body?: string;   /* defult: modal-body */
+    active?: string; /* defult: active */
+    open?: string;   /* defult: open */
+    close?: string;  /* defult: close */
+  };
+  disableScroll?: boolean; /* defult: true */
+  focus?: {
+    use?: boolean;        /* defult: true */
+    selectors?: string[]; /* defult: [
+                              'button:not([disabled])',
+                              '[href]',
+                              'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+                              'select:not([disabled]):not([aria-hidden])',
+                              'textarea:not([disabled]):not([aria-hidden])',
+                              '[tabindex]:not([tabindex="-1"])',
+                              '[contenteditable="true"]',
+                            ] */
+  };
+  hash?: {
+    open?: boolean;   /* defult: false */
+    add?: boolean;    /* defult: false */
+    remove?: boolean; /* defult: false */
+  };
+  multiple?: {
+    use?: boolean;            /* defult: false */
+    closePrevModal?: boolean; /* defult: false */
+  };
+  on?: {
+    beforeOpen?: (instance?: object) => void;  /* defult: () => ({}) */
+    afterOpen?: (instance?: object) => void;   /* defult: () => ({}) */
+    beforeClose?: (instance?: object) => void; /* defult: () => ({}) */
+    afterClose?: (instance?: object) => void;  /* defult: () => ({}) */
+  };
+  outsideClose?: boolean; /* defult: true */
+  style?: {
+    use?: boolean;   /* defult: false */
+    width?: number;  /* defult: 400 */
+    valign?: string; /* defult: center */
+    animation?:      /* defult: from-bottom */
+      | 'from-bottom'
+      | 'from-top'
+      | 'from-left'
+      | 'from-right'
+      | 'zoom-in'
+      | 'zoom-out'
+      | 'fade';
+  };
+  triggersAttrs?: {
+    open?: string;     /* defult: data-modal-open */
+    close?: string;    /* defult: data-modal-close */
+    closeAll?: string; /* defult: data-modal-close-all */
+  };
+}
+```
+
+---
 
 ## Methods
 
 ### Open by id
 
 ```js
-modal.openModal('my-modal');
+Modal.openModal('my-modal');
 ```
 
 ### Close by id
 
 ```js
-modal.closeModal('my-modal');
+Modal.closeModal('my-modal');
 ```
 
 ### Close current
 
 ```js
-modal.closeModal();
+Modal.closeModal();
 ```
 
 ### Close all
 
 ```js
-modal.closeAllModals();
+Modal.closeAllModals();
 ```
 
 ### Get scrollbar width
@@ -140,7 +164,7 @@ modal.closeAllModals();
 Example of preventing displacement of position:fixed elements when scrolling is disabled:
 
 ```js
-const modal = new AccessibleMinimodal({
+const Modal = new AccessibleMinimodal({
   on: {
     beforeOpen: instance => {
       const scrollbarWidth = instance.getScrollbarWidth();

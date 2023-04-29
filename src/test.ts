@@ -1,4 +1,4 @@
-import AccessibleMinimodal from './main';
+import { AccessibleMinimodal } from './index';
 const Modal = new AccessibleMinimodal({
   animationDuration: undefined,
   on: {

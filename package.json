@@ -1,7 +1,7 @@
 {
   "name": "accessible-minimodal",
-  "version": "2.0.7",
-  "description": "Accessible, lightweight, stylish modal library in JavaScript / TypeScript",
+  "version": "2.0.11",
+  "description": "Accessible, lightweight, stylish modal library in JavaScript (TypeScript)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imhvost/accessible-minimodal"
@@ -18,16 +18,16 @@
   "author": "imhvost",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/accessible-minimodal.umd.cjs",
-  "module": "./dist/accessible-minimodal.js",
+  "main": "./dist/accessible-minimodal.umd.js",
+  "module": "./dist/accessible-minimodal.es.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/accessible-minimodal.js",
-      "require": "./dist/accessible-minimodal.umd.cjs"
+      "import": "./dist/accessible-minimodal.es.js",
+      "require": "./dist/accessible-minimodal.umd.js"
     }
   },
   "scripts": {
@@ -46,7 +46,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.8",
     "typescript": "^4.9.3",
-    "vite": "^4.2.0",
-    "vite-plugin-dts": "^2.2.0"
+    "vite": "^4.2.0"
   }
 }

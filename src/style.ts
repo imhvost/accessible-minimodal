@@ -11,6 +11,7 @@ interface BuildStyleProps {
 
 export const buildStyle = (props: BuildStyleProps) => {
   const { modal, wrapp, body, active, open, close } = props.classNames;
+  const varPrefix = '--accessible-minimodal';
   const getMargin = (valign: string) => {
     switch (valign) {
       case 'top':
@@ -24,11 +25,11 @@ export const buildStyle = (props: BuildStyleProps) => {
   const getTransform = (animation: string) => {
     switch (animation) {
       case 'from-top':
-        return 'translateY( calc(var(--accessible-minimodal-translate) * -1) )';
+        return `translateY( calc(var(${varPrefix}-translate) * -1) )`;
       case 'from-left':
-        return 'translateX( calc(var(--accessible-minimodal-translate) * -1) )';
+        return `translateX( calc(var(${varPrefix}-translate) * -1) )`;
       case 'from-right':
-        return 'translateX(var(--accessible-minimodal-translate))';
+        return `translateX(var(${varPrefix}-translate))`;
       case 'zoom-in':
         return 'scale(.8)';
       case 'zoom-out':
@@ -36,22 +37,22 @@ export const buildStyle = (props: BuildStyleProps) => {
       case 'fade':
         return 'none';
       default:
-        return 'translateY(var(--accessible-minimodal-translate))';
+        return `translateY(var(${varPrefix}l-translate))`;
     }
   };
   const margin = getMargin(props.margin ?? '');
   const transform = getTransform(props.transform ?? '');
   const style = `
 :root{
-  --accessible-minimodal-color: #333;
-  --accessible-minimodal-bg: #fff;
-  --accessible-minimodal-filter: rgba(0, 0, 0, .7);
-  --accessible-minimodal-z-index: 666666;
-  --accessible-minimodal-padding: 40px;
-  --accessible-minimodal-border-radius: 4px;
-  --accessible-minimodal-translate: 20px;
-  --accessible-minimodal-scale-in: .8;
-  --accessible-minimodal-scale-out: 1.2;
+${varPrefix}-color: #333;
+${varPrefix}-bg: #fff;
+${varPrefix}-filter: rgba(0, 0, 0, .7);
+${varPrefix}-z-index: 666666;
+${varPrefix}-padding: 40px;
+${varPrefix}-border-radius: 4px;
+${varPrefix}-translate: 20px;
+${varPrefix}-scale-in: .8;
+${varPrefix}-scale-out: 1.2;
 }
 .${modal} {
   position: fixed;
@@ -59,7 +60,7 @@ export const buildStyle = (props: BuildStyleProps) => {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: var(--accessible-minimodal-z-index);
+  z-index: var(${varPrefix}-z-index);
 }
 .${modal}:not(.${active}) {
   opacity: 0;
@@ -81,29 +82,29 @@ export const buildStyle = (props: BuildStyleProps) => {
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: var(--accessible-minimodal-filter);
-  padding: var(--accessible-minimodal-padding) calc(--accessible-minimodal-padding / 2);
+  background-color: var(${varPrefix}-filter);
+  padding: var(${varPrefix}-padding) calc(${varPrefix}-padding / 2);
   overflow-y: scroll;
 }
 .${body} {
-  background-color: var(--accessible-minimodal-bg);
-  color: var(--accessible-minimodal-color);
+  background-color: var(${varPrefix}-bg);
+  color: var(${varPrefix}-color);
   flex: none;
   min-height: 1px;
-  border-radius: var(--accessible-minimodal-border-radius);
+  border-radius: var(${varPrefix}-border-radius);
   width: ${props.width}px;
   max-width: 100%;
   margin: ${margin};
-  padding: var(--accessible-minimodal-padding);
+  padding: var(${varPrefix}-padding);
   transform: ${transform};
   position: relative;
 }
 .${body} > ${props.closeSelector} {
   position: absolute;
-  right: calc(var(--accessible-minimodal-padding) / 4);
-  top: calc(var(--accessible-minimodal-padding) / 4);
-  width: calc(var(--accessible-minimodal-padding) / 2);
-  height: calc(var(--accessible-minimodal-padding) / 2);
+  right: calc(var(${varPrefix}-padding) / 4);
+  top: calc(var(${varPrefix}-padding) / 4);
+  width: calc(var(${varPrefix}-padding) / 2);
+  height: calc(var(${varPrefix}-padding) / 2);
   border: 0;
   background: none;
   cursor: pointer;

@@ -2,7 +2,7 @@ import { settingsDefault } from './settings';
 import type { AccessibleMinimodalSettings } from './settings';
 import { buildStyle } from './style';
 
- class AccessibleMinimodal {
+export default class AccessibleMinimodal {
   config: AccessibleMinimodalSettings;
   modal: HTMLElement | null;
   openBtn: HTMLElement | null;
@@ -384,5 +384,3 @@ import { buildStyle } from './style';
     });
   }
 }
-
-export default AccessibleMinimodal;

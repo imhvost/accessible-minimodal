@@ -16,7 +16,6 @@ const Modal = new AccessibleMinimodal({
   style: {
     use: true,
     width: undefined,
-    animation: 'zoom-out',
   },
   multiple: {
     use: true,

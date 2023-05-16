@@ -37,11 +37,12 @@ export const buildStyle = (props: BuildStyleProps) => {
       case 'fade':
         return 'none';
       default:
-        return `translateY(var(${varPrefix}l-translate))`;
+        return `translateY(var(${varPrefix}-translate))`;
     }
   };
   const margin = getMargin(props.margin ?? '');
   const transform = getTransform(props.transform ?? '');
+
   const style = `
 :root{
 ${varPrefix}-color: #333;
@@ -73,7 +74,7 @@ ${varPrefix}-scale-out: 1.2;
 }
 .${modal}.open .${body},
 .${modal}.close .${body} {
-  transition: transform 0.4s;
+  transition: transform ${props.animationDuration};
 }
 .${modal}.${active} .${body} {
   transform: none;

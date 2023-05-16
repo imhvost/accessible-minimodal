@@ -2,7 +2,7 @@ import { settingsDefault } from './settings';
 import type { AccessibleMinimodalSettings } from './settings';
 import { buildStyle } from './style';
 
-export default class AccessibleMinimodal {
+export class AccessibleMinimodal {
   config: AccessibleMinimodalSettings;
   modal: HTMLElement | null;
   openBtn: HTMLElement | null;
@@ -151,21 +151,21 @@ export default class AccessibleMinimodal {
 
       this.modal?.classList.add(this.config.classes?.open ?? '');
 
-      if (this.modal) {
-        this.modals.push(this.modal);
-      }
-
-      if (this.config.hash?.add && this.modal?.id) {
-        window.history.replaceState('', location.href, '#' + this.modal.id);
-      }
-
-      if (this.config.disableScroll) {
+      if (this.config.disableScroll && !this.modals.length) {
         const scrollbarWidth = this.getScrollbarWidth();
         const html = document.querySelector('html') as HTMLElement;
         const body = document.querySelector('body') as HTMLElement;
         html.style.overflow = 'hidden';
         html.style.paddingInlineEnd = `${scrollbarWidth}px`;
         body.style.overflow = 'hidden';
+      }
+
+      if (this.modal) {
+        this.modals.push(this.modal);
+      }
+
+      if (this.config.hash?.add && this.modal?.id) {
+        window.history.replaceState('', location.href, '#' + this.modal.id);
       }
 
       this.modal?.classList.add(this.config.classes?.active ?? '');
@@ -272,7 +272,7 @@ export default class AccessibleMinimodal {
         const html = document.querySelector('html') as HTMLElement;
         const body = document.querySelector('body') as HTMLElement;
         html.style.removeProperty('overflow');
-        html.style.removeProperty('paddingInlineEnd');
+        html.style.removeProperty('padding-inline-end');
         body.style.removeProperty('overflow');
       }
 
@@ -315,7 +315,9 @@ export default class AccessibleMinimodal {
   closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach(modal => {
-        this.closeModal(modal, true, true);
+        console.log(modal);
+
+        this.closeModal(modal, false, true);
         this.modals = [];
       });
     }

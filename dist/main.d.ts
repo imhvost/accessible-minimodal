@@ -1,5 +1,5 @@
 import type { AccessibleMinimodalSettings } from './settings';
-export default class AccessibleMinimodal {
+export declare class AccessibleMinimodal {
     config: AccessibleMinimodalSettings;
     modal: HTMLElement | null;
     openBtn: HTMLElement | null;

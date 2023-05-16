@@ -1,7 +1,10 @@
-var x = Object.defineProperty;
-var B = (a, t, o) => t in a ? x(a, t, { enumerable: !0, configurable: !0, writable: !0, value: o }) : a[t] = o;
-var p = (a, t, o) => (B(a, typeof t != "symbol" ? t + "" : t, o), o);
-const w = {
+
+/*!
+* accessible-minimodal v2.0.14
+* https://github.com/imhvost/accessible-minimodal
+*/
+
+const settingsDefault = {
   animationDuration: 400,
   classes: {
     modal: "modal",
@@ -11,9 +14,9 @@ const w = {
     open: "open",
     close: "close"
   },
-  disableScroll: !0,
+  disableScroll: true,
   focus: {
-    use: !0,
+    use: true,
     selectors: [
       "button:not([disabled])",
       "[href]",
@@ -25,13 +28,13 @@ const w = {
     ]
   },
   hash: {
-    open: !1,
-    add: !1,
-    remove: !1
+    open: false,
+    add: false,
+    remove: false
   },
   multiple: {
-    use: !1,
-    closePrevModal: !1
+    use: false,
+    closePrevModal: false
   },
   on: {
     beforeOpen: () => ({}),
@@ -39,9 +42,9 @@ const w = {
     beforeClose: () => ({}),
     afterClose: () => ({})
   },
-  outsideClose: !0,
+  outsideClose: true,
   style: {
-    use: !1,
+    use: false,
     width: 400,
     valign: "center",
     animation: "from-bottom"
@@ -51,9 +54,13 @@ const w = {
     close: "data-modal-close",
     closeAll: "data-modal-close-all"
   }
-}, A = (a) => {
-  const { modal: t, wrapp: o, body: s, active: i, open: n, close: l } = a.classNames, e = "--accessible-minimodal", r = (h) => {
-    switch (h) {
+};
+
+const buildStyle = (props) => {
+  const { modal, wrapp, body, active, open, close } = props.classNames;
+  const varPrefix = "--accessible-minimodal";
+  const getMargin = (valign) => {
+    switch (valign) {
       case "top":
         return "0 auto auto";
       case "bottom":
@@ -61,14 +68,15 @@ const w = {
       default:
         return "auto";
     }
-  }, d = (h) => {
-    switch (h) {
+  };
+  const getTransform = (animation) => {
+    switch (animation) {
       case "from-top":
-        return `translateY( calc(var(${e}-translate) * -1) )`;
+        return `translateY( calc(var(${varPrefix}-translate) * -1) )`;
       case "from-left":
-        return `translateX( calc(var(${e}-translate) * -1) )`;
+        return `translateX( calc(var(${varPrefix}-translate) * -1) )`;
       case "from-right":
-        return `translateX(var(${e}-translate))`;
+        return `translateX(var(${varPrefix}-translate))`;
       case "zoom-in":
         return "scale(.8)";
       case "zoom-out":
@@ -76,79 +84,81 @@ const w = {
       case "fade":
         return "none";
       default:
-        return `translateY(var(${e}l-translate))`;
+        return `translateY(var(${varPrefix}-translate))`;
     }
-  }, c = r(a.margin ?? ""), f = d(a.transform ?? "");
-  return `
+  };
+  const margin = getMargin(props.margin ?? "");
+  const transform = getTransform(props.transform ?? "");
+  const style = `
 :root{
-${e}-color: #333;
-${e}-bg: #fff;
-${e}-filter: rgba(0, 0, 0, .7);
-${e}-z-index: 666666;
-${e}-padding: 40px;
-${e}-border-radius: 4px;
-${e}-translate: 20px;
-${e}-scale-in: .8;
-${e}-scale-out: 1.2;
+${varPrefix}-color: #333;
+${varPrefix}-bg: #fff;
+${varPrefix}-filter: rgba(0, 0, 0, .7);
+${varPrefix}-z-index: 666666;
+${varPrefix}-padding: 40px;
+${varPrefix}-border-radius: 4px;
+${varPrefix}-translate: 20px;
+${varPrefix}-scale-in: .8;
+${varPrefix}-scale-out: 1.2;
 }
-.${t} {
+.${modal} {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: var(${e}-z-index);
+  z-index: var(${varPrefix}-z-index);
 }
-.${t}:not(.${i}) {
+.${modal}:not(.${active}) {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-.${t}.${n},
-.${t}.${l} {
-  transition: opacity ${a.animationDuration}, visibility ${a.animationDuration};
+.${modal}.${open},
+.${modal}.${close} {
+  transition: opacity ${props.animationDuration}, visibility ${props.animationDuration};
 }
-.${t}.open .${s},
-.${t}.close .${s} {
-  transition: transform 0.4s;
+.${modal}.open .${body},
+.${modal}.close .${body} {
+  transition: transform ${props.animationDuration};
 }
-.${t}.${i} .${s} {
+.${modal}.${active} .${body} {
   transform: none;
 }
-.${o} {
+.${wrapp} {
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: var(${e}-filter);
-  padding: var(${e}-padding) calc(${e}-padding / 2);
+  background-color: var(${varPrefix}-filter);
+  padding: var(${varPrefix}-padding) calc(${varPrefix}-padding / 2);
   overflow-y: scroll;
 }
-.${s} {
-  background-color: var(${e}-bg);
-  color: var(${e}-color);
+.${body} {
+  background-color: var(${varPrefix}-bg);
+  color: var(${varPrefix}-color);
   flex: none;
   min-height: 1px;
-  border-radius: var(${e}-border-radius);
-  width: ${a.width}px;
+  border-radius: var(${varPrefix}-border-radius);
+  width: ${props.width}px;
   max-width: 100%;
-  margin: ${c};
-  padding: var(${e}-padding);
-  transform: ${f};
+  margin: ${margin};
+  padding: var(${varPrefix}-padding);
+  transform: ${transform};
   position: relative;
 }
-.${s} > ${a.closeSelector} {
+.${body} > ${props.closeSelector} {
   position: absolute;
-  right: calc(var(${e}-padding) / 4);
-  top: calc(var(${e}-padding) / 4);
-  width: calc(var(${e}-padding) / 2);
-  height: calc(var(${e}-padding) / 2);
+  right: calc(var(${varPrefix}-padding) / 4);
+  top: calc(var(${varPrefix}-padding) / 4);
+  width: calc(var(${varPrefix}-padding) / 2);
+  height: calc(var(${varPrefix}-padding) / 2);
   border: 0;
   background: none;
   cursor: pointer;
   font-size: 0;
 }
-.${s} > ${a.closeSelector}:before,
-.${s} > ${a.closeSelector}:after {
+.${body} > ${props.closeSelector}:before,
+.${body} > ${props.closeSelector}:after {
   content: '';
   position: absolute;
   width: 16px;
@@ -159,168 +169,340 @@ ${e}-scale-out: 1.2;
   background-color: currentColor;
   height: 2px;
 }
-.${s} > ${a.closeSelector}:before {
+.${body} > ${props.closeSelector}:before {
   transform: rotate(45deg);
 }
-.${s} ${a.closeSelector}:after {
+.${body} ${props.closeSelector}:after {
   transform: rotate(-45deg);
 }
-`.replace(/\s*([:;,{}])\s*/g, "$1");
+`;
+  return style.replace(/\s*([:;,{}])\s*/g, "$1");
 };
-class k {
-  constructor(t = w) {
-    p(this, "config");
-    p(this, "modal");
-    p(this, "openBtn");
-    p(this, "modals");
-    p(this, "focusBtns");
-    p(this, "animated");
-    for (const [o, s] of Object.entries(t)) {
-      const i = o;
-      if (s === void 0) {
-        delete t[i];
+
+class AccessibleMinimodal {
+  config;
+  modal;
+  openBtn;
+  modals;
+  focusBtns;
+  animated;
+  constructor(settings = settingsDefault) {
+    for (const [key, value] of Object.entries(settings)) {
+      const key_ = key;
+      if (value === void 0) {
+        delete settings[key_];
         continue;
       }
-      if (typeof s == "object") {
-        const n = { ...s };
-        for (const [l, e] of Object.entries(n)) {
-          const r = l;
-          e === void 0 && delete n[r];
+      if (typeof value === "object") {
+        const value_ = { ...value };
+        for (const [k, v] of Object.entries(value_)) {
+          const k_ = k;
+          if (v === void 0) {
+            delete value_[k_];
+          }
         }
-        t[i] = {
-          ...n
+        settings[key_] = {
+          ...value_
         };
       }
     }
-    this.config = Object.assign({}, w, t), Object.keys(t).map((o) => {
-      const s = o;
-      typeof t[s] == "object" && (this.config[s] = Object.assign({}, w[s], t[s]));
-    }), this.modal = null, this.openBtn = null, this.modals = [], this.focusBtns = [], this.animated = !1, this.init(), this.addTriggers();
+    this.config = Object.assign({}, settingsDefault, settings);
+    Object.keys(settings).map((key) => {
+      const key_ = key;
+      if (typeof settings[key_] === "object") {
+        this.config[key_] = Object.assign({}, settingsDefault[key_], settings[key_]);
+      }
+    });
+    this.modal = null;
+    this.openBtn = null;
+    this.modals = [];
+    this.focusBtns = [];
+    this.animated = false;
+    this.init();
+    this.addTriggers();
   }
   init() {
-    var t, o;
-    if ((t = this.config.style) != null && t.use && this.addStyles(), (o = this.config.hash) != null && o.open) {
-      const s = window.location.hash.substring(1) ?? "";
-      s && (this.modal = document.getElementById(s), this.openModal());
+    if (this.config.style?.use) {
+      this.addStyles();
+    }
+    if (this.config.hash?.open) {
+      const hash = window.location.hash.substring(1) ?? "";
+      if (hash) {
+        this.modal = document.getElementById(hash);
+        this.openModal();
+      }
     }
   }
   addTriggers() {
-    document.addEventListener("click", (t) => {
-      var s, i, n, l, e, r, d;
-      const o = (c) => {
-        const f = t.target;
-        return f.getAttribute(c) ? f : f.closest(`[${c}]`);
+    document.addEventListener("click", (event) => {
+      const getTriggerNode = (triggerAttr) => {
+        const target = event.target;
+        if (target.getAttribute(triggerAttr)) {
+          return target;
+        }
+        return target.closest(`[${triggerAttr}]`);
       };
-      if (this.openBtn = o(((s = this.config.triggersAttrs) == null ? void 0 : s.open) ?? ""), this.openBtn && (t.preventDefault(), this.modal = document.getElementById(
-        this.openBtn.getAttribute(((i = this.config.triggersAttrs) == null ? void 0 : i.open) ?? "") ?? ""
-      ), this.focusBtns.push(this.openBtn), this.openModal()), o(((n = this.config.triggersAttrs) == null ? void 0 : n.close) ?? "") && (t.preventDefault(), this.closeModal()), o(((l = this.config.triggersAttrs) == null ? void 0 : l.closeAll) ?? "") && (t.preventDefault(), this.closeAllModals()), this.config.outsideClose) {
-        const c = t.target;
-        this.modal && c.classList.contains(((e = this.config.classes) == null ? void 0 : e.wrapp) ?? "") && !((d = document == null ? void 0 : document.activeElement) != null && d.closest("." + ((r = this.config.classes) == null ? void 0 : r.body))) && (t.preventDefault(), this.closeModal(this.modal));
+      this.openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? "");
+      if (this.openBtn) {
+        event.preventDefault();
+        this.modal = document.getElementById(
+          this.openBtn.getAttribute(this.config.triggersAttrs?.open ?? "") ?? ""
+        );
+        this.focusBtns.push(this.openBtn);
+        this.openModal();
+      }
+      if (getTriggerNode(this.config.triggersAttrs?.close ?? "")) {
+        event.preventDefault();
+        this.closeModal();
+      }
+      if (getTriggerNode(this.config.triggersAttrs?.closeAll ?? "")) {
+        event.preventDefault();
+        this.closeAllModals();
+      }
+      if (this.config.outsideClose) {
+        const target = event.target;
+        if (this.modal && target.classList.contains(this.config.classes?.wrapp ?? "") && !document?.activeElement?.closest("." + this.config.classes?.body)) {
+          event.preventDefault();
+          this.closeModal(this.modal);
+        }
       }
     });
   }
-  openModal(t, o = !0) {
-    var i;
-    if (this.animated)
-      return;
-    if (t && (typeof t == "string" ? this.modal = document.querySelector(t) : this.modal = t, o && this.focusBtns.push(null)), !this.modal) {
-      console.warn("Modal HTMLElement not found"), this.animated = !1;
+  openModal(selector, useTimeout = true) {
+    if (this.animated) {
       return;
     }
-    let s = 0;
-    (i = this.config.multiple) != null && i.use ? (this.modals.length && document.removeEventListener("keydown", this.onKeydown), this.config.multiple.closePrevModal && this.modals.length && (this.closeModal(this.modals[this.modals.length - 1], !1), o && (s = this.config.animationDuration ?? 0))) : this.modals.length && (this.closeModal(this.modals[this.modals.length - 1]), o && (s = this.config.animationDuration ?? 0)), setTimeout(() => {
-      var n, l, e, r, d, c, f, y;
-      if (this.animated = !0, (n = this.config.on) != null && n.beforeOpen && this.config.on.beforeOpen(this), (e = this.modal) == null || e.classList.add(((l = this.config.classes) == null ? void 0 : l.open) ?? ""), this.modal && this.modals.push(this.modal), (r = this.config.hash) != null && r.add && ((d = this.modal) != null && d.id) && window.history.replaceState("", location.href, "#" + this.modal.id), this.config.disableScroll) {
-        const h = this.getScrollbarWidth(), m = document.querySelector("html"), g = document.querySelector("body");
-        m.style.overflow = "hidden", m.style.paddingInlineEnd = `${h}px`, g.style.overflow = "hidden";
+    if (selector) {
+      if (typeof selector === "string") {
+        this.modal = document.querySelector(selector);
+      } else {
+        this.modal = selector;
       }
-      (f = this.modal) == null || f.classList.add(((c = this.config.classes) == null ? void 0 : c.active) ?? ""), (y = this.modal) == null || y.setAttribute("aria-hidden", "false"), setTimeout(() => {
-        var h, m, g, u, b, S;
-        if (document.addEventListener("keydown", this.onKeydown.bind(this)), (h = this.config.focus) != null && h.use && this.config.focus.selectors) {
-          const v = (m = this.modal) == null ? void 0 : m.querySelectorAll(
+      if (useTimeout) {
+        this.focusBtns.push(null);
+      }
+    }
+    if (!this.modal) {
+      console.warn("Modal HTMLElement not found");
+      this.animated = false;
+      return;
+    }
+    let timeout = 0;
+    if (this.config.multiple?.use) {
+      if (this.modals.length) {
+        document.removeEventListener("keydown", this.onKeydown);
+      }
+      if (this.config.multiple.closePrevModal && this.modals.length) {
+        this.closeModal(this.modals[this.modals.length - 1], false);
+        if (useTimeout) {
+          timeout = this.config.animationDuration ?? 0;
+        }
+      }
+    } else if (this.modals.length) {
+      this.closeModal(this.modals[this.modals.length - 1]);
+      if (useTimeout) {
+        timeout = this.config.animationDuration ?? 0;
+      }
+    }
+    setTimeout(() => {
+      this.animated = true;
+      if (this.config.on?.beforeOpen) {
+        this.config.on.beforeOpen(this);
+      }
+      this.modal?.classList.add(this.config.classes?.open ?? "");
+      if (this.config.disableScroll && !this.modals.length) {
+        const scrollbarWidth = this.getScrollbarWidth();
+        const html = document.querySelector("html");
+        const body = document.querySelector("body");
+        html.style.overflow = "hidden";
+        html.style.paddingInlineEnd = `${scrollbarWidth}px`;
+        body.style.overflow = "hidden";
+      }
+      if (this.modal) {
+        this.modals.push(this.modal);
+      }
+      if (this.config.hash?.add && this.modal?.id) {
+        window.history.replaceState("", location.href, "#" + this.modal.id);
+      }
+      this.modal?.classList.add(this.config.classes?.active ?? "");
+      this.modal?.setAttribute("aria-hidden", "false");
+      setTimeout(() => {
+        document.addEventListener("keydown", this.onKeydown.bind(this));
+        if (this.config.focus?.use && this.config.focus.selectors) {
+          const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(", ")
           );
-          if (v) {
-            let $ = v[0];
-            $.hasAttribute(
-              ((g = this.config.triggersAttrs) == null ? void 0 : g.close) ?? ""
-            ) && v.length > 1 && ($ = v[1]), $ == null || $.focus();
+          if (focusableNodes) {
+            let focusableNode = focusableNodes[0];
+            if (focusableNode.hasAttribute(
+              this.config.triggersAttrs?.close ?? ""
+            ) && focusableNodes.length > 1) {
+              focusableNode = focusableNodes[1];
+            }
+            focusableNode?.focus();
           }
         }
-        (b = this.modal) == null || b.classList.remove(((u = this.config.classes) == null ? void 0 : u.open) ?? ""), this.animated = !1, (S = this.config.on) != null && S.afterOpen && this.config.on.afterOpen(this);
+        this.modal?.classList.remove(this.config.classes?.open ?? "");
+        this.animated = false;
+        if (this.config.on?.afterOpen) {
+          this.config.on.afterOpen(this);
+        }
       }, this.config.animationDuration);
-    }, s);
+    }, timeout);
   }
-  closeModal(t, o = !0, s = !1) {
-    var l, e, r, d, c;
-    if (this.animated && !s)
-      return;
-    this.animated = !0;
-    let i = null;
-    if (t ? typeof t == "string" ? i = document.querySelector(t) : i = t : this.modal && (i = this.modal), !i) {
-      this.animated = !1;
+  closeModal(selector, removeFromModals = true, closeAll = false) {
+    if (this.animated && !closeAll) {
       return;
     }
-    const n = this.modals.findIndex((f) => f.isSameNode(i));
-    o && this.modals.splice(n, 1), (l = this.config.on) != null && l.beforeClose && this.config.on.beforeClose(this), i.classList.add(((e = this.config.classes) == null ? void 0 : e.close) ?? ""), i.classList.remove(((r = this.config.classes) == null ? void 0 : r.active) ?? ""), i.setAttribute("aria-hidden", "true"), document.removeEventListener("keydown", this.onKeydown), (d = this.config.hash) != null && d.remove && window.history.replaceState(
-      "",
-      location.href,
-      location.pathname + location.search
-    ), (c = this.config.multiple) != null && c.use && o ? this.modals.length ? this.modal = this.modals[this.modals.length - 1] : this.modal = null : i != null && i.isSameNode(this.modal) && (this.modal = null), setTimeout(() => {
-      var f, y, h, m, g;
-      if (i == null || i.classList.remove(((f = this.config.classes) == null ? void 0 : f.close) ?? ""), this.config.disableScroll && !this.modals.length) {
-        const u = document.querySelector("html"), b = document.querySelector("body");
-        u.style.removeProperty("overflow"), u.style.removeProperty("paddingInlineEnd"), b.style.removeProperty("overflow");
+    this.animated = true;
+    let closedModal = null;
+    if (selector) {
+      if (typeof selector === "string") {
+        closedModal = document.querySelector(selector);
+      } else {
+        closedModal = selector;
       }
-      if (this.animated = !1, (y = this.config.multiple) != null && y.use && ((h = this.config.multiple) != null && h.closePrevModal) && o && !s && this.modals.length && this.openModal(this.modals.pop(), !1), (m = this.config.focus) != null && m.use && this.focusBtns.length)
-        if (s) {
-          const u = this.focusBtns.find((b) => b !== null);
-          u && (u.focus(), this.focusBtns = []);
+    } else {
+      if (this.modal) {
+        closedModal = this.modal;
+      }
+    }
+    if (!closedModal) {
+      this.animated = false;
+      return;
+    }
+    const modalIndex = this.modals.findIndex((el) => el.isSameNode(closedModal));
+    if (removeFromModals) {
+      this.modals.splice(modalIndex, 1);
+    }
+    if (this.config.on?.beforeClose) {
+      this.config.on.beforeClose(this);
+    }
+    closedModal.classList.add(this.config.classes?.close ?? "");
+    closedModal.classList.remove(this.config.classes?.active ?? "");
+    closedModal.setAttribute("aria-hidden", "true");
+    document.removeEventListener("keydown", this.onKeydown);
+    if (this.config.hash?.remove) {
+      window.history.replaceState(
+        "",
+        location.href,
+        location.pathname + location.search
+      );
+    }
+    if (this.config.multiple?.use && removeFromModals) {
+      if (this.modals.length) {
+        this.modal = this.modals[this.modals.length - 1];
+      } else {
+        this.modal = null;
+      }
+    } else {
+      if (closedModal?.isSameNode(this.modal)) {
+        this.modal = null;
+      }
+    }
+    setTimeout(() => {
+      closedModal?.classList.remove(this.config.classes?.close ?? "");
+      if (this.config.disableScroll && !this.modals.length) {
+        const html = document.querySelector("html");
+        const body = document.querySelector("body");
+        html.style.removeProperty("overflow");
+        html.style.removeProperty("padding-inline-end");
+        body.style.removeProperty("overflow");
+      }
+      this.animated = false;
+      if (this.config.multiple?.use && this.config.multiple?.closePrevModal && removeFromModals && !closeAll && this.modals.length) {
+        this.openModal(this.modals.pop(), false);
+      }
+      if (this.config.focus?.use && this.focusBtns.length) {
+        if (closeAll) {
+          const focusBtn = this.focusBtns.find((btn) => btn !== null);
+          if (focusBtn) {
+            focusBtn.focus();
+            this.focusBtns = [];
+          }
         } else {
-          const u = this.focusBtns[n];
-          u && (u.focus(), o && this.focusBtns.splice(n, 1));
+          const focusBtn = this.focusBtns[modalIndex];
+          if (focusBtn) {
+            focusBtn.focus();
+            if (removeFromModals) {
+              this.focusBtns.splice(modalIndex, 1);
+            }
+          }
         }
-      (g = this.config.on) != null && g.afterClose && this.config.on.afterClose(this);
+      }
+      if (this.config.on?.afterClose) {
+        this.config.on.afterClose(this);
+      }
     }, this.config.animationDuration);
   }
   closeAllModals() {
-    this.modals.length && this.modals.forEach((t) => {
-      this.closeModal(t, !0, !0), this.modals = [];
-    });
+    if (this.modals.length) {
+      this.modals.forEach((modal) => {
+        console.log(modal);
+        this.closeModal(modal, false, true);
+        this.modals = [];
+      });
+    }
   }
   getScrollbarWidth() {
     return window.screen.width - document.documentElement.clientWidth === 0 ? 0 : window.innerWidth - document.documentElement.clientWidth;
   }
-  onKeydown(t) {
-    this.modal && (t.key === "Escape" && this.closeModal(this.modal), t.key === "Tab" && this.changeFocus(t));
-  }
-  changeFocus(t) {
-    var l, e;
-    if (!((l = this.config.focus) != null && l.selectors))
+  onKeydown(event) {
+    if (!this.modal) {
       return;
-    const o = (e = this.modal) == null ? void 0 : e.querySelectorAll(
+    }
+    if (event.key === "Escape") {
+      this.closeModal(this.modal);
+    }
+    if (event.key === "Tab") {
+      this.changeFocus(event);
+    }
+  }
+  changeFocus(event) {
+    if (!this.config.focus?.selectors) {
+      return;
+    }
+    const focusableNodes = this.modal?.querySelectorAll(
       this.config.focus.selectors.join(", ")
     );
-    if (!o)
+    if (!focusableNodes) {
       return;
-    const s = o[0], i = o[o.length - 1], n = t.target;
-    t.shiftKey ? n.isEqualNode(s) && (i.focus(), t.preventDefault()) : n.isEqualNode(i) && (s.focus(), t.preventDefault());
+    }
+    const firstNode = focusableNodes[0];
+    const lastNode = focusableNodes[focusableNodes.length - 1];
+    const target = event.target;
+    if (event.shiftKey) {
+      if (target.isEqualNode(firstNode)) {
+        lastNode.focus();
+        event.preventDefault();
+      }
+    } else if (target.isEqualNode(lastNode)) {
+      firstNode.focus();
+      event.preventDefault();
+    }
   }
   addStyles() {
-    var n, l, e, r, d;
-    const t = { ...this.config.classes }, o = this.config.animationDuration + "ms", s = `[${(n = this.config.triggersAttrs) == null ? void 0 : n.close}]`, i = A({
-      classNames: t,
-      animationDuration: o,
-      margin: (l = this.config.style) == null ? void 0 : l.valign,
-      transform: (e = this.config.style) == null ? void 0 : e.animation,
-      closeSelector: s,
-      width: (r = this.config.style) == null ? void 0 : r.width
+    const classNames = { ...this.config.classes };
+    const animationDuration = this.config.animationDuration + "ms";
+    const closeSelector = `[${this.config.triggersAttrs?.close}]`;
+    const style = buildStyle({
+      classNames,
+      animationDuration,
+      margin: this.config.style?.valign,
+      transform: this.config.style?.animation,
+      closeSelector,
+      width: this.config.style?.width
     });
-    document.head.insertAdjacentHTML("beforeend", `<style>${i}</style>`), document.querySelectorAll("." + ((d = this.config.classes) == null ? void 0 : d.modal)).forEach((c) => {
-      c.style.removeProperty("display");
+    document.head.insertAdjacentHTML("beforeend", `<style>${style}</style>`);
+    document.querySelectorAll("." + this.config.classes?.modal).forEach((el) => {
+      el.style.removeProperty("display");
     });
   }
 }
-export {
-  k as AccessibleMinimodal
-};
+
+export { AccessibleMinimodal };
+
+          for (const key of Object.keys(globalThis.AccessibleMinimodal)) {
+            globalThis[key] = globalThis.AccessibleMinimodal[key]
+          }
+        

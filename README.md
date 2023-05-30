@@ -137,13 +137,13 @@ interface AccessibleMinimodalSettings {
 #### Open by id:
 
 ```js
-Modal.openModal('my-modal');
+Modal.openModal('#my-modal');
 ```
 
 #### Close by id:
 
 ```js
-Modal.closeModal('my-modal');
+Modal.closeModal('#my-modal');
 ```
 
 #### Close current modal:

@@ -57,10 +57,7 @@ ${varPrefix}-scale-out: 1.2;
 }
 .${modal} {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: var(${varPrefix}-z-index);
 }
 .${modal}:not(.${active}) {
@@ -80,7 +77,6 @@ ${varPrefix}-scale-out: 1.2;
   transform: none;
 }
 .${wrapp} {
-  width: 100%;
   height: 100%;
   display: flex;
   background-color: var(${varPrefix}-filter);
@@ -91,7 +87,7 @@ ${varPrefix}-scale-out: 1.2;
   background-color: var(${varPrefix}-bg);
   color: var(${varPrefix}-color);
   flex: none;
-  min-height: 1px;
+  min-height: 0;
   border-radius: var(${varPrefix}-border-radius);
   width: ${props.width}px;
   max-width: 100%;
@@ -109,16 +105,13 @@ ${varPrefix}-scale-out: 1.2;
   border: 0;
   background: none;
   cursor: pointer;
-  font-size: 0;
 }
 .${body} > ${props.closeSelector}:before,
 .${body} > ${props.closeSelector}:after {
   content: '';
   position: absolute;
   width: 16px;
-  top: 50%;
-  left: 50%;
-  right: 0;
+  inset: 50% 0 auto 50%;
   margin: -1px 0 0 -8px;
   background-color: currentColor;
   height: 2px;

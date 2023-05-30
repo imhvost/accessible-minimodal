@@ -165,11 +165,11 @@ Example of preventing displacement of position:fixed elements when scrolling is 
 ```js
 const Modal = new AccessibleMinimodal({
   on: {
-    beforeOpen: instance => {
-      const scrollbarWidth = instance.getScrollbarWidth();
+    beforeOpen: () => {
+      const scrollbarWidth = Modal.getScrollbarWidth();
       document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`;
     },
-    afterClose: () => document.querySelector('.header').style.removeProperty('margin-right')l
+    afterClose: () => document.querySelector('.header').style.removeProperty('margin-right')
   }
 })
 ```

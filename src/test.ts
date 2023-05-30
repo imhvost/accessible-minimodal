@@ -2,9 +2,7 @@ import { AccessibleMinimodal } from './index';
 const Modal = new AccessibleMinimodal({
   animationDuration: undefined,
   on: {
-    beforeOpen: instance => {
-      console.log('beforeOpen', instance);
-    },
+    beforeOpen: undefined,
     afterOpen: instance => {
       console.log('afterOpen', instance);
     },

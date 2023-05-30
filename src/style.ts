@@ -105,6 +105,7 @@ ${varPrefix}-scale-out: 1.2;
   border: 0;
   background: none;
   cursor: pointer;
+  font-size: 0;
 }
 .${body} > ${props.closeSelector}:before,
 .${body} > ${props.closeSelector}:after {

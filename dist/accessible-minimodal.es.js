@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.15
+* accessible-minimodal v2.0.16
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -151,6 +151,7 @@ ${varPrefix}-scale-out: 1.2;
   border: 0;
   background: none;
   cursor: pointer;
+  font-size: 0;
 }
 .${body} > ${props.closeSelector}:before,
 .${body} > ${props.closeSelector}:after {
@@ -235,12 +236,13 @@ class AccessibleMinimodal {
         }
         return target.closest(`[${triggerAttr}]`);
       };
-      this.openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? "");
-      if (this.openBtn) {
+      const openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? "");
+      if (openBtn) {
         event.preventDefault();
         this.modal = document.getElementById(
-          this.openBtn.getAttribute(this.config.triggersAttrs?.open ?? "") ?? ""
+          openBtn.getAttribute(this.config.triggersAttrs?.open ?? "") ?? ""
         );
+        this.openBtn = openBtn;
         this.focusBtns.push(this.openBtn);
         this.openModal();
       }
@@ -300,7 +302,7 @@ class AccessibleMinimodal {
     setTimeout(() => {
       this.animated = true;
       if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen(this);
+        this.config.on.beforeOpen({ ...this });
       }
       this.modal?.classList.add(this.config.classes?.open ?? "");
       if (this.config.disableScroll && !this.modals.length) {
@@ -308,8 +310,10 @@ class AccessibleMinimodal {
         const html = document.querySelector("html");
         const body = document.querySelector("body");
         html.style.overflow = "hidden";
-        html.style.paddingInlineEnd = `${scrollbarWidth}px`;
         body.style.overflow = "hidden";
+        if (scrollbarWidth) {
+          html.style.paddingInlineEnd = `${scrollbarWidth}px`;
+        }
       }
       if (this.modal) {
         this.modals.push(this.modal);
@@ -338,7 +342,7 @@ class AccessibleMinimodal {
         this.modal?.classList.remove(this.config.classes?.open ?? "");
         this.animated = false;
         if (this.config.on?.afterOpen) {
-          this.config.on.afterOpen(this);
+          this.config.on.afterOpen({ ...this });
         }
       }, this.config.animationDuration);
     }, timeout);
@@ -369,7 +373,7 @@ class AccessibleMinimodal {
       this.modals.splice(modalIndex, 1);
     }
     if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose(this);
+      this.config.on.beforeClose({ ...this });
     }
     closedModal.classList.add(this.config.classes?.close ?? "");
     closedModal.classList.remove(this.config.classes?.active ?? "");
@@ -382,17 +386,6 @@ class AccessibleMinimodal {
         location.pathname + location.search
       );
     }
-    if (this.config.multiple?.use && removeFromModals) {
-      if (this.modals.length) {
-        this.modal = this.modals[this.modals.length - 1];
-      } else {
-        this.modal = null;
-      }
-    } else {
-      if (closedModal?.isSameNode(this.modal)) {
-        this.modal = null;
-      }
-    }
     setTimeout(() => {
       closedModal?.classList.remove(this.config.classes?.close ?? "");
       if (this.config.disableScroll && !this.modals.length) {
@@ -401,6 +394,20 @@ class AccessibleMinimodal {
         html.style.removeProperty("overflow");
         html.style.removeProperty("padding-inline-end");
         body.style.removeProperty("overflow");
+      }
+      if (this.config.on?.afterClose) {
+        this.config.on.afterClose({ ...this });
+      }
+      if (this.config.multiple?.use && removeFromModals) {
+        if (this.modals.length) {
+          this.modal = this.modals[this.modals.length - 1];
+        } else {
+          this.modal = null;
+        }
+      } else {
+        if (closedModal?.isSameNode(this.modal)) {
+          this.modal = null;
+        }
       }
       this.animated = false;
       if (this.config.multiple?.use && this.config.multiple?.closePrevModal && removeFromModals && !closeAll && this.modals.length) {
@@ -422,9 +429,6 @@ class AccessibleMinimodal {
             }
           }
         }
-      }
-      if (this.config.on?.afterClose) {
-        this.config.on.afterClose(this);
       }
     }, this.config.animationDuration);
   }

@@ -6,7 +6,7 @@ export declare class AccessibleMinimodal {
     modals: HTMLElement[];
     focusBtns: Array<HTMLElement | null>;
     animated: boolean;
-    constructor(settings?: AccessibleMinimodalSettings);
+    constructor(settings: AccessibleMinimodalSettings);
     protected init(): void;
     private addTriggers;
     openModal(selector?: string | HTMLElement, useTimeout?: boolean): void;

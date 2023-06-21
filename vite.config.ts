@@ -22,8 +22,10 @@ export default defineConfig({
 */
 `,
         footer: `
-          for (const key of Object.keys(globalThis.AccessibleMinimodal)) {
-            globalThis[key] = globalThis.AccessibleMinimodal[key]
+          if (globalThis.AccessibleMinimodal) {
+            for (const key of Object.keys(globalThis.AccessibleMinimodal)) {
+              globalThis[key] = globalThis.AccessibleMinimodal[key]
+            }
           }
         `,
       },

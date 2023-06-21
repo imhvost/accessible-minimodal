@@ -186,6 +186,7 @@ export class AccessibleMinimodal {
           if (focusableNodes) {
             let focusableNode = focusableNodes[0];
             if (
+              focusableNode &&
               focusableNode.hasAttribute(
                 this.config.triggersAttrs?.close ?? ''
               ) &&

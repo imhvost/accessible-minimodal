@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.18
+* accessible-minimodal v2.0.20
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -331,7 +331,7 @@ class AccessibleMinimodal {
           );
           if (focusableNodes) {
             let focusableNode = focusableNodes[0];
-            if (focusableNode.hasAttribute(
+            if (focusableNode && focusableNode.hasAttribute(
               this.config.triggersAttrs?.close ?? ""
             ) && focusableNodes.length > 1) {
               focusableNode = focusableNodes[1];

@@ -9,7 +9,7 @@ export class AccessibleMinimodal {
   modals: HTMLElement[];
   focusBtns: Array<HTMLElement | null>;
   animated: boolean;
-  constructor(settings: AccessibleMinimodalSettings = settingsDefault) {
+  constructor(settings: AccessibleMinimodalSettings) {
     for (const [key, value] of Object.entries(settings)) {
       const key_ = key as keyof AccessibleMinimodalSettings;
       if (value === undefined) {

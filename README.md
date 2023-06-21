@@ -49,7 +49,7 @@ Open button:
 ## js
 
 ```js
-export { AccessibleMinimodal } from 'accessible-minimodal';
+import { AccessibleMinimodal } from 'accessible-minimodal';
 
 const Modal = new AccessibleMinimodal(/* { options } */);
 ```

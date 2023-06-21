@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.20
+* accessible-minimodal v2.0.21
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -324,6 +324,8 @@ class AccessibleMinimodal {
       this.modal?.classList.add(this.config.classes?.active ?? "");
       this.modal?.setAttribute("aria-hidden", "false");
       setTimeout(() => {
+        this.modal?.classList.remove(this.config.classes?.open ?? "");
+        this.animated = false;
         document.addEventListener("keydown", this.onKeydown.bind(this));
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
@@ -336,11 +338,9 @@ class AccessibleMinimodal {
             ) && focusableNodes.length > 1) {
               focusableNode = focusableNodes[1];
             }
-            focusableNode?.focus();
+            focusableNode.focus();
           }
         }
-        this.modal?.classList.remove(this.config.classes?.open ?? "");
-        this.animated = false;
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen({ ...this });
         }

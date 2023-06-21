@@ -178,13 +178,20 @@ export class AccessibleMinimodal {
       this.modal?.setAttribute('aria-hidden', 'false');
 
       setTimeout(() => {
+        
+        this.modal?.classList.remove(this.config.classes?.open ?? '');
+
+        this.animated = false;
+
         document.addEventListener('keydown', this.onKeydown.bind(this));
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(', ')
           );
+          
           if (focusableNodes) {
             let focusableNode = focusableNodes[0];
+            
             if (
               focusableNode &&
               focusableNode.hasAttribute(
@@ -194,13 +201,10 @@ export class AccessibleMinimodal {
             ) {
               focusableNode = focusableNodes[1];
             }
-            (focusableNode as HTMLElement)?.focus();
+            
+            (focusableNode as HTMLElement).focus();
           }
         }
-
-        this.modal?.classList.remove(this.config.classes?.open ?? '');
-
-        this.animated = false;
 
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen({...this});

@@ -26,3 +26,5 @@ const Modal = new AccessibleMinimodal({
 });
 
 console.log(Modal);
+
+Modal.openModal('#modal')

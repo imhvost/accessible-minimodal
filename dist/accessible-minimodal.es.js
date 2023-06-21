@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.17
+* accessible-minimodal v2.0.18
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -180,7 +180,7 @@ class AccessibleMinimodal {
   modals;
   focusBtns;
   animated;
-  constructor(settings) {
+  constructor(settings = {}) {
     for (const [key, value] of Object.entries(settings)) {
       const key_ = key;
       if (value === void 0) {

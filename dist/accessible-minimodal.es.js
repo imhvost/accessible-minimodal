@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.21
+* accessible-minimodal v2.0.22
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -19,7 +19,7 @@ const settingsDefault = {
     use: true,
     selectors: [
       "button:not([disabled])",
-      "[href]",
+      "a[href]",
       'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
       "select:not([disabled]):not([aria-hidden])",
       "textarea:not([disabled]):not([aria-hidden])",
@@ -326,7 +326,6 @@ class AccessibleMinimodal {
       setTimeout(() => {
         this.modal?.classList.remove(this.config.classes?.open ?? "");
         this.animated = false;
-        document.addEventListener("keydown", this.onKeydown.bind(this));
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(", ")
@@ -341,6 +340,7 @@ class AccessibleMinimodal {
             focusableNode.focus();
           }
         }
+        document.addEventListener("keydown", this.onKeydown.bind(this));
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen({ ...this });
         }

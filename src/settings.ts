@@ -78,7 +78,7 @@ const settingsDefault: AccessibleMinimodalSettings = {
     use: true,
     selectors: [
       'button:not([disabled])',
-      '[href]',
+      'a[href]',
       'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
       'select:not([disabled]):not([aria-hidden])',
       'textarea:not([disabled]):not([aria-hidden])',

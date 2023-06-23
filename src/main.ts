@@ -182,8 +182,6 @@ export class AccessibleMinimodal {
         this.modal?.classList.remove(this.config.classes?.open ?? '');
 
         this.animated = false;
-
-        document.addEventListener('keydown', this.onKeydown.bind(this));
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(', ')
@@ -205,6 +203,8 @@ export class AccessibleMinimodal {
             (focusableNode as HTMLElement).focus();
           }
         }
+
+        document.addEventListener('keydown', this.onKeydown.bind(this));
 
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen({...this});

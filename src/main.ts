@@ -71,7 +71,7 @@ export class AccessibleMinimodal {
         }
         return target.closest(`[${triggerAttr}]`);
       };
-      const openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? '')
+      const openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? '');
       if (openBtn) {
         event.preventDefault();
         this.modal = document.getElementById(
@@ -105,7 +105,8 @@ export class AccessibleMinimodal {
 
   openModal(
     selector?: string | HTMLElement,
-    useTimeout = true
+    useTimeout = true,
+    callback?: () => void
   ) {
     if (this.animated) {
       return;
@@ -150,7 +151,7 @@ export class AccessibleMinimodal {
       this.animated = true;
 
       if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen({...this});
+        this.config.on.beforeOpen({ ...this });
       }
 
       this.modal?.classList.add(this.config.classes?.open ?? '');
@@ -161,7 +162,7 @@ export class AccessibleMinimodal {
         const body = document.querySelector('body') as HTMLElement;
         html.style.overflow = 'hidden';
         body.style.overflow = 'hidden';
-        if(scrollbarWidth){
+        if (scrollbarWidth) {
           html.style.paddingInlineEnd = `${scrollbarWidth}px`;
         }
       }
@@ -178,7 +179,6 @@ export class AccessibleMinimodal {
       this.modal?.setAttribute('aria-hidden', 'false');
 
       setTimeout(() => {
-        
         this.modal?.classList.remove(this.config.classes?.open ?? '');
 
         this.animated = false;
@@ -186,10 +186,10 @@ export class AccessibleMinimodal {
           const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(', ')
           );
-          
+
           if (focusableNodes) {
             let focusableNode = focusableNodes[0];
-            
+
             if (
               focusableNode &&
               focusableNode.hasAttribute(
@@ -199,7 +199,7 @@ export class AccessibleMinimodal {
             ) {
               focusableNode = focusableNodes[1];
             }
-            
+
             (focusableNode as HTMLElement).focus();
           }
         }
@@ -207,7 +207,11 @@ export class AccessibleMinimodal {
         document.addEventListener('keydown', this.onKeydown.bind(this));
 
         if (this.config.on?.afterOpen) {
-          this.config.on.afterOpen({...this});
+          this.config.on.afterOpen({ ...this });
+        }
+
+        if (callback) {
+          callback();
         }
       }, this.config.animationDuration);
     }, timeout);
@@ -216,7 +220,8 @@ export class AccessibleMinimodal {
   closeModal(
     selector?: string | HTMLElement,
     removeFromModals = true,
-    closeAll = false
+    closeAll = false,
+    callback?: () => void
   ) {
     if (this.animated && !closeAll) {
       return;
@@ -247,7 +252,7 @@ export class AccessibleMinimodal {
     }
 
     if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose({...this});
+      this.config.on.beforeClose({ ...this });
     }
 
     closedModal.classList.add(this.config.classes?.close ?? '');
@@ -276,7 +281,11 @@ export class AccessibleMinimodal {
       }
 
       if (this.config.on?.afterClose) {
-        this.config.on.afterClose({...this});
+        this.config.on.afterClose({ ...this });
+      }
+
+      if (callback) {
+        callback();
       }
 
       if (this.config.multiple?.use && removeFromModals) {
@@ -320,7 +329,6 @@ export class AccessibleMinimodal {
           }
         }
       }
-
     }, this.config.animationDuration);
   }
 

@@ -167,9 +167,12 @@ const Modal = new AccessibleMinimodal({
   on: {
     beforeOpen: () => {
       const scrollbarWidth = Modal.getScrollbarWidth();
-      document.querySelector('.header').style.marginRight = `${scrollbarWidth}px`;
+      document.querySelector(
+        '.header'
+      ).style.marginRight = `${scrollbarWidth}px`;
     },
-    afterClose: () => document.querySelector('.header').style.removeProperty('margin-right')
-  }
-})
+    afterClose: () =>
+      document.querySelector('.header').style.removeProperty('margin-right'),
+  },
+});
 ```

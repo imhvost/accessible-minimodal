@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.22
+* accessible-minimodal v2.0.23
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -263,7 +263,7 @@ class AccessibleMinimodal {
       }
     });
   }
-  openModal(selector, useTimeout = true) {
+  openModal(selector, useTimeout = true, callback) {
     if (this.animated) {
       return;
     }
@@ -344,10 +344,13 @@ class AccessibleMinimodal {
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen({ ...this });
         }
+        if (callback) {
+          callback();
+        }
       }, this.config.animationDuration);
     }, timeout);
   }
-  closeModal(selector, removeFromModals = true, closeAll = false) {
+  closeModal(selector, removeFromModals = true, closeAll = false, callback) {
     if (this.animated && !closeAll) {
       return;
     }
@@ -397,6 +400,9 @@ class AccessibleMinimodal {
       }
       if (this.config.on?.afterClose) {
         this.config.on.afterClose({ ...this });
+      }
+      if (callback) {
+        callback();
       }
       if (this.config.multiple?.use && removeFromModals) {
         if (this.modals.length) {

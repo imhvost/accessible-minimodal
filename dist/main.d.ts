@@ -9,8 +9,11 @@ export declare class AccessibleMinimodal {
     constructor(settings?: AccessibleMinimodalSettings);
     protected init(): void;
     private addTriggers;
-    openModal(selector?: string | HTMLElement, useTimeout?: boolean, callback?: () => void): void;
-    closeModal(selector?: string | HTMLElement, removeFromModals?: boolean, closeAll?: boolean, callback?: () => void): void;
+    private getOnInstance;
+    openModal(selector?: string | HTMLElement): void;
+    private _openModal;
+    closeModal(selector?: string | HTMLElement): void;
+    private _closeModal;
     closeAllModals(): void;
     getScrollbarWidth(): number;
     protected onKeydown(event: KeyboardEvent): void;

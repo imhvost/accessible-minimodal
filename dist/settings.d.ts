@@ -19,11 +19,16 @@ interface Multiple {
     use?: boolean;
     closePrevModal?: boolean;
 }
+interface EventInstance {
+    modal: HTMLElement | null;
+    openBtn: HTMLElement | null;
+    config: AccessibleMinimodalSettings;
+}
 interface On {
-    beforeOpen?: (instance?: object) => void;
-    afterOpen?: (instance?: object) => void;
-    beforeClose?: (instance?: object) => void;
-    afterClose?: (instance?: object) => void;
+    beforeOpen?: (instance?: EventInstance) => void;
+    afterOpen?: (instance?: EventInstance) => void;
+    beforeClose?: (instance?: EventInstance) => void;
+    afterClose?: (instance?: EventInstance) => void;
 }
 interface Style {
     use?: boolean;

@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.0.23
+* accessible-minimodal v2.1.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -263,7 +263,17 @@ class AccessibleMinimodal {
       }
     });
   }
-  openModal(selector, useTimeout = true, callback) {
+  getOnInstance() {
+    return {
+      modal: this.modal,
+      openBtn: this.openBtn,
+      config: this.config
+    };
+  }
+  openModal(selector) {
+    this._openModal(selector);
+  }
+  _openModal(selector, useTimeout = true) {
     if (this.animated) {
       return;
     }
@@ -278,7 +288,7 @@ class AccessibleMinimodal {
       }
     }
     if (!this.modal) {
-      console.warn("Modal HTMLElement not found");
+      console.warn("AccessibleMinimodal warn: Modal HTMLElement not found");
       this.animated = false;
       return;
     }
@@ -288,7 +298,7 @@ class AccessibleMinimodal {
         document.removeEventListener("keydown", this.onKeydown);
       }
       if (this.config.multiple.closePrevModal && this.modals.length) {
-        this.closeModal(this.modals[this.modals.length - 1], false);
+        this._closeModal(this.modals[this.modals.length - 1], false);
         if (useTimeout) {
           timeout = this.config.animationDuration ?? 0;
         }
@@ -302,7 +312,10 @@ class AccessibleMinimodal {
     setTimeout(() => {
       this.animated = true;
       if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen({ ...this });
+        this.config.on.beforeOpen(this.getOnInstance());
+        this.modal?.dispatchEvent(
+          new Event("accessible-minimodal:before-open")
+        );
       }
       this.modal?.classList.add(this.config.classes?.open ?? "");
       if (this.config.disableScroll && !this.modals.length) {
@@ -342,15 +355,18 @@ class AccessibleMinimodal {
         }
         document.addEventListener("keydown", this.onKeydown.bind(this));
         if (this.config.on?.afterOpen) {
-          this.config.on.afterOpen({ ...this });
-        }
-        if (callback) {
-          callback();
+          this.config.on.afterOpen(this.getOnInstance());
+          this.modal?.dispatchEvent(
+            new Event("accessible-minimodal:after-open")
+          );
         }
       }, this.config.animationDuration);
     }, timeout);
   }
-  closeModal(selector, removeFromModals = true, closeAll = false, callback) {
+  closeModal(selector) {
+    this._closeModal(selector);
+  }
+  _closeModal(selector, removeFromModals = true, closeAll = false) {
     if (this.animated && !closeAll) {
       return;
     }
@@ -376,7 +392,8 @@ class AccessibleMinimodal {
       this.modals.splice(modalIndex, 1);
     }
     if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose({ ...this });
+      this.config.on.beforeClose(this.getOnInstance());
+      this.modal?.dispatchEvent(new Event("accessible-minimodal:before-close"));
     }
     closedModal.classList.add(this.config.classes?.close ?? "");
     closedModal.classList.remove(this.config.classes?.active ?? "");
@@ -399,10 +416,10 @@ class AccessibleMinimodal {
         body.style.removeProperty("overflow");
       }
       if (this.config.on?.afterClose) {
-        this.config.on.afterClose({ ...this });
-      }
-      if (callback) {
-        callback();
+        this.config.on.afterClose(this.getOnInstance());
+        this.modal?.dispatchEvent(
+          new Event("accessible-minimodal:after-close")
+        );
       }
       if (this.config.multiple?.use && removeFromModals) {
         if (this.modals.length) {
@@ -417,7 +434,7 @@ class AccessibleMinimodal {
       }
       this.animated = false;
       if (this.config.multiple?.use && this.config.multiple?.closePrevModal && removeFromModals && !closeAll && this.modals.length) {
-        this.openModal(this.modals.pop(), false);
+        this._openModal(this.modals.pop(), false);
       }
       if (this.config.focus?.use && this.focusBtns.length) {
         if (closeAll) {
@@ -442,7 +459,7 @@ class AccessibleMinimodal {
     if (this.modals.length) {
       this.modals.forEach((modal) => {
         console.log(modal);
-        this.closeModal(modal, false, true);
+        this._closeModal(modal, false, true);
         this.modals = [];
       });
     }

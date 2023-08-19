@@ -103,11 +103,19 @@ export class AccessibleMinimodal {
     });
   }
 
-  openModal(
-    selector?: string | HTMLElement,
-    useTimeout = true,
-    callback?: () => void
-  ) {
+  private getOnInstance() {
+    return {
+      modal: this.modal,
+      openBtn: this.openBtn,
+      config: this.config,
+    };
+  }
+
+  public openModal(selector?: string | HTMLElement) {
+    this._openModal(selector);
+  }
+
+  private _openModal(selector?: string | HTMLElement, useTimeout = true) {
     if (this.animated) {
       return;
     }
@@ -123,7 +131,7 @@ export class AccessibleMinimodal {
       }
     }
     if (!this.modal) {
-      console.warn('Modal HTMLElement not found');
+      console.warn('AccessibleMinimodal warn: Modal HTMLElement not found');
       this.animated = false;
       return;
     }
@@ -135,7 +143,7 @@ export class AccessibleMinimodal {
         document.removeEventListener('keydown', this.onKeydown);
       }
       if (this.config.multiple.closePrevModal && this.modals.length) {
-        this.closeModal(this.modals[this.modals.length - 1], false);
+        this._closeModal(this.modals[this.modals.length - 1], false);
         if (useTimeout) {
           timeout = this.config.animationDuration ?? 0;
         }
@@ -151,7 +159,10 @@ export class AccessibleMinimodal {
       this.animated = true;
 
       if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen({ ...this });
+        this.config.on.beforeOpen(this.getOnInstance());
+        this.modal?.dispatchEvent(
+          new Event('accessible-minimodal:before-open')
+        );
       }
 
       this.modal?.classList.add(this.config.classes?.open ?? '');
@@ -207,21 +218,23 @@ export class AccessibleMinimodal {
         document.addEventListener('keydown', this.onKeydown.bind(this));
 
         if (this.config.on?.afterOpen) {
-          this.config.on.afterOpen({ ...this });
-        }
-
-        if (callback) {
-          callback();
+          this.config.on.afterOpen(this.getOnInstance());
+          this.modal?.dispatchEvent(
+            new Event('accessible-minimodal:after-open')
+          );
         }
       }, this.config.animationDuration);
     }, timeout);
   }
 
-  closeModal(
+  public closeModal(selector?: string | HTMLElement) {
+    this._closeModal(selector);
+  }
+
+  private _closeModal(
     selector?: string | HTMLElement,
     removeFromModals = true,
-    closeAll = false,
-    callback?: () => void
+    closeAll = false
   ) {
     if (this.animated && !closeAll) {
       return;
@@ -252,7 +265,8 @@ export class AccessibleMinimodal {
     }
 
     if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose({ ...this });
+      this.config.on.beforeClose(this.getOnInstance());
+      this.modal?.dispatchEvent(new Event('accessible-minimodal:before-close'));
     }
 
     closedModal.classList.add(this.config.classes?.close ?? '');
@@ -281,11 +295,10 @@ export class AccessibleMinimodal {
       }
 
       if (this.config.on?.afterClose) {
-        this.config.on.afterClose({ ...this });
-      }
-
-      if (callback) {
-        callback();
+        this.config.on.afterClose(this.getOnInstance());
+        this.modal?.dispatchEvent(
+          new Event('accessible-minimodal:after-close')
+        );
       }
 
       if (this.config.multiple?.use && removeFromModals) {
@@ -309,7 +322,7 @@ export class AccessibleMinimodal {
         !closeAll &&
         this.modals.length
       ) {
-        this.openModal(this.modals.pop(), false);
+        this._openModal(this.modals.pop(), false);
       }
 
       if (this.config.focus?.use && this.focusBtns.length) {
@@ -332,18 +345,18 @@ export class AccessibleMinimodal {
     }, this.config.animationDuration);
   }
 
-  closeAllModals() {
+  public closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach(modal => {
         console.log(modal);
 
-        this.closeModal(modal, false, true);
+        this._closeModal(modal, false, true);
         this.modals = [];
       });
     }
   }
 
-  getScrollbarWidth(): number {
+  public getScrollbarWidth(): number {
     return window.screen.width - document.documentElement.clientWidth === 0
       ? 0
       : window.innerWidth - document.documentElement.clientWidth;

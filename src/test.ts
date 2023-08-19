@@ -27,4 +27,10 @@ const Modal = new AccessibleMinimodal({
 
 console.log(Modal);
 
+document
+  .getElementById('modal')
+  ?.addEventListener('accessible-minimodal:after-close', () => {
+    console.log('accessible-minimodal:after-close');
+  });
+
 Modal.openModal('#modal');

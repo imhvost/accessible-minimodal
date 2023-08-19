@@ -23,7 +23,7 @@ Open button:
 <button id="modal-open-btn" data-modal-open="modal">Open Modal</button>
 
 <!-- Modal -->
-<div id="modal" aria-hidden="true" class="modal" style="display:none;">
+<div id="modal" aria-hidden="true" class="modal">
   <div tabindex="-1" class="modal-wrapp">
     <div
       role="dialog"
@@ -175,4 +175,23 @@ const Modal = new AccessibleMinimodal({
       document.querySelector('.header').style.removeProperty('margin-right'),
   },
 });
+```
+
+---
+
+## Events
+
+- `accessible-minimodal:before-open`
+- `accessible-minimodal:after-open`
+- `accessible-minimodal:before-close`
+- `accessible-minimodal:after-close`
+
+Example:
+
+```javascript
+document
+  .getElementById('modal')
+  ?.addEventListener('accessible-minimodal:after-close', () => {
+    console.log('accessible-minimodal:after-close');
+  });
 ```

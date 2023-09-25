@@ -44,6 +44,19 @@
         background-color: #eee;
         padding: 12px;
       }
+      .fixed {
+        position: fixed;
+        right: 40px;
+        bottom: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        border: solid 2px;
+        display: grid;
+        place-items: center;
+        width: 120px;
+        height: 120px;
+        z-index: 6;
+      }
     </style>
   </head>
   <body>
@@ -116,6 +129,7 @@
         <button type="button" data-modal-open="modal-1">
           Open Multiple Modal
         </button>
+        <div class="fixed">Fixed</div>
         <div id="modal" aria-hidden="true" class="modal">
           <div tabindex="-1" class="modal-wrapp">
             <div role="dialog" aria-modal="true" class="modal-body">

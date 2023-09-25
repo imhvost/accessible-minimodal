@@ -56,10 +56,15 @@ interface TriggersAttrs {
   closeAll?: string;
 }
 
+interface DisableScroll {
+  use?: boolean;
+  jumpingElements?: string | HTMLElement[];
+}
+
 interface AccessibleMinimodalSettings {
   animationDuration?: number;
   classes?: Classes;
-  disableScroll?: boolean;
+  disableScroll?: DisableScroll;
   focus?: Focus;
   hash?: Hash;
   multiple?: Multiple;
@@ -79,7 +84,10 @@ const settingsDefault: AccessibleMinimodalSettings = {
     open: 'open',
     close: 'close',
   },
-  disableScroll: true,
+  disableScroll: {
+    use: true,
+    jumpingElements: '',
+  },
   focus: {
     use: true,
     selectors: [

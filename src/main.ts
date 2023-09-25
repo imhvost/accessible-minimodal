@@ -167,7 +167,7 @@ export class AccessibleMinimodal {
 
       this.modal?.classList.add(this.config.classes?.open ?? '');
 
-      if (this.config.disableScroll && !this.modals.length) {
+      if (this.config.disableScroll?.use && !this.modals.length) {
         const scrollbarWidth = this.getScrollbarWidth();
         const html = document.querySelector('html') as HTMLElement;
         const body = document.querySelector('body') as HTMLElement;
@@ -175,6 +175,23 @@ export class AccessibleMinimodal {
         body.style.overflow = 'hidden';
         if (scrollbarWidth) {
           html.style.paddingInlineEnd = `${scrollbarWidth}px`;
+          const { jumpingElements } = this.config.disableScroll;
+          if (jumpingElements) {
+            if (Array.isArray(jumpingElements) && jumpingElements.length) {
+              jumpingElements.forEach(
+                el => (el.style.marginInlineEnd = `${scrollbarWidth}px`)
+              );
+            } else if (typeof jumpingElements === 'string') {
+              document
+                .querySelectorAll(jumpingElements)
+                .forEach(
+                  el =>
+                    ((
+                      el as HTMLElement
+                    ).style.marginInlineEnd = `${scrollbarWidth}px`)
+                );
+            }
+          }
         }
       }
 
@@ -286,14 +303,6 @@ export class AccessibleMinimodal {
     setTimeout(() => {
       closedModal?.classList.remove(this.config.classes?.close ?? '');
 
-      if (this.config.disableScroll && !this.modals.length) {
-        const html = document.querySelector('html') as HTMLElement;
-        const body = document.querySelector('body') as HTMLElement;
-        html.style.removeProperty('overflow');
-        html.style.removeProperty('padding-inline-end');
-        body.style.removeProperty('overflow');
-      }
-
       if (this.config.on?.afterClose) {
         this.config.on.afterClose(this.getOnInstance());
         this.modal?.dispatchEvent(
@@ -339,6 +348,28 @@ export class AccessibleMinimodal {
             if (removeFromModals) {
               this.focusBtns.splice(modalIndex, 1);
             }
+          }
+        }
+      }
+
+      if (this.config.disableScroll?.use && !this.modals.length) {
+        const html = document.querySelector('html') as HTMLElement;
+        const body = document.querySelector('body') as HTMLElement;
+        html.style.removeProperty('overflow');
+        html.style.removeProperty('padding-inline-end');
+        body.style.removeProperty('overflow');
+        const { jumpingElements } = this.config.disableScroll;
+        if (jumpingElements) {
+          if (Array.isArray(jumpingElements) && jumpingElements.length) {
+            jumpingElements.forEach(el =>
+              el.style.removeProperty('margin-inline-end')
+            );
+          } else if (typeof jumpingElements === 'string') {
+            document
+              .querySelectorAll(jumpingElements)
+              .forEach(el =>
+                (el as HTMLElement).style.removeProperty('margin-inline-end')
+              );
           }
         }
       }

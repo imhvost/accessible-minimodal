@@ -19,6 +19,9 @@ const Modal = new AccessibleMinimodal({
     use: true,
     width: undefined,
   },
+  disableScroll: {
+    jumpingElements: [document.querySelector('.fixed') as HTMLElement],
+  },
   multiple: {
     use: true,
     closePrevModal: true,
@@ -33,4 +36,4 @@ document
     console.log('accessible-minimodal:after-close');
   });
 
-Modal.openModal('#modal');
+// Modal.openModal('#modal');

@@ -41,10 +41,14 @@ interface TriggersAttrs {
     close?: string;
     closeAll?: string;
 }
+interface DisableScroll {
+    use?: boolean;
+    jumpingElements?: string | HTMLElement[];
+}
 interface AccessibleMinimodalSettings {
     animationDuration?: number;
     classes?: Classes;
-    disableScroll?: boolean;
+    disableScroll?: DisableScroll;
     focus?: Focus;
     hash?: Hash;
     multiple?: Multiple;

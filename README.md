@@ -78,7 +78,10 @@ interface AccessibleMinimodalSettings {
     open?: string /* defult: open */;
     close?: string /* defult: close */;
   };
-  disableScroll?: boolean /* defult: true */;
+  disableScroll?:{
+    use: boolean, /* defult: true */
+    jumpingElements?: string | HTMLElement[]; /* defult: '' */;
+  };
   focus?: {
     use?: boolean /* defult: true */;
     selectors?: string[] /* defult:
@@ -164,15 +167,8 @@ Example of preventing displacement of position:fixed elements when scrolling is 
 
 ```js
 const Modal = new AccessibleMinimodal({
-  on: {
-    beforeOpen: () => {
-      const scrollbarWidth = Modal.getScrollbarWidth();
-      document.querySelector(
-        '.header'
-      ).style.marginRight = `${scrollbarWidth}px`;
-    },
-    afterClose: () =>
-      document.querySelector('.header').style.removeProperty('margin-right'),
+  disableScroll: {
+    jumpingElements: '.fixed-elements',
   },
 });
 ```

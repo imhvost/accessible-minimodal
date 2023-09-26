@@ -1,6 +1,6 @@
 {
   "name": "accessible-minimodal",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Accessible, lightweight, stylish JavaScript (TypeScript) modal library",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts --fix --ignore-path .gitignore",
-    "format": "prettier . --write"
+    "format": "prettier . --write src/"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

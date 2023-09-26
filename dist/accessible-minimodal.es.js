@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.2.0
+* accessible-minimodal v2.2.1
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -365,7 +365,9 @@ class AccessibleMinimodal {
             ) && focusableNodes.length > 1) {
               focusableNode = focusableNodes[1];
             }
-            focusableNode.focus();
+            if (focusableNode) {
+              focusableNode.focus();
+            }
           }
         }
         document.addEventListener("keydown", this.onKeydown.bind(this));

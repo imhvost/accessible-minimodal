@@ -227,8 +227,9 @@ export class AccessibleMinimodal {
             ) {
               focusableNode = focusableNodes[1];
             }
-
-            (focusableNode as HTMLElement).focus();
+            if (focusableNode) {
+              (focusableNode as HTMLElement).focus();
+            }
           }
         }
 

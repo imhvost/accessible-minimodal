@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.2.1
+* accessible-minimodal v2.2.2
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -487,7 +487,6 @@ class AccessibleMinimodal {
   closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach((modal) => {
-        console.log(modal);
         this._closeModal(modal, false, true);
         this.modals = [];
       });

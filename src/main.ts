@@ -380,8 +380,6 @@ export class AccessibleMinimodal {
   public closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach(modal => {
-        console.log(modal);
-
         this._closeModal(modal, false, true);
         this.modals = [];
       });

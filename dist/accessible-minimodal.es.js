@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.2.2
+* accessible-minimodal v2.2.3
 * https://github.com/imhvost/accessible-minimodal
 */
 

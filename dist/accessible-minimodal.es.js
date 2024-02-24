@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.3.0
+* accessible-minimodal v2.3.1
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -292,7 +292,6 @@ class AccessibleMinimodal {
     }
     if (!this.modal) {
       console.warn("AccessibleMinimodal warn: Modal HTMLElement not found");
-      this.animated = false;
       return;
     }
     if (this.config.on?.beforeOpen) {
@@ -309,6 +308,7 @@ class AccessibleMinimodal {
         return;
       }
     }
+    this.animated = true;
     let timeout = 0;
     if (this.config.multiple?.use) {
       if (this.modals.length) {
@@ -327,7 +327,6 @@ class AccessibleMinimodal {
       }
     }
     setTimeout(() => {
-      this.animated = true;
       this.modal?.classList.add(this.config.classes?.open ?? "");
       if (this.config.disableScroll?.use && !this.modals.length) {
         const scrollbarWidth = this.getScrollbarWidth();
@@ -395,7 +394,6 @@ class AccessibleMinimodal {
     if (this.animated && !closeAll) {
       return;
     }
-    this.animated = true;
     let closedModal = null;
     if (selector) {
       if (typeof selector === "string") {
@@ -409,7 +407,6 @@ class AccessibleMinimodal {
       }
     }
     if (!closedModal) {
-      this.animated = false;
       return;
     }
     if (this.config.on?.beforeClose) {
@@ -424,6 +421,7 @@ class AccessibleMinimodal {
         return;
       }
     }
+    this.animated = true;
     const modalIndex = this.modals.findIndex((el) => el.isSameNode(closedModal));
     if (removeFromModals) {
       this.modals.splice(modalIndex, 1);

@@ -34,7 +34,10 @@ document
   .getElementById('modal')
   ?.addEventListener('accessible-minimodal:before-close', e => {
     console.log('accessible-minimodal:before-close', e);
-    e.preventDefault();
+    const yes = confirm('?');
+    if (!yes) {
+      e.preventDefault();
+    }
   });
 
 // Modal.openModal('#modal');

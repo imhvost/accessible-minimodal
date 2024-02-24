@@ -132,7 +132,6 @@ export class AccessibleMinimodal {
     }
     if (!this.modal) {
       console.warn('AccessibleMinimodal warn: Modal HTMLElement not found');
-      this.animated = false;
       return;
     }
 
@@ -150,6 +149,8 @@ export class AccessibleMinimodal {
         return;
       }
     }
+
+    this.animated = true;
 
     let timeout = 0;
 
@@ -171,8 +172,6 @@ export class AccessibleMinimodal {
     }
 
     setTimeout(() => {
-      this.animated = true;
-
       this.modal?.classList.add(this.config.classes?.open ?? '');
 
       if (this.config.disableScroll?.use && !this.modals.length) {
@@ -266,7 +265,6 @@ export class AccessibleMinimodal {
       return;
     }
 
-    this.animated = true;
     let closedModal: HTMLElement | null = null;
     if (selector) {
       if (typeof selector === 'string') {
@@ -281,7 +279,6 @@ export class AccessibleMinimodal {
     }
 
     if (!closedModal) {
-      this.animated = false;
       return;
     }
 
@@ -297,6 +294,8 @@ export class AccessibleMinimodal {
         return;
       }
     }
+
+    this.animated = true;
 
     const modalIndex = this.modals.findIndex(el => el.isSameNode(closedModal));
     if (removeFromModals) {

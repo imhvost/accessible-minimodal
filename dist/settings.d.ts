@@ -25,9 +25,9 @@ interface EventInstance {
     config: AccessibleMinimodalSettings;
 }
 interface On {
-    beforeOpen?: (instance?: EventInstance) => void;
+    beforeOpen?: (instance?: EventInstance) => boolean | void;
     afterOpen?: (instance?: EventInstance) => void;
-    beforeClose?: (instance?: EventInstance) => void;
+    beforeClose?: (instance?: EventInstance) => boolean | void;
     afterClose?: (instance?: EventInstance) => void;
 }
 interface Style {

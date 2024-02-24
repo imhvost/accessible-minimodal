@@ -136,6 +136,21 @@ export class AccessibleMinimodal {
       return;
     }
 
+    if (this.config.on?.beforeOpen) {
+      const isPrevent = this.config.on.beforeOpen(this.getOnInstance());
+      if (isPrevent === false) {
+        return;
+      }
+      const isCancel = this.modal?.dispatchEvent(
+        new Event('accessible-minimodal:before-open', {
+          cancelable: true,
+        })
+      );
+      if (!isCancel) {
+        return;
+      }
+    }
+
     let timeout = 0;
 
     if (this.config.multiple?.use) {
@@ -157,13 +172,6 @@ export class AccessibleMinimodal {
 
     setTimeout(() => {
       this.animated = true;
-
-      if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen(this.getOnInstance());
-        this.modal?.dispatchEvent(
-          new Event('accessible-minimodal:before-open')
-        );
-      }
 
       this.modal?.classList.add(this.config.classes?.open ?? '');
 
@@ -277,14 +285,22 @@ export class AccessibleMinimodal {
       return;
     }
 
+    if (this.config.on?.beforeClose) {
+      const isPrevent = this.config.on.beforeClose(this.getOnInstance());
+      if (isPrevent === false) {
+        return;
+      }
+      const isCancel = this.modal?.dispatchEvent(
+        new Event('accessible-minimodal:before-close', { cancelable: true })
+      );
+      if (!isCancel) {
+        return;
+      }
+    }
+
     const modalIndex = this.modals.findIndex(el => el.isSameNode(closedModal));
     if (removeFromModals) {
       this.modals.splice(modalIndex, 1);
-    }
-
-    if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose(this.getOnInstance());
-      this.modal?.dispatchEvent(new Event('accessible-minimodal:before-close'));
     }
 
     closedModal.classList.add(this.config.classes?.close ?? '');

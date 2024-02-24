@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.2.3
+* accessible-minimodal v2.3.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -40,9 +40,9 @@ const settingsDefault = {
     closePrevModal: false
   },
   on: {
-    beforeOpen: () => ({}),
+    beforeOpen: () => true,
     afterOpen: () => ({}),
-    beforeClose: () => ({}),
+    beforeClose: () => true,
     afterClose: () => ({})
   },
   outsideClose: true,
@@ -295,6 +295,20 @@ class AccessibleMinimodal {
       this.animated = false;
       return;
     }
+    if (this.config.on?.beforeOpen) {
+      const isPrevent = this.config.on.beforeOpen(this.getOnInstance());
+      if (isPrevent === false) {
+        return;
+      }
+      const isCancel = this.modal?.dispatchEvent(
+        new Event("accessible-minimodal:before-open", {
+          cancelable: true
+        })
+      );
+      if (!isCancel) {
+        return;
+      }
+    }
     let timeout = 0;
     if (this.config.multiple?.use) {
       if (this.modals.length) {
@@ -314,12 +328,6 @@ class AccessibleMinimodal {
     }
     setTimeout(() => {
       this.animated = true;
-      if (this.config.on?.beforeOpen) {
-        this.config.on.beforeOpen(this.getOnInstance());
-        this.modal?.dispatchEvent(
-          new Event("accessible-minimodal:before-open")
-        );
-      }
       this.modal?.classList.add(this.config.classes?.open ?? "");
       if (this.config.disableScroll?.use && !this.modals.length) {
         const scrollbarWidth = this.getScrollbarWidth();
@@ -404,13 +412,21 @@ class AccessibleMinimodal {
       this.animated = false;
       return;
     }
+    if (this.config.on?.beforeClose) {
+      const isPrevent = this.config.on.beforeClose(this.getOnInstance());
+      if (isPrevent === false) {
+        return;
+      }
+      const isCancel = this.modal?.dispatchEvent(
+        new Event("accessible-minimodal:before-close", { cancelable: true })
+      );
+      if (!isCancel) {
+        return;
+      }
+    }
     const modalIndex = this.modals.findIndex((el) => el.isSameNode(closedModal));
     if (removeFromModals) {
       this.modals.splice(modalIndex, 1);
-    }
-    if (this.config.on?.beforeClose) {
-      this.config.on.beforeClose(this.getOnInstance());
-      this.modal?.dispatchEvent(new Event("accessible-minimodal:before-close"));
     }
     closedModal.classList.add(this.config.classes?.close ?? "");
     closedModal.classList.remove(this.config.classes?.active ?? "");

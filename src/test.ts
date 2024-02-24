@@ -32,8 +32,9 @@ console.log(Modal);
 
 document
   .getElementById('modal')
-  ?.addEventListener('accessible-minimodal:after-close', () => {
-    console.log('accessible-minimodal:after-close');
+  ?.addEventListener('accessible-minimodal:before-close', e => {
+    console.log('accessible-minimodal:before-close', e);
+    e.preventDefault();
   });
 
 // Modal.openModal('#modal');

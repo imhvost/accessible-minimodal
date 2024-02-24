@@ -30,9 +30,9 @@ interface EventInstance {
 }
 
 interface On {
-  beforeOpen?: (instance?: EventInstance) => void;
+  beforeOpen?: (instance?: EventInstance) => boolean | void;
   afterOpen?: (instance?: EventInstance) => void;
-  beforeClose?: (instance?: EventInstance) => void;
+  beforeClose?: (instance?: EventInstance) => boolean | void;
   afterClose?: (instance?: EventInstance) => void;
 }
 
@@ -110,9 +110,9 @@ const settingsDefault: AccessibleMinimodalSettings = {
     closePrevModal: false,
   },
   on: {
-    beforeOpen: () => ({}),
+    beforeOpen: () => true,
     afterOpen: () => ({}),
-    beforeClose: () => ({}),
+    beforeClose: () => true,
     afterClose: () => ({}),
   },
   outsideClose: true,

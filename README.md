@@ -106,9 +106,13 @@ interface AccessibleMinimodalSettings {
     closePrevModal?: boolean /* defult: false */;
   };
   on?: {
-    beforeOpen?: (instance?: object) => void /* defult: () => ({}) */;
+    beforeOpen?: (instance?: object) => void /* defult: () => true
+                                                use return false for prevent open
+                                              */;
     afterOpen?: (instance?: object) => void /* defult: () => ({}) */;
-    beforeClose?: (instance?: object) => void /* defult: () => ({}) */;
+    beforeClose?: (instance?: object) => void /* defult: () => true
+                                                  use return false for prevent close
+                                              */;
     afterClose?: (instance?: object) => void /* defult: () => ({}) */;
   };
   outsideClose?: boolean /* defult: true */;
@@ -187,7 +191,8 @@ Example:
 ```javascript
 document
   .getElementById('modal')
-  ?.addEventListener('accessible-minimodal:after-close', () => {
-    console.log('accessible-minimodal:after-close');
+  ?.addEventListener('accessible-minimodal:before-close', e => {
+    console.log('accessible-minimodal:before-close');
+    // use e.preventDefault() for prevent close
   });
 ```

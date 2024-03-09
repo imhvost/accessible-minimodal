@@ -136,10 +136,7 @@ export class AccessibleMinimodal {
     }
 
     if (this.config.on?.beforeOpen) {
-      const isPrevent = this.config.on.beforeOpen(this.getOnInstance());
-      if (isPrevent === false) {
-        return;
-      }
+      this.config.on.beforeOpen(this.getOnInstance());
       const isCancel = this.modal?.dispatchEvent(
         new Event('accessible-minimodal:before-open', {
           cancelable: true,
@@ -261,10 +258,6 @@ export class AccessibleMinimodal {
     removeFromModals = true,
     closeAll = false
   ) {
-    if (this.animated && !closeAll) {
-      return;
-    }
-
     let closedModal: HTMLElement | null = null;
     if (selector) {
       if (typeof selector === 'string') {
@@ -283,10 +276,7 @@ export class AccessibleMinimodal {
     }
 
     if (this.config.on?.beforeClose) {
-      const isPrevent = this.config.on.beforeClose(this.getOnInstance());
-      if (isPrevent === false) {
-        return;
-      }
+      this.config.on.beforeClose(this.getOnInstance());
       const isCancel = this.modal?.dispatchEvent(
         new Event('accessible-minimodal:before-close', { cancelable: true })
       );
@@ -298,7 +288,7 @@ export class AccessibleMinimodal {
     this.animated = true;
 
     const modalIndex = this.modals.findIndex(el => el.isSameNode(closedModal));
-    if (removeFromModals) {
+    if (removeFromModals && !closeAll) {
       this.modals.splice(modalIndex, 1);
     }
 
@@ -328,6 +318,9 @@ export class AccessibleMinimodal {
 
       if (this.config.multiple?.use && removeFromModals) {
         if (this.modals.length) {
+          if (closeAll) {
+            this.modals.pop();
+          }
           this.modal = this.modals[this.modals.length - 1];
         } else {
           this.modal = null;
@@ -395,8 +388,8 @@ export class AccessibleMinimodal {
   public closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach(modal => {
-        this._closeModal(modal, false, true);
-        this.modals = [];
+        this._closeModal(modal, true, true);
+        // this.modals = [];
       });
     }
   }

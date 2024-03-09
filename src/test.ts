@@ -24,7 +24,7 @@ const Modal = new AccessibleMinimodal({
   },
   multiple: {
     use: true,
-    closePrevModal: true,
+    // closePrevModal: true,
   },
 });
 
@@ -32,12 +32,8 @@ console.log(Modal);
 
 document
   .getElementById('modal')
-  ?.addEventListener('accessible-minimodal:before-close', e => {
-    console.log('accessible-minimodal:before-close', e);
-    const yes = confirm('?');
-    if (!yes) {
-      e.preventDefault();
-    }
+  ?.addEventListener('accessible-minimodal:after-close', e => {
+    console.log('accessible-minimodal:after-close', e.currentTarget);
   });
 
 // Modal.openModal('#modal');

@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.3.1
+* accessible-minimodal v2.4.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -295,10 +295,7 @@ class AccessibleMinimodal {
       return;
     }
     if (this.config.on?.beforeOpen) {
-      const isPrevent = this.config.on.beforeOpen(this.getOnInstance());
-      if (isPrevent === false) {
-        return;
-      }
+      this.config.on.beforeOpen(this.getOnInstance());
       const isCancel = this.modal?.dispatchEvent(
         new Event("accessible-minimodal:before-open", {
           cancelable: true
@@ -391,9 +388,6 @@ class AccessibleMinimodal {
     this._closeModal(selector);
   }
   _closeModal(selector, removeFromModals = true, closeAll = false) {
-    if (this.animated && !closeAll) {
-      return;
-    }
     let closedModal = null;
     if (selector) {
       if (typeof selector === "string") {
@@ -410,10 +404,7 @@ class AccessibleMinimodal {
       return;
     }
     if (this.config.on?.beforeClose) {
-      const isPrevent = this.config.on.beforeClose(this.getOnInstance());
-      if (isPrevent === false) {
-        return;
-      }
+      this.config.on.beforeClose(this.getOnInstance());
       const isCancel = this.modal?.dispatchEvent(
         new Event("accessible-minimodal:before-close", { cancelable: true })
       );
@@ -423,7 +414,7 @@ class AccessibleMinimodal {
     }
     this.animated = true;
     const modalIndex = this.modals.findIndex((el) => el.isSameNode(closedModal));
-    if (removeFromModals) {
+    if (removeFromModals && !closeAll) {
       this.modals.splice(modalIndex, 1);
     }
     closedModal.classList.add(this.config.classes?.close ?? "");
@@ -447,6 +438,9 @@ class AccessibleMinimodal {
       }
       if (this.config.multiple?.use && removeFromModals) {
         if (this.modals.length) {
+          if (closeAll) {
+            this.modals.pop();
+          }
           this.modal = this.modals[this.modals.length - 1];
         } else {
           this.modal = null;
@@ -501,8 +495,7 @@ class AccessibleMinimodal {
   closeAllModals() {
     if (this.modals.length) {
       this.modals.forEach((modal) => {
-        this._closeModal(modal, false, true);
-        this.modals = [];
+        this._closeModal(modal, true, true);
       });
     }
   }

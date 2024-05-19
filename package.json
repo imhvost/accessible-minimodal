@@ -1,6 +1,6 @@
 {
   "name": "accessible-minimodal",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "description": "Accessible, lightweight, stylish JavaScript (TypeScript) modal library",
   "repository": {
     "type": "git",

@@ -86,6 +86,7 @@ interface AccessibleMinimodalSettings {
     modal?: string /* defult: modal */;
     wrapp?: string /* defult: modal-wrapp */;
     body?: string /* defult: modal-body */;
+    btnClose?: string /* defult: modal-btn-close */;
     active?: string /* defult: active */;
     open?: string /* defult: open */;
     close?: string /* defult: close */;

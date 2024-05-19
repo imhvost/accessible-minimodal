@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.4.0
+* accessible-minimodal v2.5.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -10,6 +10,7 @@ const settingsDefault = {
     modal: "modal",
     wrapp: "modal-wrapp",
     body: "modal-body",
+    closeBtn: "modal-close-btn",
     active: "active",
     open: "open",
     close: "close"
@@ -60,7 +61,7 @@ const settingsDefault = {
 };
 
 const buildStyle = (props) => {
-  const { modal, wrapp, body, active, open, close } = props.classNames;
+  const { modal, wrapp, body, closeBtn, active, open, close } = props.classNames;
   const varPrefix = "--accessible-minimodal";
   const getMargin = (valign) => {
     switch (valign) {
@@ -145,7 +146,7 @@ ${varPrefix}-scale-out: 1.2;
   transform: ${transform};
   position: relative;
 }
-.${body} > ${props.closeSelector} {
+.${closeBtn} {
   position: absolute;
   right: calc(var(${varPrefix}-padding) / 4);
   top: calc(var(${varPrefix}-padding) / 4);
@@ -156,8 +157,8 @@ ${varPrefix}-scale-out: 1.2;
   cursor: pointer;
   font-size: 0;
 }
-.${body} > ${props.closeSelector}:before,
-.${body} > ${props.closeSelector}:after {
+.${closeBtn}:before,
+.${closeBtn}:after {
   content: '';
   position: absolute;
   width: 16px;
@@ -166,10 +167,10 @@ ${varPrefix}-scale-out: 1.2;
   background-color: currentColor;
   height: 2px;
 }
-.${body} > ${props.closeSelector}:before {
+.${closeBtn}:before {
   transform: rotate(45deg);
 }
-.${body} ${props.closeSelector}:after {
+.${closeBtn}:after {
   transform: rotate(-45deg);
 }
 `;
@@ -269,8 +270,7 @@ class AccessibleMinimodal {
   getOnInstance() {
     return {
       modal: this.modal,
-      openBtn: this.openBtn,
-      config: this.config
+      openBtn: this.openBtn
     };
   }
   openModal(selector) {
@@ -282,7 +282,7 @@ class AccessibleMinimodal {
     }
     if (selector) {
       if (typeof selector === "string") {
-        this.modal = document.querySelector(selector);
+        this.modal = document.getElementById(selector);
       } else {
         this.modal = selector;
       }
@@ -391,7 +391,7 @@ class AccessibleMinimodal {
     let closedModal = null;
     if (selector) {
       if (typeof selector === "string") {
-        closedModal = document.querySelector(selector);
+        closedModal = document.getElementById(selector);
       } else {
         closedModal = selector;
       }
@@ -539,13 +539,11 @@ class AccessibleMinimodal {
   addStyles() {
     const classNames = { ...this.config.classes };
     const animationDuration = this.config.animationDuration + "ms";
-    const closeSelector = `[${this.config.triggersAttrs?.close}]`;
     const style = buildStyle({
       classNames,
       animationDuration,
       margin: this.config.style?.valign,
       transform: this.config.style?.animation,
-      closeSelector,
       width: this.config.style?.width
     });
     document.head.insertAdjacentHTML("beforeend", `<style>${style}</style>`);

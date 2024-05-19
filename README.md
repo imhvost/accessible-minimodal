@@ -20,11 +20,23 @@ Open button:
 
 ```html
 <!-- Open Button -->
-<button id="modal-open-btn" data-modal-open="modal">Open Modal</button>
+<button
+  id="modal-open-btn"
+  data-modal-open="modal"
+>
+  Open Modal
+</button>
 
 <!-- Modal -->
-<div id="modal" aria-hidden="true" class="modal">
-  <div tabindex="-1" class="modal-wrapp">
+<div
+  id="modal"
+  aria-hidden="true"
+  class="modal"
+>
+  <div
+    tabindex="-1"
+    class="modal-wrapp"
+  >
     <div
       role="dialog"
       aria-modal="true"
@@ -106,13 +118,9 @@ interface AccessibleMinimodalSettings {
     closePrevModal?: boolean /* defult: false */;
   };
   on?: {
-    beforeOpen?: (instance?: object) => void /* defult: () => true
-                                                use return false for prevent open
-                                              */;
+    beforeOpen?: (instance?: object) => void /* defult: () => ({}) */;
     afterOpen?: (instance?: object) => void /* defult: () => ({}) */;
-    beforeClose?: (instance?: object) => void /* defult: () => true
-                                                  use return false for prevent close
-                                              */;
+    beforeClose?: (instance?: object) => void /* defult: () => ({}) */;
     afterClose?: (instance?: object) => void /* defult: () => ({}) */;
   };
   outsideClose?: boolean /* defult: true */;
@@ -144,13 +152,13 @@ interface AccessibleMinimodalSettings {
 #### Open by id:
 
 ```js
-Modal.openModal('#my-modal');
+Modal.openModal('my-modal');
 ```
 
 #### Close by id:
 
 ```js
-Modal.closeModal('#my-modal');
+Modal.closeModal('my-modal');
 ```
 
 #### Close current modal:

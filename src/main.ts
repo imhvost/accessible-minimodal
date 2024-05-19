@@ -75,7 +75,7 @@ export class AccessibleMinimodal {
       if (openBtn) {
         event.preventDefault();
         this.modal = document.getElementById(
-          openBtn.getAttribute(this.config.triggersAttrs?.open ?? '') ?? ''
+          openBtn.getAttribute(this.config.triggersAttrs?.open ?? '') ?? '',
         );
         this.openBtn = openBtn;
         this.focusBtns.push(this.openBtn);
@@ -107,7 +107,6 @@ export class AccessibleMinimodal {
     return {
       modal: this.modal,
       openBtn: this.openBtn,
-      config: this.config,
     };
   }
 
@@ -122,7 +121,7 @@ export class AccessibleMinimodal {
 
     if (selector) {
       if (typeof selector === 'string') {
-        this.modal = document.querySelector(selector);
+        this.modal = document.getElementById(selector);
       } else {
         this.modal = selector;
       }
@@ -140,7 +139,7 @@ export class AccessibleMinimodal {
       const isCancel = this.modal?.dispatchEvent(
         new Event('accessible-minimodal:before-open', {
           cancelable: true,
-        })
+        }),
       );
       if (!isCancel) {
         return;
@@ -183,16 +182,15 @@ export class AccessibleMinimodal {
           if (jumpingElements) {
             if (Array.isArray(jumpingElements) && jumpingElements.length) {
               jumpingElements.forEach(
-                el => (el.style.marginInlineEnd = `${scrollbarWidth}px`)
+                el => (el.style.marginInlineEnd = `${scrollbarWidth}px`),
               );
             } else if (typeof jumpingElements === 'string') {
               document
                 .querySelectorAll(jumpingElements)
                 .forEach(
                   el =>
-                    ((
-                      el as HTMLElement
-                    ).style.marginInlineEnd = `${scrollbarWidth}px`)
+                    ((el as HTMLElement).style.marginInlineEnd =
+                      `${scrollbarWidth}px`),
                 );
             }
           }
@@ -216,7 +214,7 @@ export class AccessibleMinimodal {
         this.animated = false;
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
-            this.config.focus.selectors.join(', ')
+            this.config.focus.selectors.join(', '),
           );
 
           if (focusableNodes) {
@@ -225,7 +223,7 @@ export class AccessibleMinimodal {
             if (
               focusableNode &&
               focusableNode.hasAttribute(
-                this.config.triggersAttrs?.close ?? ''
+                this.config.triggersAttrs?.close ?? '',
               ) &&
               focusableNodes.length > 1
             ) {
@@ -242,7 +240,7 @@ export class AccessibleMinimodal {
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen(this.getOnInstance());
           this.modal?.dispatchEvent(
-            new Event('accessible-minimodal:after-open')
+            new Event('accessible-minimodal:after-open'),
           );
         }
       }, this.config.animationDuration);
@@ -256,12 +254,12 @@ export class AccessibleMinimodal {
   private _closeModal(
     selector?: string | HTMLElement,
     removeFromModals = true,
-    closeAll = false
+    closeAll = false,
   ) {
     let closedModal: HTMLElement | null = null;
     if (selector) {
       if (typeof selector === 'string') {
-        closedModal = document.querySelector(selector);
+        closedModal = document.getElementById(selector);
       } else {
         closedModal = selector;
       }
@@ -278,7 +276,7 @@ export class AccessibleMinimodal {
     if (this.config.on?.beforeClose) {
       this.config.on.beforeClose(this.getOnInstance());
       const isCancel = this.modal?.dispatchEvent(
-        new Event('accessible-minimodal:before-close', { cancelable: true })
+        new Event('accessible-minimodal:before-close', { cancelable: true }),
       );
       if (!isCancel) {
         return;
@@ -302,7 +300,7 @@ export class AccessibleMinimodal {
       window.history.replaceState(
         '',
         location.href,
-        location.pathname + location.search
+        location.pathname + location.search,
       );
     }
 
@@ -312,7 +310,7 @@ export class AccessibleMinimodal {
       if (this.config.on?.afterClose) {
         this.config.on.afterClose(this.getOnInstance());
         this.modal?.dispatchEvent(
-          new Event('accessible-minimodal:after-close')
+          new Event('accessible-minimodal:after-close'),
         );
       }
 
@@ -371,13 +369,13 @@ export class AccessibleMinimodal {
         if (jumpingElements) {
           if (Array.isArray(jumpingElements) && jumpingElements.length) {
             jumpingElements.forEach(el =>
-              el.style.removeProperty('margin-inline-end')
+              el.style.removeProperty('margin-inline-end'),
             );
           } else if (typeof jumpingElements === 'string') {
             document
               .querySelectorAll(jumpingElements)
               .forEach(el =>
-                (el as HTMLElement).style.removeProperty('margin-inline-end')
+                (el as HTMLElement).style.removeProperty('margin-inline-end'),
               );
           }
         }
@@ -417,7 +415,7 @@ export class AccessibleMinimodal {
       return;
     }
     const focusableNodes = this.modal?.querySelectorAll(
-      this.config.focus.selectors.join(', ')
+      this.config.focus.selectors.join(', '),
     );
     if (!focusableNodes) {
       return;
@@ -440,14 +438,12 @@ export class AccessibleMinimodal {
   protected addStyles() {
     const classNames = { ...this.config.classes };
     const animationDuration = this.config.animationDuration + 'ms';
-    const closeSelector = `[${this.config.triggersAttrs?.close}]`;
 
     const style = buildStyle({
       classNames: classNames,
       animationDuration: animationDuration,
       margin: this.config.style?.valign,
       transform: this.config.style?.animation,
-      closeSelector: closeSelector,
       width: this.config.style?.width,
     });
 

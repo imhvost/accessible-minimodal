@@ -2,6 +2,7 @@ interface Classes {
     modal?: string;
     wrapp?: string;
     body?: string;
+    closeBtn?: string;
     active?: string;
     open?: string;
     close?: string;
@@ -22,7 +23,6 @@ interface Multiple {
 interface EventInstance {
     modal: HTMLElement | null;
     openBtn: HTMLElement | null;
-    config: AccessibleMinimodalSettings;
 }
 interface On {
     beforeOpen?: (instance?: EventInstance) => boolean | void;

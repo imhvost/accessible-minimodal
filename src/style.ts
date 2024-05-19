@@ -6,11 +6,11 @@ interface BuildStyleProps {
   width?: number;
   margin?: string;
   transform?: string;
-  closeSelector: string;
 }
 
 export const buildStyle = (props: BuildStyleProps) => {
-  const { modal, wrapp, body, active, open, close } = props.classNames;
+  const { modal, wrapp, body, closeBtn, active, open, close } =
+    props.classNames;
   const varPrefix = '--accessible-minimodal';
   const getMargin = (valign: string) => {
     switch (valign) {
@@ -96,7 +96,7 @@ ${varPrefix}-scale-out: 1.2;
   transform: ${transform};
   position: relative;
 }
-.${body} > ${props.closeSelector} {
+.${closeBtn} {
   position: absolute;
   right: calc(var(${varPrefix}-padding) / 4);
   top: calc(var(${varPrefix}-padding) / 4);
@@ -107,8 +107,8 @@ ${varPrefix}-scale-out: 1.2;
   cursor: pointer;
   font-size: 0;
 }
-.${body} > ${props.closeSelector}:before,
-.${body} > ${props.closeSelector}:after {
+.${closeBtn}:before,
+.${closeBtn}:after {
   content: '';
   position: absolute;
   width: 16px;
@@ -117,10 +117,10 @@ ${varPrefix}-scale-out: 1.2;
   background-color: currentColor;
   height: 2px;
 }
-.${body} > ${props.closeSelector}:before {
+.${closeBtn}:before {
   transform: rotate(45deg);
 }
-.${body} ${props.closeSelector}:after {
+.${closeBtn}:after {
   transform: rotate(-45deg);
 }
 `;

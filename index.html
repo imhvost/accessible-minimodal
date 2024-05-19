@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>accessible-minimodal</title>
 
     <script></script>
@@ -62,7 +65,9 @@
   <body>
     <div class="container">
       <h1>ACCESSIBLE-MINIMODAL EXAMPLES</h1>
-      <a href="https://github.com/imhvost/accessible-minimodal" target="_blank"
+      <a
+        href="https://github.com/imhvost/accessible-minimodal"
+        target="_blank"
         >https://github.com/imhvost/accessible-minimodal</a
       >
       <section>
@@ -119,69 +124,150 @@
     use: true
   }
 });</code></pre>
-        <button type="button" data-modal-open="modal">Open Single Modal</button>
+        <button
+          type="button"
+          data-modal-open="modal"
+        >
+          Open Single Modal
+        </button>
         <a
           href="https://imhvost.github.io/accessible-minimodal.html#modal"
           target="_blank"
         >
           Open Modal by Hash
         </a>
-        <button type="button" data-modal-open="modal-1">
+        <button
+          type="button"
+          data-modal-open="modal-1"
+        >
           Open Multiple Modal
         </button>
         <div class="fixed">Fixed</div>
-        <div id="modal" aria-hidden="true" class="modal">
-          <div tabindex="-1" class="modal-wrapp">
-            <div role="dialog" aria-modal="true" class="modal-body">
-              <button type="button" class="modal-close-btn" data-modal-close>
+        <div
+          id="modal"
+          aria-hidden="true"
+          class="modal"
+        >
+          <div
+            tabindex="-1"
+            class="modal-wrapp"
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              class="modal-body"
+            >
+              <button
+                type="button"
+                class="modal-close-btn"
+                data-modal-close
+              >
                 Close
               </button>
               Modal Content<br /><br />
               <label aria-label="Input"
-                ><input type="text" placeholder="Input"
+                ><input
+                  type="text"
+                  placeholder="Input"
               /></label>
               <button type="button">Button</button>
             </div>
           </div>
         </div>
-        <div id="modal-1" aria-hidden="true" class="modal">
-          <div tabindex="-1" class="modal-wrapp">
-            <div role="dialog" aria-modal="true" class="modal-body">
-              <button type="button" class="modal-close-btn" data-modal-close>
+        <div
+          id="modal-1"
+          aria-hidden="true"
+          class="modal"
+        >
+          <div
+            tabindex="-1"
+            class="modal-wrapp"
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              class="modal-body"
+            >
+              <button
+                type="button"
+                class="modal-close-btn"
+                data-modal-close
+              >
                 Close
               </button>
               Modal Content<br /><br />
               <label aria-label="Input"
-                ><input type="text" placeholder="Input"
+                ><input
+                  type="text"
+                  placeholder="Input"
               /></label>
               <button type="button">Button</button>
-              <button type="button" data-modal-open="modal-2">
+              <button
+                type="button"
+                data-modal-open="modal-2"
+              >
                 Open Modal 2
               </button>
             </div>
           </div>
         </div>
-        <div id="modal-2" aria-hidden="true" class="modal">
-          <div tabindex="-1" class="modal-wrapp">
-            <div role="dialog" aria-modal="true" class="modal-body">
-              <button type="button" class="modal-close-btn" data-modal-close>
+        <div
+          id="modal-2"
+          aria-hidden="true"
+          class="modal"
+        >
+          <div
+            tabindex="-1"
+            class="modal-wrapp"
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              class="modal-body"
+            >
+              <button
+                type="button"
+                class="modal-close-btn"
+                data-modal-close
+              >
                 Close
               </button>
               Modal Content<br /><br />
-              <button type="button" data-modal-open="modal-3">
+              <button
+                type="button"
+                data-modal-open="modal-3"
+              >
                 Open Modal 3
               </button>
             </div>
           </div>
         </div>
-        <div id="modal-3" aria-hidden="true" class="modal">
-          <div tabindex="-1" class="modal-wrapp">
-            <div role="dialog" aria-modal="true" class="modal-body">
-              <button type="button" class="modal-close-btn" data-modal-close>
+        <div
+          id="modal-3"
+          aria-hidden="true"
+          class="modal"
+        >
+          <div
+            tabindex="-1"
+            class="modal-wrapp"
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              class="modal-body"
+            >
+              <button
+                type="button"
+                class="modal-close-btn"
+                data-modal-close
+              >
                 Close
               </button>
               Modal Content<br /><br />
-              <button type="button" data-modal-close-all>
+              <button
+                type="button"
+                data-modal-close-all
+              >
                 Close All Modals
               </button>
             </div>
@@ -312,7 +398,9 @@
           }
           .modal-custom.open,
           .modal-custom.close {
-            transition: opacity 0.4s, visibility 0.4s;
+            transition:
+              opacity 0.4s,
+              visibility 0.4s;
           }
           .modal-custom.open .modal-custom-body,
           .modal-custom.close .modal-custom-body {
@@ -349,8 +437,15 @@
         >
           Open Modal Custom
         </button>
-        <div id="modal-custom" aria-hidden="true" class="modal-custom">
-          <div tabindex="-1" class="modal-custom-wrapp">
+        <div
+          id="modal-custom"
+          aria-hidden="true"
+          class="modal-custom"
+        >
+          <div
+            tabindex="-1"
+            class="modal-custom-wrapp"
+          >
             <div
               role="dialog"
               aria-modal="true"
@@ -359,7 +454,12 @@
             >
               Modal Content
               <br /><br />
-              <button type="button" data-modal-custom-close>Close Modal</button>
+              <button
+                type="button"
+                data-modal-custom-close
+              >
+                Close Modal
+              </button>
             </div>
           </div>
         </div>
@@ -378,6 +478,9 @@
         });
       </script>
     </div>
-    <script src="/src/test.ts" type="module"></script>
+    <script
+      src="/src/test.ts"
+      type="module"
+    ></script>
   </body>
 </html>

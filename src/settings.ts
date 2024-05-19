@@ -2,6 +2,7 @@ interface Classes {
   modal?: string;
   wrapp?: string;
   body?: string;
+  closeBtn?: string;
   active?: string;
   open?: string;
   close?: string;
@@ -26,7 +27,6 @@ interface Multiple {
 interface EventInstance {
   modal: HTMLElement | null;
   openBtn: HTMLElement | null;
-  config: AccessibleMinimodalSettings;
 }
 
 interface On {
@@ -80,6 +80,7 @@ const settingsDefault: AccessibleMinimodalSettings = {
     modal: 'modal',
     wrapp: 'modal-wrapp',
     body: 'modal-body',
+    closeBtn: 'modal-close-btn',
     active: 'active',
     open: 'open',
     close: 'close',

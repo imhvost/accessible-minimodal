@@ -59,6 +59,7 @@ ${varPrefix}-scale-out: 1.2;
   position: fixed;
   inset: 0;
   z-index: var(${varPrefix}-z-index);
+  transition-property: opacity, visibility;
 }
 .${modal}:not(.${active}) {
   opacity: 0;
@@ -67,11 +68,7 @@ ${varPrefix}-scale-out: 1.2;
 }
 .${modal}.${open},
 .${modal}.${close} {
-  transition: opacity ${props.animationDuration}, visibility ${props.animationDuration};
-}
-.${modal}.open .${body},
-.${modal}.close .${body} {
-  transition: transform ${props.animationDuration};
+  transition-duration: ${props.animationDuration};
 }
 .${modal}.${active} .${body} {
   transform: none;
@@ -80,7 +77,7 @@ ${varPrefix}-scale-out: 1.2;
   height: 100%;
   display: flex;
   background-color: var(${varPrefix}-filter);
-  padding: var(${varPrefix}-padding) calc(${varPrefix}-padding / 2);
+  padding: var(${varPrefix}-padding) calc(var(${varPrefix}-padding) / 2);
   overflow-y: scroll;
 }
 .${body} {
@@ -95,6 +92,8 @@ ${varPrefix}-scale-out: 1.2;
   padding: var(${varPrefix}-padding);
   transform: ${transform};
   position: relative;
+  transition-duration: ${props.animationDuration};
+  transition-property: transform;
 }
 .${closeBtn} {
   position: absolute;

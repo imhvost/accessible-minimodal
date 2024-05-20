@@ -111,10 +111,10 @@ const settingsDefault: AccessibleMinimodalSettings = {
     closePrevModal: false,
   },
   on: {
-    beforeOpen: () => true,
-    afterOpen: () => ({}),
-    beforeClose: () => true,
-    afterClose: () => ({}),
+    beforeOpen: undefined,
+    afterOpen: undefined,
+    beforeClose: undefined,
+    afterClose: undefined,
   },
   outsideClose: true,
   style: {

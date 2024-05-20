@@ -12,7 +12,7 @@ const Modal = new AccessibleMinimodal({
       console.log('beforeClose', instance);
     },
     afterClose: instance => {
-      console.log('afterClose', instance);
+      console.log(Modal, instance);
     },
   },
   style: {

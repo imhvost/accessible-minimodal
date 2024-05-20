@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.5.2
+* accessible-minimodal v2.5.15
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -41,10 +41,10 @@ const settingsDefault = {
     closePrevModal: false
   },
   on: {
-    beforeOpen: () => true,
-    afterOpen: () => ({}),
-    beforeClose: () => true,
-    afterClose: () => ({})
+    beforeOpen: void 0,
+    afterOpen: void 0,
+    beforeClose: void 0,
+    afterClose: void 0
   },
   outsideClose: true,
   style: {
@@ -109,6 +109,7 @@ ${varPrefix}-scale-out: 1.2;
   position: fixed;
   inset: 0;
   z-index: var(${varPrefix}-z-index);
+  transition-property: opacity, visibility;
 }
 .${modal}:not(.${active}) {
   opacity: 0;
@@ -117,11 +118,7 @@ ${varPrefix}-scale-out: 1.2;
 }
 .${modal}.${open},
 .${modal}.${close} {
-  transition: opacity ${props.animationDuration}, visibility ${props.animationDuration};
-}
-.${modal}.open .${body},
-.${modal}.close .${body} {
-  transition: transform ${props.animationDuration};
+  transition-duration: ${props.animationDuration};
 }
 .${modal}.${active} .${body} {
   transform: none;
@@ -130,7 +127,7 @@ ${varPrefix}-scale-out: 1.2;
   height: 100%;
   display: flex;
   background-color: var(${varPrefix}-filter);
-  padding: var(${varPrefix}-padding) calc(${varPrefix}-padding / 2);
+  padding: var(${varPrefix}-padding) calc(var(${varPrefix}-padding) / 2);
   overflow-y: scroll;
 }
 .${body} {
@@ -145,6 +142,8 @@ ${varPrefix}-scale-out: 1.2;
   padding: var(${varPrefix}-padding);
   transform: ${transform};
   position: relative;
+  transition-duration: ${props.animationDuration};
+  transition-property: transform;
 }
 .${closeBtn} {
   position: absolute;
@@ -454,12 +453,11 @@ class AccessibleMinimodal {
       if (this.config.multiple?.use && this.config.multiple?.closePrevModal && removeFromModals && !closeAll && this.modals.length) {
         this._openModal(this.modals.pop(), false);
       }
-      if (this.config.focus?.use && this.focusBtns.length) {
+      if (this.focusBtns.length) {
         if (closeAll) {
           const focusBtn = this.focusBtns.find((btn) => btn !== null);
           if (focusBtn) {
             focusBtn.focus();
-            this.focusBtns = [];
           }
         } else {
           const focusBtn = this.focusBtns[modalIndex];
@@ -489,6 +487,11 @@ class AccessibleMinimodal {
             );
           }
         }
+      }
+      if (closeAll) {
+        this.focusBtns = [];
+        this.modals = [];
+        this.modal = null;
       }
     }, this.config.animationDuration);
   }

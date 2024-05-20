@@ -341,15 +341,15 @@ export class AccessibleMinimodal {
         this._openModal(this.modals.pop(), false);
       }
 
-      if (this.config.focus?.use && this.focusBtns.length) {
+      if (this.focusBtns.length) {
         if (closeAll) {
           const focusBtn = this.focusBtns.find(btn => btn !== null);
           if (focusBtn) {
             focusBtn.focus();
-            this.focusBtns = [];
           }
         } else {
           const focusBtn = this.focusBtns[modalIndex];
+
           if (focusBtn) {
             focusBtn.focus();
             if (removeFromModals) {
@@ -380,6 +380,12 @@ export class AccessibleMinimodal {
           }
         }
       }
+
+      if (closeAll) {
+        this.focusBtns = [];
+        this.modals = [];
+        this.modal = null;
+      }
     }, this.config.animationDuration);
   }
 
@@ -387,7 +393,6 @@ export class AccessibleMinimodal {
     if (this.modals.length) {
       this.modals.forEach(modal => {
         this._closeModal(modal, true, true);
-        // this.modals = [];
       });
     }
   }

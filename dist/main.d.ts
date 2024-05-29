@@ -1,4 +1,4 @@
-import { AccessibleMinimodalSettings } from './settings';
+import { AccessibleMinimodalSettings, TriggersAttrs } from './settings';
 
 export declare class AccessibleMinimodal {
     config: AccessibleMinimodalSettings;
@@ -9,7 +9,7 @@ export declare class AccessibleMinimodal {
     animated: boolean;
     constructor(settings?: AccessibleMinimodalSettings);
     protected init(): void;
-    private addTriggers;
+    addTriggers(triggers?: TriggersAttrs): void;
     private getOnInstance;
     openModal(selector?: string | HTMLElement): void;
     private _openModal;

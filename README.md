@@ -139,6 +139,7 @@ interface AccessibleMinimodalSettings {
       | 'fade';
   };
   triggersAttrs?: {
+    use?: true,
     open?: string /* defult: data-modal-open */;
     close?: string /* defult: data-modal-close */;
     closeAll?: string /* defult: data-modal-close-all */;
@@ -176,13 +177,27 @@ Modal.closeAllModals();
 
 #### Get scrollbar width:
 
-Example of preventing displacement of position:fixed elements when scrolling is disabled:
+```js
+Modal.getScrollbarWidth();
+```
+
+Example of preventing displacement of `position:fixed` elements when scrolling is disabled:
 
 ```js
 const Modal = new AccessibleMinimodal({
   disableScroll: {
     jumpingElements: '.fixed-elements',
   },
+});
+```
+
+#### Add triggers:
+
+```js
+Modal.addTriggers({
+  open: 'data-my-open',
+  close: 'data-my-close',
+  closeAll: 'data-my-close-all',
 });
 ```
 

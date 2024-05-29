@@ -50,10 +50,14 @@ interface Style {
     | 'fade';
 }
 
-interface TriggersAttrs {
+export interface TriggersAttrs {
   open?: string;
   close?: string;
   closeAll?: string;
+}
+
+interface Triggers extends TriggersAttrs {
+  use?: boolean;
 }
 
 interface DisableScroll {
@@ -71,7 +75,7 @@ interface AccessibleMinimodalSettings {
   on?: On;
   outsideClose?: boolean;
   style?: Style;
-  triggersAttrs?: TriggersAttrs;
+  triggers?: Triggers;
 }
 
 const settingsDefault: AccessibleMinimodalSettings = {
@@ -123,7 +127,8 @@ const settingsDefault: AccessibleMinimodalSettings = {
     valign: 'center',
     animation: 'from-bottom',
   },
-  triggersAttrs: {
+  triggers: {
+    use: true,
     open: 'data-modal-open',
     close: 'data-modal-close',
     closeAll: 'data-modal-close-all',

@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.5.15
+* accessible-minimodal v2.6.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -53,7 +53,8 @@ const settingsDefault = {
     valign: "center",
     animation: "from-bottom"
   },
-  triggersAttrs: {
+  triggers: {
+    use: true,
     open: "data-modal-open",
     close: "data-modal-close",
     closeAll: "data-modal-close-all"
@@ -216,9 +217,11 @@ class AccessibleMinimodal {
     this.focusBtns = [];
     this.animated = false;
     this.init();
-    this.addTriggers();
   }
   init() {
+    if (this.config.triggers?.use) {
+      this.addTriggers();
+    }
     if (this.config.style?.use) {
       this.addStyles();
     }
@@ -230,30 +233,34 @@ class AccessibleMinimodal {
       }
     }
   }
-  addTriggers() {
+  addTriggers(triggers) {
+    triggers = triggers || this.config.triggers;
     document.addEventListener("click", (event) => {
       const getTriggerNode = (triggerAttr) => {
+        if (!triggerAttr) {
+          return null;
+        }
         const target = event.target;
         if (target.getAttribute(triggerAttr)) {
           return target;
         }
         return target.closest(`[${triggerAttr}]`);
       };
-      const openBtn = getTriggerNode(this.config.triggersAttrs?.open ?? "");
+      const openBtn = getTriggerNode(triggers?.open ?? "");
       if (openBtn) {
         event.preventDefault();
         this.modal = document.getElementById(
-          openBtn.getAttribute(this.config.triggersAttrs?.open ?? "") ?? ""
+          openBtn.getAttribute(triggers?.open ?? "") ?? ""
         );
         this.openBtn = openBtn;
         this.focusBtns.push(this.openBtn);
         this.openModal();
       }
-      if (getTriggerNode(this.config.triggersAttrs?.close ?? "")) {
+      if (getTriggerNode(triggers?.close ?? "")) {
         event.preventDefault();
         this.closeModal();
       }
-      if (getTriggerNode(this.config.triggersAttrs?.closeAll ?? "")) {
+      if (getTriggerNode(triggers?.closeAll ?? "")) {
         event.preventDefault();
         this.closeAllModals();
       }
@@ -363,9 +370,7 @@ class AccessibleMinimodal {
           );
           if (focusableNodes) {
             let focusableNode = focusableNodes[0];
-            if (focusableNode && focusableNode.hasAttribute(
-              this.config.triggersAttrs?.close ?? ""
-            ) && focusableNodes.length > 1) {
+            if (focusableNode && focusableNode.hasAttribute(this.config.triggers?.close ?? "") && focusableNodes.length > 1) {
               focusableNode = focusableNodes[1];
             }
             if (focusableNode) {

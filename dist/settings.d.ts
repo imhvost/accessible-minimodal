@@ -36,10 +36,13 @@ interface Style {
     valign?: string;
     animation?: 'from-bottom' | 'from-top' | 'from-left' | 'from-right' | 'zoom-in' | 'zoom-out' | 'fade';
 }
-interface TriggersAttrs {
+export interface TriggersAttrs {
     open?: string;
     close?: string;
     closeAll?: string;
+}
+interface Triggers extends TriggersAttrs {
+    use?: boolean;
 }
 interface DisableScroll {
     use?: boolean;
@@ -55,7 +58,7 @@ interface AccessibleMinimodalSettings {
     on?: On;
     outsideClose?: boolean;
     style?: Style;
-    triggersAttrs?: TriggersAttrs;
+    triggers?: Triggers;
 }
 declare const settingsDefault: AccessibleMinimodalSettings;
 export { settingsDefault, type AccessibleMinimodalSettings, type Classes };

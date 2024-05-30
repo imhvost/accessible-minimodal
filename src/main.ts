@@ -141,16 +141,18 @@ export class AccessibleMinimodal {
       return;
     }
 
+    const isCancel = this.modal?.dispatchEvent(
+      new Event('accessible-minimodal:before-open', {
+        cancelable: true,
+      }),
+    );
+
+    if (!isCancel) {
+      return;
+    }
+
     if (this.config.on?.beforeOpen) {
       this.config.on.beforeOpen(this.getOnInstance());
-      const isCancel = this.modal?.dispatchEvent(
-        new Event('accessible-minimodal:before-open', {
-          cancelable: true,
-        }),
-      );
-      if (!isCancel) {
-        return;
-      }
     }
 
     this.animated = true;
@@ -242,11 +244,10 @@ export class AccessibleMinimodal {
 
         document.addEventListener('keydown', this.onKeydown.bind(this));
 
+        this.modal?.dispatchEvent(new Event('accessible-minimodal:after-open'));
+
         if (this.config.on?.afterOpen) {
           this.config.on.afterOpen(this.getOnInstance());
-          this.modal?.dispatchEvent(
-            new Event('accessible-minimodal:after-open'),
-          );
         }
       }, this.config.animationDuration);
     }, timeout);
@@ -278,14 +279,15 @@ export class AccessibleMinimodal {
       return;
     }
 
+    const isCancel = this.modal?.dispatchEvent(
+      new Event('accessible-minimodal:before-close', { cancelable: true }),
+    );
+    if (!isCancel) {
+      return;
+    }
+
     if (this.config.on?.beforeClose) {
       this.config.on.beforeClose(this.getOnInstance());
-      const isCancel = this.modal?.dispatchEvent(
-        new Event('accessible-minimodal:before-close', { cancelable: true }),
-      );
-      if (!isCancel) {
-        return;
-      }
     }
 
     this.animated = true;
@@ -312,11 +314,10 @@ export class AccessibleMinimodal {
     setTimeout(() => {
       closedModal?.classList.remove(this.config.classes?.close ?? '');
 
+      this.modal?.dispatchEvent(new Event('accessible-minimodal:after-close'));
+
       if (this.config.on?.afterClose) {
         this.config.on.afterClose(this.getOnInstance());
-        this.modal?.dispatchEvent(
-          new Event('accessible-minimodal:after-close'),
-        );
       }
 
       if (this.config.multiple?.use && removeFromModals) {

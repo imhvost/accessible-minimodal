@@ -27,14 +27,14 @@ const Modal = new AccessibleMinimodal({
     // closePrevModal: true,
   },
   triggers: {
-    use: false,
+    // use: false,
   },
 });
 
 console.log(Modal);
-Modal.addTriggers({
-  open: 'data-modal-open',
-});
+// Modal.addTriggers({
+//   open: 'data-modal-open',
+// });
 
 document
   .getElementById('modal')

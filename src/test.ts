@@ -32,6 +32,8 @@ const Modal = new AccessibleMinimodal({
 });
 
 console.log(Modal);
+
+Modal.openModal('modal');
 // Modal.addTriggers({
 //   open: 'data-modal-open',
 // });

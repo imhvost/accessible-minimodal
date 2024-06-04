@@ -117,11 +117,14 @@ export class AccessibleMinimodal {
     };
   }
 
-  public openModal(selector?: string | HTMLElement) {
+  public openModal(selector?: string | HTMLElement | null) {
     this._openModal(selector);
   }
 
-  private _openModal(selector?: string | HTMLElement, useTimeout = true) {
+  private _openModal(
+    selector?: string | HTMLElement | null,
+    useTimeout = true,
+  ) {
     if (this.animated) {
       return;
     }
@@ -253,12 +256,12 @@ export class AccessibleMinimodal {
     }, timeout);
   }
 
-  public closeModal(selector?: string | HTMLElement) {
+  public closeModal(selector?: string | HTMLElement | null) {
     this._closeModal(selector);
   }
 
   private _closeModal(
-    selector?: string | HTMLElement,
+    selector?: string | HTMLElement | null,
     removeFromModals = true,
     closeAll = false,
   ) {

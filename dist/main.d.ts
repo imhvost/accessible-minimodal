@@ -11,9 +11,9 @@ export declare class AccessibleMinimodal {
     protected init(): void;
     addTriggers(triggers?: TriggersAttrs): void;
     private getOnInstance;
-    openModal(selector?: string | HTMLElement): void;
+    openModal(selector?: string | HTMLElement | null): void;
     private _openModal;
-    closeModal(selector?: string | HTMLElement): void;
+    closeModal(selector?: string | HTMLElement | null): void;
     private _closeModal;
     closeAllModals(): void;
     getScrollbarWidth(): number;

@@ -154,11 +154,11 @@ export class AccessibleMinimodal {
       return;
     }
 
+    this.animated = true;
+
     if (this.config.on?.beforeOpen) {
       this.config.on.beforeOpen(this.getOnInstance());
     }
-
-    this.animated = true;
 
     let timeout = 0;
 
@@ -289,11 +289,11 @@ export class AccessibleMinimodal {
       return;
     }
 
+    this.animated = true;
+
     if (this.config.on?.beforeClose) {
       this.config.on.beforeClose(this.getOnInstance());
     }
-
-    this.animated = true;
 
     const modalIndex = this.modals.findIndex(el => el.isSameNode(closedModal));
     if (removeFromModals && !closeAll) {

@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.2
+* accessible-minimodal v2.6.3
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -308,10 +308,10 @@ class AccessibleMinimodal {
     if (!isCancel) {
       return;
     }
+    this.animated = true;
     if (this.config.on?.beforeOpen) {
       this.config.on.beforeOpen(this.getOnInstance());
     }
-    this.animated = true;
     let timeout = 0;
     if (this.config.multiple?.use) {
       if (this.modals.length) {
@@ -411,10 +411,10 @@ class AccessibleMinimodal {
     if (!isCancel) {
       return;
     }
+    this.animated = true;
     if (this.config.on?.beforeClose) {
       this.config.on.beforeClose(this.getOnInstance());
     }
-    this.animated = true;
     const modalIndex = this.modals.findIndex((el) => el.isSameNode(closedModal));
     if (removeFromModals && !closeAll) {
       this.modals.splice(modalIndex, 1);

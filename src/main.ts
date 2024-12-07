@@ -218,7 +218,6 @@ export class AccessibleMinimodal {
       }
 
       this.modal?.classList.add(this.config.classes?.active ?? '');
-      this.modal?.setAttribute('aria-hidden', 'false');
 
       setTimeout(() => {
         this.modal?.classList.remove(this.config.classes?.open ?? '');
@@ -302,7 +301,6 @@ export class AccessibleMinimodal {
 
     closedModal.classList.add(this.config.classes?.close ?? '');
     closedModal.classList.remove(this.config.classes?.active ?? '');
-    closedModal.setAttribute('aria-hidden', 'true');
 
     document.removeEventListener('keydown', this.onKeydown);
 

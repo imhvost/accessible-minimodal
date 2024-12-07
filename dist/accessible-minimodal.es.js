@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.3
+* accessible-minimodal v2.6.4
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -360,7 +360,6 @@ class AccessibleMinimodal {
         window.history.replaceState("", location.href, "#" + this.modal.id);
       }
       this.modal?.classList.add(this.config.classes?.active ?? "");
-      this.modal?.setAttribute("aria-hidden", "false");
       setTimeout(() => {
         this.modal?.classList.remove(this.config.classes?.open ?? "");
         this.animated = false;
@@ -421,7 +420,6 @@ class AccessibleMinimodal {
     }
     closedModal.classList.add(this.config.classes?.close ?? "");
     closedModal.classList.remove(this.config.classes?.active ?? "");
-    closedModal.setAttribute("aria-hidden", "true");
     document.removeEventListener("keydown", this.onKeydown);
     if (this.config.hash?.remove) {
       window.history.replaceState(

@@ -264,6 +264,9 @@ export class AccessibleMinimodal {
     removeFromModals = true,
     closeAll = false,
   ) {
+    if (this.animated) {
+      return;
+    }
     let closedModal: HTMLElement | null = null;
     if (selector) {
       if (typeof selector === 'string') {

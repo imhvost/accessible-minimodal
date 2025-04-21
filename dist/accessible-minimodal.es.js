@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.4
+* accessible-minimodal v2.6.5
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -389,6 +389,9 @@ class AccessibleMinimodal {
     this._closeModal(selector);
   }
   _closeModal(selector, removeFromModals = true, closeAll = false) {
+    if (this.animated) {
+      return;
+    }
     let closedModal = null;
     if (selector) {
       if (typeof selector === "string") {

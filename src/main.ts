@@ -223,6 +223,9 @@ export class AccessibleMinimodal {
         this.modal?.classList.remove(this.config.classes?.open ?? '');
 
         this.animated = false;
+
+        this.modal?.removeAttribute('inert');
+
         if (this.config.focus?.use && this.config.focus.selectors) {
           const focusableNodes = this.modal?.querySelectorAll(
             this.config.focus.selectors.join(', '),
@@ -243,6 +246,8 @@ export class AccessibleMinimodal {
             }
           }
         }
+
+        this.modal?.removeAttribute('aria-hidden');
 
         document.addEventListener('keydown', this.onKeydown.bind(this));
 
@@ -368,6 +373,9 @@ export class AccessibleMinimodal {
           }
         }
       }
+
+      closedModal?.setAttribute('aria-hidden', 'true');
+      closedModal?.setAttribute('inert', 'true');
 
       if (this.config.disableScroll?.use && !this.modals.length) {
         const html = document.querySelector('html') as HTMLElement;

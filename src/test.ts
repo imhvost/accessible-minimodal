@@ -23,25 +23,33 @@ const Modal = new AccessibleMinimodal({
     jumpingElements: [document.querySelector('.fixed') as HTMLElement],
   },
   multiple: {
-    use: true,
+    // use: true,
     // closePrevModal: true,
+  },
+  hash: {
+    open: true,
+    add: true,
+    remove: true,
   },
   triggers: {
     // use: false,
+  },
+  focus: {
+    use: false,
   },
 });
 
 console.log(Modal);
 
-Modal.openModal('modal');
+// Modal.openModal('modal');
 // Modal.addTriggers({
 //   open: 'data-modal-open',
 // });
 
 document
   .getElementById('modal')
-  ?.addEventListener('accessible-minimodal:after-close', e => {
-    console.log('accessible-minimodal:after-close', e.currentTarget);
+  ?.addEventListener('accessible-minimodal:before-open', e => {
+    console.log('accessible-minimodal:before-open', e.currentTarget);
   });
 
 // Modal.openModal('#modal');

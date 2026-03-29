@@ -59,7 +59,9 @@ export class AccessibleMinimodal {
       const hash = window.location.hash.substring(1) ?? '';
       if (hash) {
         this.modal = document.getElementById(hash);
-        this.openModal();
+        setTimeout(() => {
+          this.openModal(hash);
+        }, 10);
       }
     }
   }
@@ -374,9 +376,6 @@ export class AccessibleMinimodal {
         }
       }
 
-      closedModal?.setAttribute('aria-hidden', 'true');
-      closedModal?.setAttribute('inert', 'true');
-
       if (this.config.disableScroll?.use && !this.modals.length) {
         const html = document.querySelector('html') as HTMLElement;
         const body = document.querySelector('body') as HTMLElement;
@@ -404,6 +403,9 @@ export class AccessibleMinimodal {
         this.modals = [];
         this.modal = null;
       }
+
+      closedModal?.setAttribute('aria-hidden', 'true');
+      closedModal?.setAttribute('inert', 'true');
     }, this.config.animationDuration);
   }
 

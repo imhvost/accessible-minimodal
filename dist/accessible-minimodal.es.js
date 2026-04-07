@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.8
+* accessible-minimodal v2.6.9
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -29,7 +29,11 @@ const settingsDefault = {
       "textarea:not([disabled]):not([aria-hidden])",
       '[tabindex]:not([tabindex="-1"])',
       '[contenteditable="true"]'
-    ]
+    ],
+    options: {
+      preventScroll: true,
+      focusVisible: false
+    }
   },
   hash: {
     open: false,
@@ -376,7 +380,7 @@ class AccessibleMinimodal {
               focusableNode = focusableNodes[1];
             }
             if (focusableNode) {
-              focusableNode.focus();
+              focusableNode.focus(this.config.focus.options);
             }
           }
         }
@@ -459,16 +463,16 @@ class AccessibleMinimodal {
       if (this.config.multiple?.use && this.config.multiple?.closePrevModal && removeFromModals && !closeAll && this.modals.length) {
         this._openModal(this.modals.pop(), false);
       }
-      if (this.focusBtns.length) {
+      if (this.config.focus?.use && this.focusBtns.length) {
         if (closeAll) {
           const focusBtn = this.focusBtns.find((btn) => btn !== null);
           if (focusBtn) {
-            focusBtn.focus();
+            focusBtn.focus(this.config.focus.options);
           }
         } else {
           const focusBtn = this.focusBtns[modalIndex];
           if (focusBtn) {
-            focusBtn.focus();
+            focusBtn.focus(this.config.focus.options);
             if (removeFromModals) {
               this.focusBtns.splice(modalIndex, 1);
             }

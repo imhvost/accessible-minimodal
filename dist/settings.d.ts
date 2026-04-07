@@ -10,6 +10,10 @@ interface Classes {
 interface Focus {
     use?: boolean;
     selectors?: string[];
+    options?: {
+        preventScroll?: boolean;
+        focusVisible?: boolean;
+    };
 }
 interface Hash {
     open?: boolean;

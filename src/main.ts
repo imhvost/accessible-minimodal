@@ -244,7 +244,7 @@ export class AccessibleMinimodal {
               focusableNode = focusableNodes[1];
             }
             if (focusableNode) {
-              (focusableNode as HTMLElement).focus();
+              (focusableNode as HTMLElement).focus(this.config.focus.options);
             }
           }
         }
@@ -358,17 +358,17 @@ export class AccessibleMinimodal {
         this._openModal(this.modals.pop(), false);
       }
 
-      if (this.focusBtns.length) {
+      if (this.config.focus?.use && this.focusBtns.length) {
         if (closeAll) {
           const focusBtn = this.focusBtns.find(btn => btn !== null);
           if (focusBtn) {
-            focusBtn.focus();
+            focusBtn.focus(this.config.focus.options);
           }
         } else {
           const focusBtn = this.focusBtns[modalIndex];
 
           if (focusBtn) {
-            focusBtn.focus();
+            focusBtn.focus(this.config.focus.options);
             if (removeFromModals) {
               this.focusBtns.splice(modalIndex, 1);
             }

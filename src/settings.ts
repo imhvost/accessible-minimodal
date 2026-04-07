@@ -11,6 +11,10 @@ interface Classes {
 interface Focus {
   use?: boolean;
   selectors?: string[];
+  options?: {
+    preventScroll?: boolean;
+    focusVisible?: boolean;
+  };
 }
 
 interface Hash {
@@ -104,6 +108,10 @@ const settingsDefault: AccessibleMinimodalSettings = {
       '[tabindex]:not([tabindex="-1"])',
       '[contenteditable="true"]',
     ],
+    options: {
+      preventScroll: true,
+      focusVisible: false,
+    },
   },
   hash: {
     open: false,

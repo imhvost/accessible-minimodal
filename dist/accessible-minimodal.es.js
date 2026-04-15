@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.9
+* accessible-minimodal v2.6.10
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -232,10 +232,11 @@ class AccessibleMinimodal {
     if (this.config.hash?.open) {
       const hash = window.location.hash.substring(1) ?? "";
       if (hash) {
-        this.modal = document.getElementById(hash);
-        setTimeout(() => {
-          this.openModal(hash);
-        }, 10);
+        const el = document.getElementById(hash);
+        if (el && el.classList.contains(String(this.config.classes?.modal)))
+          setTimeout(() => {
+            this.openModal(hash);
+          }, 10);
       }
     }
   }

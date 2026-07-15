@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.7.0
+* accessible-minimodal v2.7.1
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -291,7 +291,6 @@ class AccessibleMinimodal {
     this._openModal(selector);
   }
   _openModal(selector, useTimeout = true) {
-    console.log(useTimeout, this.config.multiple?.use);
     if (this.animated) {
       return;
     }

@@ -128,8 +128,6 @@ export class AccessibleMinimodal {
     selector?: string | HTMLElement | null,
     useTimeout = true,
   ) {
-    console.log(useTimeout, this.config.multiple?.use);
-
     if (this.animated) {
       return;
     }

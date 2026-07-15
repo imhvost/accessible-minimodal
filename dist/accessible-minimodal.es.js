@@ -1,6 +1,6 @@
 
 /*!
-* accessible-minimodal v2.6.10
+* accessible-minimodal v2.7.0
 * https://github.com/imhvost/accessible-minimodal
 */
 
@@ -21,6 +21,7 @@ const settingsDefault = {
   },
   focus: {
     use: true,
+    trap: true,
     selectors: [
       "button:not([disabled])",
       "a[href]",
@@ -290,6 +291,7 @@ class AccessibleMinimodal {
     this._openModal(selector);
   }
   _openModal(selector, useTimeout = true) {
+    console.log(useTimeout, this.config.multiple?.use);
     if (this.animated) {
       return;
     }
@@ -530,6 +532,9 @@ class AccessibleMinimodal {
     }
   }
   changeFocus(event) {
+    if (!this.config.focus?.trap) {
+      return;
+    }
     if (!this.config.focus?.selectors) {
       return;
     }

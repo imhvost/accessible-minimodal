@@ -10,6 +10,7 @@ interface Classes {
 
 interface Focus {
   use?: boolean;
+  trap?: boolean;
   selectors?: string[];
   options?: {
     preventScroll?: boolean;
@@ -99,6 +100,7 @@ const settingsDefault: AccessibleMinimodalSettings = {
   },
   focus: {
     use: true,
+    trap: true,
     selectors: [
       'button:not([disabled])',
       'a[href]',

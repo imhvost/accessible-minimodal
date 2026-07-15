@@ -9,6 +9,7 @@ interface Classes {
 }
 interface Focus {
     use?: boolean;
+    trap?: boolean;
     selectors?: string[];
     options?: {
         preventScroll?: boolean;

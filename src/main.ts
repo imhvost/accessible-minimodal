@@ -128,6 +128,8 @@ export class AccessibleMinimodal {
     selector?: string | HTMLElement | null,
     useTimeout = true,
   ) {
+    console.log(useTimeout, this.config.multiple?.use);
+
     if (this.animated) {
       return;
     }
@@ -437,6 +439,9 @@ export class AccessibleMinimodal {
   }
 
   protected changeFocus(event: KeyboardEvent) {
+    if (!this.config.focus?.trap) {
+      return;
+    }
     if (!this.config.focus?.selectors) {
       return;
     }

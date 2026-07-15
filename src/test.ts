@@ -23,7 +23,7 @@ const Modal = new AccessibleMinimodal({
     jumpingElements: [document.querySelector('.fixed') as HTMLElement],
   },
   multiple: {
-    // use: true,
+    use: true,
     // closePrevModal: true,
   },
   hash: {
@@ -35,7 +35,7 @@ const Modal = new AccessibleMinimodal({
     // use: false,
   },
   focus: {
-    use: false,
+    trap: false,
   },
 });
 
@@ -52,4 +52,4 @@ document
     console.log('accessible-minimodal:before-open', e.currentTarget);
   });
 
-// Modal.openModal('#modal');
+Modal.openModal('modal-1');

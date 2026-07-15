@@ -97,6 +97,7 @@ interface AccessibleMinimodalSettings {
   };
   focus?: {
     use?: boolean /* defult: true */;
+    trap?: boolean /* defult: true */;
     selectors?: string[] /* defult:
                             [
                               'button:not([disabled])',
